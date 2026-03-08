@@ -1,0 +1,19 @@
+{
+  "graph_type": "cycle",
+  "n_nodes": 4,
+  "n_edges": 4,
+  "p": 1,
+  "c_max": 4.0,
+  "best_bitstring": "0101",
+  "optimizer": "COBYLA",
+  "optimal_energy": 2.999999996891742,
+  "approximation_ratio": 0.7499999992229355,
+  "optimal_params": [
+    0.7853639398075904,
+    1.9635051920651339
+  ],
+  "n_evals": 43,
+  "converged": true,
+  "noisy_energy": 1.9998076826994076,
+  "mitigated_energy": 2.9999999968917406
+}

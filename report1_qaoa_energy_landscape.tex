@@ -1,0 +1,2966 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+  11pt,
+]{report}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\chapter{QAOA Energy Landscape Explorer: Full Research \& Implementation
+Report}\label{qaoa-energy-landscape-explorer-full-research-implementation-report}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Part 1 --- Theoretical
+Foundations}\label{part-1-theoretical-foundations}
+
+\subsection{1. Combinatorial Optimization \& the Ising
+Model}\label{combinatorial-optimization-the-ising-model}
+
+\subsubsection{1.1 Derivation of the Ising Hamiltonian from First
+Principles}\label{derivation-of-the-ising-hamiltonian-from-first-principles}
+
+The classical Ising model originates in statistical mechanics as a model
+of interacting magnetic spins on a lattice. Consider \(N\) binary spin
+variables \(s_i \in \{-1, +1\}\), each sitting on a vertex \(i\) of a
+graph \(G = (V, E)\). The most general pairwise Ising Hamiltonian with
+external fields is:
+
+\[H_{\text{Ising}}(\mathbf{s}) = -\sum_{(i,j) \in E} J_{ij}\, s_i s_j - \sum_{i \in V} h_i\, s_i\]
+
+where \(J_{ij}\) are coupling constants (positive = ferromagnetic,
+negative = anti-ferromagnetic) and \(h_i\) are local field strengths.
+The ground state of this Hamiltonian corresponds to the spin
+configuration \(\mathbf{s}^*\) that minimises \(H_{\text{Ising}}\).
+
+To promote this to a quantum mechanical operator, replace each classical
+spin \(s_i\) with the Pauli-\(Z\) operator \(\hat{Z}_i\) acting on the
+\(i\)-th qubit:
+
+\[\hat{H}_{\text{Ising}} = -\sum_{(i,j) \in E} J_{ij}\, \hat{Z}_i \hat{Z}_j - \sum_{i \in V} h_i\, \hat{Z}_i\]
+
+This is diagonal in the computational basis
+\(\{|0\rangle, |1\rangle\}^{\otimes N}\) since each \(\hat{Z}_i\) has
+eigenvalues \(\pm 1\) on \(|0\rangle\) and \(|1\rangle\) respectively.
+The eigenvalues of \(\hat{H}_{\text{Ising}}\) on a computational basis
+state \(|z_1 z_2 \cdots z_N\rangle\) reproduce the classical Ising
+energy \(H_{\text{Ising}}(s_1, \ldots, s_N)\) under the identification
+\(s_i = 1 - 2z_i\) (i.e., \(|0\rangle \mapsto s=+1\),
+\(|1\rangle \mapsto s=-1\)).
+
+\subsubsection{1.2 QUBO ↔ Ising
+Equivalence}\label{qubo-ising-equivalence}
+
+A Quadratic Unconstrained Binary Optimization (QUBO) problem is defined
+over binary variables \(x_i \in \{0, 1\}\):
+
+\[H_{\text{QUBO}}(\mathbf{x}) = \sum_{i} Q_{ii}\, x_i + \sum_{i < j} Q_{ij}\, x_i x_j\]
+
+where \(Q\) is a real symmetric (or upper-triangular) matrix. To convert
+QUBO → Ising, substitute \(x_i = \frac{1 - s_i}{2}\):
+
+\[x_i x_j = \frac{(1-s_i)(1-s_j)}{4} = \frac{1 - s_i - s_j + s_i s_j}{4}\]
+
+\[x_i = \frac{1 - s_i}{2}\]
+
+Substituting into \(H_{\text{QUBO}}\):
+
+\[H_{\text{QUBO}} = \sum_i Q_{ii} \frac{1 - s_i}{2} + \sum_{i<j} Q_{ij} \frac{1 - s_i - s_j + s_i s_j}{4}\]
+
+Collecting terms:
+
+\[H_{\text{Ising}}(\mathbf{s}) = \sum_{i<j} \frac{Q_{ij}}{4}\, s_i s_j - \sum_i \left(\frac{Q_{ii}}{2} + \sum_{j \neq i} \frac{Q_{ij}}{4}\right) s_i + \text{const}\]
+
+Hence the Ising couplings and fields are:
+
+\[J_{ij} = \frac{Q_{ij}}{4}, \qquad h_i = \frac{Q_{ii}}{2} + \sum_{j \neq i} \frac{Q_{ij}}{4}\]
+
+(with appropriate sign conventions matching the \(-J_{ij}\) in the Ising
+Hamiltonian).
+
+\subsubsection{1.3 Worked Example: MaxCut on a 4-Node
+Graph}\label{worked-example-maxcut-on-a-4-node-graph}
+
+Consider the cycle graph \(C_4\) on vertices \(\{0, 1, 2, 3\}\) with
+edges \(E = \{(0,1), (1,2), (2,3), (3,0)\}\), all with unit weight.
+
+\textbf{MaxCut objective:} Maximise the number of edges crossing the
+partition. For edge \((i,j)\), the contribution is
+\(\frac{1 - s_i s_j}{2}\) (equals 1 if \(s_i \neq s_j\), 0 otherwise).
+Total:
+
+\[C(\mathbf{s}) = \sum_{(i,j) \in E} \frac{1 - s_i s_j}{2} = \frac{|E|}{2} - \frac{1}{2}\sum_{(i,j) \in E} s_i s_j\]
+
+To maximise \(C\), we minimise \(\sum_{(i,j)} s_i s_j\). The cost
+Hamiltonian (to be minimised) in qubit form is:
+
+\[\hat{H}_C = \frac{1}{2}\sum_{(i,j) \in E} (\hat{I} - \hat{Z}_i \hat{Z}_j) = \frac{|E|}{2}\hat{I} - \frac{1}{2}\sum_{(i,j) \in E} \hat{Z}_i \hat{Z}_j\]
+
+For \(C_4\):
+
+\[\hat{H}_C = 2\hat{I} - \frac{1}{2}(\hat{Z}_0\hat{Z}_1 + \hat{Z}_1\hat{Z}_2 + \hat{Z}_2\hat{Z}_3 + \hat{Z}_3\hat{Z}_0)\]
+
+Since we maximise \(\langle \hat{H}_C \rangle\), equivalently we
+minimise \(-\hat{H}_C\). The maximum cut on \(C_4\) is 4 (e.g.,
+\(|0101\rangle\) or \(|1010\rangle\), putting alternating vertices in
+different sets), giving \(C_{\max} = 4\).
+
+\textbf{Explicit Ising form (to be maximised):}
+\(J_{ij} = -\frac{1}{2}\) for all edges, \(h_i = 0\). The ground state
+of \(\hat{H}_{\text{cost}} = -\hat{H}_C\) has eigenvalue \(-4\).
+
+\subsubsection{1.4 The Energy Landscape: Geometric Definition and
+Significance}\label{the-energy-landscape-geometric-definition-and-significance}
+
+Given a parameterised quantum state
+\(|\psi(\boldsymbol{\theta})\rangle\) and a cost Hamiltonian
+\(\hat{H}_C\), the \textbf{energy landscape} is the scalar field:
+
+\[\mathcal{L}(\boldsymbol{\theta}) = \langle \psi(\boldsymbol{\theta}) | \hat{H}_C | \psi(\boldsymbol{\theta}) \rangle\]
+
+mapping the parameter space \(\boldsymbol{\theta} \in \mathbb{R}^d\) to
+the real line. For QAOA with depth \(p\),
+\(\boldsymbol{\theta} = (\gamma_1, \ldots, \gamma_p, \beta_1, \ldots, \beta_p) \in \mathbb{R}^{2p}\).
+
+When \(p = 1\), \(\mathcal{L}(\gamma, \beta)\) is a two-dimensional
+surface embedded in \(\mathbb{R}^3\), directly visualisable.
+Geometrically, this surface encodes:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Global minima}: the optimal QAOA parameters yielding the best
+  approximation ratio.
+\item
+  \textbf{Local minima}: suboptimal parameter traps that gradient-based
+  optimisers may converge to.
+\item
+  \textbf{Saddle points}: critical points where the Hessian has mixed
+  signature --- these can slow convergence.
+\item
+  \textbf{Flat regions (barren plateaus)}: zones where the gradient
+  vanishes exponentially, making navigation impossible.
+\end{itemize}
+
+The topology and curvature of this landscape directly determine the
+trainability of the variational algorithm, the success of classical
+optimisers, and the quality of the approximate solution. Understanding
+landscape structure is therefore a prerequisite for QAOA performance
+analysis.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{2. QAOA: Full Derivation}\label{qaoa-full-derivation}
+
+\subsubsection{2.1 From Quantum Approximate Optimization to the QAOA
+Circuit}\label{from-quantum-approximate-optimization-to-the-qaoa-circuit}
+
+The Quantum Approximate Optimization Algorithm (Farhi, Goldstone,
+Gutmann, 2014) constructs a sequence of parameterised unitaries designed
+to prepare a state with high overlap on the ground state of a cost
+Hamiltonian \(\hat{H}_C\).
+
+\textbf{Setup:} Given a combinatorial optimization problem encoded in a
+cost Hamiltonian \(\hat{H}_C\) (diagonal in the computational basis),
+define:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Cost unitary}: \(\hat{U}_C(\gamma) = e^{-i\gamma \hat{H}_C}\)
+\item
+  \textbf{Mixer unitary}: \(\hat{U}_B(\beta) = e^{-i\beta \hat{H}_B}\)
+  where \(\hat{H}_B = \sum_{i=1}^{N} \hat{X}_i\) is the transverse-field
+  mixer.
+\end{itemize}
+
+\textbf{Initial state:} The uniform superposition
+\(|+\rangle^{\otimes N} = \hat{H}^{\otimes N}|0\rangle^{\otimes N}\),
+which is the ground state of \(\hat{H}_B\).
+
+\textbf{QAOA state at depth \(p\):}
+
+\[|\boldsymbol{\gamma}, \boldsymbol{\beta}\rangle = \hat{U}_B(\beta_p)\hat{U}_C(\gamma_p) \cdots \hat{U}_B(\beta_1)\hat{U}_C(\gamma_1)|+\rangle^{\otimes N}\]
+
+Equivalently:
+
+\[|\boldsymbol{\gamma}, \boldsymbol{\beta}\rangle = \prod_{k=1}^{p} \bigl[\hat{U}_B(\beta_k)\,\hat{U}_C(\gamma_k)\bigr] |+\rangle^{\otimes N}\]
+
+where the product is time-ordered (rightmost applied first).
+
+\subsubsection{\texorpdfstring{2.2 Cost Hamiltonian \(\hat{H}_C\) and
+Mixer Hamiltonian
+\(\hat{H}_B\)}{2.2 Cost Hamiltonian \textbackslash hat\{H\}\_C and Mixer Hamiltonian \textbackslash hat\{H\}\_B}}\label{cost-hamiltonian-hath_c-and-mixer-hamiltonian-hath_b}
+
+For MaxCut on a graph \(G = (V, E)\) with edge weights \(w_{ij}\):
+
+\[\hat{H}_C = \sum_{(i,j) \in E} \frac{w_{ij}}{2}(\hat{I} - \hat{Z}_i \hat{Z}_j)\]
+
+The mixer Hamiltonian drives transitions between computational basis
+states:
+
+\[\hat{H}_B = \sum_{i=1}^{N} \hat{X}_i\]
+
+The choice of mixer is not unique. The \(X\)-mixer preserves no
+symmetries and explores the full Hilbert space. For constrained
+problems, one may use XY-mixers, Grover mixers, or other
+symmetry-preserving alternatives (Hadfield et al., 2019).
+
+\subsubsection{2.3 Explicit Gate Decomposition of the Full
+Unitary}\label{explicit-gate-decomposition-of-the-full-unitary}
+
+\textbf{Cost unitary decomposition:}
+
+Since
+\(\hat{H}_C = \sum_{(i,j)} \frac{w_{ij}}{2}(\hat{I} - \hat{Z}_i\hat{Z}_j)\),
+and all \(\hat{Z}_i\hat{Z}_j\) terms commute mutually (they are all
+diagonal), we can decompose:
+
+\[\hat{U}_C(\gamma) = e^{-i\gamma \hat{H}_C} = \prod_{(i,j) \in E} e^{-i\gamma \frac{w_{ij}}{2}(\hat{I} - \hat{Z}_i\hat{Z}_j)}\]
+
+Each factor:
+
+\[e^{-i\gamma \frac{w_{ij}}{2}(\hat{I} - \hat{Z}_i\hat{Z}_j)} = e^{-i\gamma w_{ij}/2} \cdot e^{i\gamma \frac{w_{ij}}{2} \hat{Z}_i\hat{Z}_j}\]
+
+The global phase \(e^{-i\gamma w_{ij}/2}\) is unphysical. The
+\(ZZ\)-rotation is implemented as:
+
+\[e^{i\gamma \frac{w_{ij}}{2} \hat{Z}_i \hat{Z}_j} = \text{CNOT}_{i,j} \cdot R_Z\bigl(-\gamma w_{ij}\bigr)_j \cdot \text{CNOT}_{i,j}\]
+
+where \(R_Z(\theta) = e^{-i\theta \hat{Z}/2}\). Alternatively, using the
+native \(R_{ZZ}\) gate:
+
+\[R_{ZZ}(\theta) = e^{-i\frac{\theta}{2}\hat{Z}\otimes\hat{Z}}\]
+
+so the cost layer is a sequence of \(R_{ZZ}(-\gamma w_{ij})\) gates on
+all edge pairs.
+
+\textbf{Mixer unitary decomposition:}
+
+Since all \(\hat{X}_i\) operators commute when acting on distinct
+qubits:
+
+\[\hat{U}_B(\beta) = e^{-i\beta \sum_i \hat{X}_i} = \prod_{i=1}^{N} e^{-i\beta \hat{X}_i} = \prod_{i=1}^{N} R_X(2\beta)_i\]
+
+where \(R_X(\theta) = e^{-i\theta \hat{X}/2}\).
+
+\textbf{Full circuit:} For depth \(p\), the circuit is:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Apply \(\hat{H}^{\otimes N}\) to \(|0\rangle^{\otimes N}\)
+\item
+  For \(k = 1, \ldots, p\):
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Apply \(R_{ZZ}(-\gamma_k w_{ij})\) for each edge \((i,j) \in E\)
+  \item
+    Apply \(R_X(2\beta_k)\) to each qubit \(i \in V\)
+  \end{itemize}
+\item
+  Measure in the computational basis
+\end{enumerate}
+
+\subsubsection{\texorpdfstring{2.4 The \(p \to \infty\) Limit and
+Adiabatic
+Connection}{2.4 The p \textbackslash to \textbackslash infty Limit and Adiabatic Connection}}\label{the-p-to-infty-limit-and-adiabatic-connection}
+
+QAOA is formally equivalent to a digitised (Trotterised) quantum
+annealing schedule. Consider the time-dependent Hamiltonian:
+
+\[\hat{H}(t) = \left(1 - \frac{t}{T}\right)\hat{H}_B + \frac{t}{T}\hat{H}_C, \qquad t \in [0, T]\]
+
+The adiabatic theorem guarantees that if \(T\) is large enough
+(specifically \(T \sim O(1/\Delta_{\min}^2)\) where \(\Delta_{\min}\) is
+the minimum spectral gap), the system tracks the instantaneous ground
+state and ends in the ground state of \(\hat{H}_C\).
+
+Trotterise this evolution into \(p\) steps with \(\Delta t = T/p\):
+
+\[\hat{U} \approx \prod_{k=1}^{p} e^{-i\Delta t (1 - t_k/T)\hat{H}_B} \, e^{-i\Delta t (t_k/T)\hat{H}_C}\]
+
+This is exactly the QAOA unitary with:
+
+\[\beta_k = \Delta t\left(1 - \frac{k}{p}\right), \qquad \gamma_k = \Delta t \cdot \frac{k}{p}\]
+
+So for fixed \(T\), as \(p \to \infty\), QAOA reproduces the adiabatic
+evolution exactly (up to Trotter error \(O(\Delta t^2)\)). Since QAOA
+optimises over all \((\boldsymbol{\gamma}, \boldsymbol{\beta})\) and is
+not restricted to linear annealing schedules, it is strictly more
+powerful than Trotterised adiabatic evolution: it can exploit shortcuts
+to adiabaticity and counterdiabatic terms implicitly.
+
+\subsubsection{\texorpdfstring{2.5 Analytical Expectation Value for
+\(p=1\) on
+\(C_4\)}{2.5 Analytical Expectation Value for p=1 on C\_4}}\label{analytical-expectation-value-for-p1-on-c_4}
+
+For the cycle graph \(C_4\) with
+\(\hat{H}_C = \sum_{(i,j) \in E} \frac{1}{2}(\hat{I} - \hat{Z}_i \hat{Z}_j)\)
+(4 edges, 4 qubits), the \(p=1\) QAOA expectation value can be computed
+analytically.
+
+Start with \(|+\rangle^{\otimes 4}\). Apply
+\(\hat{U}_C(\gamma) = \prod_{(i,j)} e^{i\gamma/2 \hat{Z}_i\hat{Z}_j}\)
+(dropping global phases), then
+\(\hat{U}_B(\beta) = \prod_i R_X(2\beta)_i\).
+
+By the linearity of \(\langle \hat{H}_C \rangle\), we need:
+
+\[\langle \hat{H}_C \rangle = \sum_{(i,j) \in E} \frac{1}{2}\bigl(1 - \langle \hat{Z}_i \hat{Z}_j \rangle\bigr)\]
+
+By the symmetry of the cycle graph, all edge expectation values are
+identical. Define
+\(f(\gamma, \beta) = \langle \hat{Z}_0 \hat{Z}_1 \rangle\). Then
+\(\langle \hat{H}_C \rangle = 4 \cdot \frac{1}{2}(1 - f) = 2(1 - f)\).
+
+For the cycle on 4 qubits (ring topology), the \(p=1\) expectation value
+is:
+
+\[f(\gamma, \beta) = \langle +|^{\otimes 4}\, \hat{U}_C^\dagger(\gamma)\, \hat{U}_B^\dagger(\beta)\, \hat{Z}_0 \hat{Z}_1\, \hat{U}_B(\beta)\, \hat{U}_C(\gamma)\, |+\rangle^{\otimes 4}\]
+
+Using the fact that
+\(R_X(2\beta)^\dagger \hat{Z} R_X(2\beta) = \cos(2\beta)\hat{Z} - \sin(2\beta)\hat{Y}\)
+and propagating through the \(ZZ\) rotations, one obtains (after
+considerable algebra --- see Farhi et al.~Appendix or Wang et al., PRX
+2018):
+
+\[f(\gamma,\beta) = \cos^2(2\beta)\bigl[\cos(2\gamma) - \sin^2(2\gamma)\cos(2\gamma)\bigr] + \frac{1}{2}\sin^2(2\beta)\sin^2(2\gamma)\bigl[1 + \cos^2(2\gamma)\bigr]\sin(4\beta)(\ldots)\]
+
+The full closed-form for a \(d\)-regular graph at \(p=1\) is given by
+the Farhi-Goldstone-Gutmann formula. For the \(d\)-regular case with
+edge \((i,j)\) where vertex \(i\) has \(d_i - 1\) other neighbours and
+vertex \(j\) has \(d_j - 1\) other neighbours:
+
+\[\langle \hat{Z}_i \hat{Z}_j \rangle = \frac{1}{2}\sin(4\beta)\sin(2\gamma)\bigl[\cos^{d_i-1}(2\gamma) + \cos^{d_j-1}(2\gamma)\bigr] - \frac{1}{4}\sin^2(2\beta)\sin^2(2\gamma)\Bigl[\cos^{n_{ij}}(2\gamma)\Bigr]\]
+
+where \(n_{ij} = d_i + d_j - 2 - |N(i) \cap N(j)|\) accounts for shared
+neighbours. For the 2-regular cycle \(C_4\), \(d_i = d_j = 2\), and
+\(|N(0) \cap N(1)| = 0\), so \(n_{01} = 2\). Substituting:
+
+\[\langle \hat{Z}_0\hat{Z}_1\rangle_{C_4} = \frac{1}{2}\sin(4\beta)\sin(2\gamma)\bigl[2\cos(2\gamma)\bigr] - \frac{1}{4}\sin^2(2\beta)\sin^2(2\gamma)\cos^2(2\gamma)\]
+
+\[= \sin(4\beta)\sin(2\gamma)\cos(2\gamma) - \frac{1}{4}\sin^2(2\beta)\sin^2(2\gamma)\cos^2(2\gamma)\]
+
+Then:
+
+\[\langle \hat{H}_C \rangle = 2\bigl(1 - f(\gamma,\beta)\bigr) = 2 - 2\Bigl[\sin(4\beta)\sin(4\gamma)/2 - \frac{1}{4}\sin^2(2\beta)\sin^2(4\gamma)/4\Bigr]\]
+
+The maximum of \(\langle \hat{H}_C \rangle\) over \((\gamma, \beta)\)
+gives the QAOA \(p=1\) approximation ratio
+\(r_1 = \langle \hat{H}_C \rangle_{\max} / C_{\max}\), where
+\(C_{\max} = 4\).
+
+Numerically, for \(C_4\): \(r_1 \approx 0.75\) (3 out of 4 edges),
+achieved near \(\gamma^* \approx \pi/8\), \(\beta^* \approx \pi/8\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{3. The \((\beta, \gamma)\) Parameter
+Landscape}{3. The (\textbackslash beta, \textbackslash gamma) Parameter Landscape}}\label{the-beta-gamma-parameter-landscape}
+
+\subsubsection{3.1 Periodicity}\label{periodicity}
+
+The QAOA landscape is periodic in both parameters. The periods depend on
+the Hamiltonian structure:
+
+\textbf{\(\gamma\)-periodicity:} The cost unitary
+\(e^{-i\gamma \hat{H}_C}\) is periodic in \(\gamma\) with period
+determined by the spectral structure of \(\hat{H}_C\). For MaxCut with
+integer weights, the eigenvalues of \(\hat{H}_C\) are integers (or
+half-integers), and the cost unitary is \(2\pi\)-periodic. More
+precisely, if every eigenvalue difference of \(\hat{H}_C\) is an
+integer, the period in \(\gamma\) is \(2\pi\). For the standard MaxCut
+formulation \(\hat{H}_C = \sum_{(i,j)} \frac{1}{2}(I - Z_iZ_j)\), the
+eigenvalue differences are integers, so:
+
+\[\text{Period in } \gamma = 2\pi\]
+
+However, exploiting the parity symmetry
+\(\hat{H}_C(-\gamma) = \hat{H}_C(\gamma)\) and the fact that the
+landscape has a reflection symmetry, it suffices to search
+\(\gamma \in [0, \pi]\).
+
+\textbf{\(\beta\)-periodicity:} The mixer unitary
+\(e^{-i\beta \sum_i X_i}\): since \(X_i\) has eigenvalues \(\pm 1\), the
+\(R_X(2\beta)\) gate is \(2\pi\)-periodic in \(2\beta\), i.e.,
+\(\pi\)-periodic in \(\beta\):
+
+\[\text{Period in } \beta = \pi\]
+
+Again, the symmetry
+\(\langle H_C \rangle(\beta) = \langle H_C \rangle(-\beta)\) allows
+restriction to \(\beta \in [0, \pi/2]\).
+
+\textbf{Combined search space for \(p=1\):}
+\((\gamma, \beta) \in [0, \pi] \times [0, \pi/2]\) (or further reducible
+depending on graph symmetries).
+
+\subsubsection{3.2 Landscape Structure}\label{landscape-structure}
+
+\textbf{Concentration of parameters (Brandao et al., 2018; Wurtz \&
+Love, 2021):}
+
+For \(d\)-regular graphs in the large \(N\) limit, the optimal QAOA
+parameters \((\boldsymbol{\gamma}^*, \boldsymbol{\beta}^*)\) at fixed
+\(p\) concentrate --- they become independent of the specific graph
+instance and depend only on \(d\) and \(p\). This means:
+
+\begin{itemize}
+\tightlist
+\item
+  One can precompute ``universal'' optimal parameters on small instances
+  and transfer them to larger graphs of the same regularity class.
+\item
+  The variance of the optimal energy across random \(d\)-regular graphs
+  decays as \(O(1/N)\).
+\end{itemize}
+
+\textbf{Symmetry properties:}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Inversion symmetry:}
+  \(\langle H_C \rangle(\boldsymbol{\gamma}, \boldsymbol{\beta}) = \langle H_C \rangle(-\boldsymbol{\gamma}, -\boldsymbol{\beta})\)
+  --- the landscape is symmetric under simultaneous negation.
+\item
+  \textbf{Time-reversal:} For real Hamiltonians,
+  \(\langle H_C \rangle(\boldsymbol{\gamma}, \boldsymbol{\beta}) = \langle H_C \rangle(\boldsymbol{\gamma}^R, \boldsymbol{\beta}^R)\)
+  where \(R\) denotes reversal of parameter ordering.
+\item
+  \textbf{Graph automorphisms} induce symmetries in the landscape.
+\end{enumerate}
+
+\textbf{Good initial parameter strategies:}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{INTERP (Zhou et al., 2020):} Optimise at depth \(p\), then
+  linearly interpolate the parameters to initialise depth \(p+1\).
+  Specifically, for \(p \to p+1\):
+\end{itemize}
+
+\[\gamma_k^{(p+1)} = \frac{k-1}{p}\gamma_{k-1}^{(p)} + \frac{p+1-k}{p}\gamma_k^{(p)}, \quad k = 1, \ldots, p+1\]
+
+(similarly for \(\beta\)). This exploits the smoothness of optimal
+parameter schedules.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{FOURIER (Zhou et al., 2020):} Parameterise the QAOA angles in
+  a Fourier basis:
+\end{itemize}
+
+\[\gamma_k = \sum_{q=1}^{Q} u_q \sin\!\left(\frac{(2k-1)q\pi}{2p}\right), \qquad \beta_k = \sum_{q=1}^{Q} v_q \cos\!\left(\frac{(2k-1)q\pi}{2p}\right)\]
+
+where \(Q \leq p\) is the number of Fourier components. Optimisation
+over \((u_1, \ldots, u_Q, v_1, \ldots, v_Q)\) is in a reduced
+\(2Q\)-dimensional space instead of \(2p\), avoiding local minima.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{TQA (Trotterised Quantum Annealing):} Use the linear schedule
+  from the adiabatic connection (Section 2.4) as initialisation.
+\end{itemize}
+
+\subsubsection{3.3 Barren Plateaus}\label{barren-plateaus}
+
+\textbf{Formal definition:} A variational circuit exhibits a barren
+plateau if the variance of the cost function partial derivatives
+vanishes exponentially with system size:
+
+\[\text{Var}\!\left[\frac{\partial \langle \hat{H}_C \rangle}{\partial \theta_k}\right] \leq F(N)\]
+
+where \(F(N) \in O(1/b^N)\) for some \(b > 1\).
+
+For QAOA specifically, the situation is nuanced:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Hardware-efficient random ansätze} (McClean et al., 2018): For
+  circuits that form approximate 2-designs, the gradient variance decays
+  as \(O(2^{-N})\), guaranteeing barren plateaus.
+\item
+  \textbf{QAOA with fixed \(p\):} QAOA at constant depth \(p\) does NOT
+  suffer from barren plateaus in the same way because the circuit is
+  highly structured (alternating cost and mixer unitaries) and shallow.
+  The gradient variance scales polynomially (often as
+  \(\Theta(1/\text{poly}(N))\)), which is trainable.
+\item
+  \textbf{QAOA with \(p = O(\text{poly}(N))\):} As \(p\) grows
+  polynomially with \(N\), the landscape can develop barren plateau
+  features depending on the cost function locality. For local cost
+  functions (each term acts on \(O(1)\) qubits), Cerezo et al.~(2021)
+  showed that shallow circuits have well-behaved gradients, while deep
+  circuits suffer barren plateaus regardless.
+\end{enumerate}
+
+\textbf{Practical consequence:} For the typical QAOA regime
+(\(p \leq 10\), \(N \leq 30\)), barren plateaus are not the primary
+obstacle. Instead, the proliferation of local minima and the
+non-convexity of the landscape are the main challenges.
+
+\subsubsection{3.4 Phase Transition Behaviour with Local Field
+Strength}\label{phase-transition-behaviour-with-local-field-strength}
+
+The 2025 result in \emph{Quantum} (Boulebnane \& Montanaro, 2025; also
+Kremenetski et al., 2025) studies the QAOA landscape on
+anti-ferromagnetic Ising models with longitudinal fields:
+
+\[\hat{H}_C = -\sum_{(i,j)} J_{ij}\hat{Z}_i\hat{Z}_j + h\sum_i \hat{Z}_i\]
+
+where \(J_{ij} < 0\) (anti-ferromagnetic). Three distinct regimes are
+identified as \(h\) varies:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Trivial regime} (\(|h| \gg |J|\)): The ground state is the
+  fully polarised state (all spins aligned with the field). QAOA finds
+  this trivially even at \(p=1\) --- the landscape has a single dominant
+  minimum.
+\item
+  \textbf{Anti-ferromagnetic regime} (\(|h| \ll |J|\)): The ground state
+  exhibits Néel-type anti-ferromagnetic ordering. The landscape at low
+  \(p\) is highly structured with multiple degenerate minima
+  corresponding to the broken symmetry. The QAOA performance depends
+  strongly on the graph geometry (bipartite vs.~frustrated).
+\item
+  \textbf{Critical regime} (\(|h| \sim |J|\), near the quantum phase
+  transition): The spectral gap \(\Delta\) closes polynomially or
+  logarithmically with \(N\), the landscape becomes complex with many
+  nearly degenerate minima, and the approximation ratio achievable at
+  fixed \(p\) drops sharply. This is where QAOA most struggles --- and
+  where the landscape structure is richest from a visualisation
+  perspective.
+\end{enumerate}
+
+The key finding is that QAOA performance undergoes a sharp transition at
+the critical field strength, and the landscape topology (number of local
+minima, gradient magnitudes, Hessian structure) changes qualitatively
+across the phase boundary.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{4. Classical Optimization of QAOA
+Parameters}\label{classical-optimization-of-qaoa-parameters}
+
+\subsubsection{4.1 Parameter-Shift Rule: Full
+Derivation}\label{parameter-shift-rule-full-derivation}
+
+For a parameterised unitary of the form \(U(\theta) = e^{-i\theta G/2}\)
+where \(G\) is a generator with eigenvalues \(\pm r\) (typically
+\(r = 1\) for Pauli generators), the parameter-shift rule states:
+
+\[\frac{\partial}{\partial \theta}\langle \psi(\theta) | \hat{O} | \psi(\theta)\rangle = \frac{r}{2}\Bigl[\langle \hat{O}\rangle_{\theta + \pi/(2r)} - \langle \hat{O}\rangle_{\theta - \pi/(2r)}\Bigr]\]
+
+\textbf{Derivation:} Let
+\(|\psi(\theta)\rangle = U(\theta)|\psi_0\rangle\) with
+\(U(\theta) = e^{-i\theta G/2}\). Decompose \(|\psi_0\rangle\) in the
+eigenbasis of \(G\):
+\(G = r|+\rangle\langle +| - r|-\rangle\langle -|\).
+
+\[|\psi_0\rangle = c_+|+\rangle + c_-|-\rangle\]
+
+\[|\psi(\theta)\rangle = c_+ e^{-ir\theta/2}|+\rangle + c_- e^{ir\theta/2}|-\rangle\]
+
+Let \(f(\theta) = \langle\psi(\theta)|\hat{O}|\psi(\theta)\rangle\).
+Computing:
+
+\[f(\theta) = |c_+|^2 O_{++} + |c_-|^2 O_{--} + c_+^* c_- e^{ir\theta} O_{+-} + c_- ^* c_+ e^{-ir\theta} O_{-+}\]
+
+where \(O_{ab} = \langle a|\hat{O}|b\rangle\). This is a sinusoidal
+function with frequency \(r\):
+
+\[f(\theta) = A + B\cos(r\theta) + C\sin(r\theta)\]
+
+Therefore:
+
+\[f'(\theta) = -Br\sin(r\theta) + Cr\cos(r\theta) = r\bigl[f(\theta + \pi/(2r)) - f(\theta - \pi/(2r))\bigr] / 2\]
+
+which follows from the identity:
+
+\[\frac{f(\theta + s) - f(\theta - s)}{2} = B\bigl[\cos r(\theta+s) - \cos r(\theta-s)\bigr]/2 + C\bigl[\sin r(\theta + s) - \sin r(\theta-s)\bigr]/2\]
+
+Setting \(s = \pi/(2r)\):
+
+\[= -B\sin(r\theta)\sin(\pi/2) + C\cos(r\theta)\sin(\pi/2) = -B\sin(r\theta) + C\cos(r\theta) = f'(\theta)/r\]
+
+Hence \(f'(\theta) = r[f(\theta + \pi/(2r)) - f(\theta - \pi/(2r))]/2\).
+For standard Pauli generators, \(r = 1\) and the shift is \(\pm \pi/2\):
+
+\[\frac{\partial \langle \hat{O} \rangle}{\partial \theta} = \frac{\langle \hat{O}\rangle_{\theta + \pi/2} - \langle \hat{O}\rangle_{\theta - \pi/2}}{2}\]
+
+\textbf{For QAOA:} The cost unitary parameters \(\gamma_k\) multiply
+\(\hat{H}_C\), which has a richer spectrum than \(\pm 1\). The
+\(ZZ\)-rotation gates \(e^{-i\gamma w_{ij} \hat{Z}_i \hat{Z}_j/2}\)
+individually satisfy the two-eigenvalue condition with \(r = w_{ij}\),
+so the parameter-shift rule applies gate-by-gate. However, the full
+circuit expectation value as a function of \(\gamma_k\) involves
+multiple \(ZZ\)-gates at the same \(\gamma_k\), leading to a
+multi-frequency sinusoidal. In practice, one can either: - Decompose the
+cost layer and compute gradients one gate at a time (more circuits). -
+Use the general parameter-shift rule for multi-frequency functions
+(Wierichs et al., 2022).
+
+\subsubsection{4.2 Optimizer Comparison}\label{optimizer-comparison}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1642}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2239}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2537}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2687}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Optimizer
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Gradient-free?
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Noisy-tolerant?
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Typical use case
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{COBYLA} & Trust-region, gradient-free & Yes & Moderate & Small
+\(p\), few parameters, hardware runs \\
+\textbf{L-BFGS-B} & Quasi-Newton & No (needs gradient) & Poor &
+Noiseless simulation, smooth landscapes \\
+\textbf{SPSA} & Stochastic gradient approximation & Effectively yes (2
+evals/step) & \textbf{Excellent} & Hardware, noisy estimates, many
+parameters \\
+\textbf{Adam} & Momentum-based gradient descent & No (needs gradient) &
+Moderate & Differentiable simulators (autograd) \\
+\end{longtable}
+}
+
+\textbf{COBYLA} (Constrained Optimization BY Linear Approximations):
+Uses a simplex-like trust region without gradients. Requires \(O(d)\)
+function evaluations per step where \(d\) is the parameter dimension.
+Works well for \(d \leq 20\) but scales poorly. On noisy hardware, the
+trust region can be destabilised by shot noise.
+
+\textbf{L-BFGS-B} (Limited-memory BFGS with Box constraints):
+Approximates the Hessian from gradient history. Converges superlinearly
+near optima in noiseless settings. Completely unusable on hardware
+because noise in the gradient estimates corrupts the Hessian
+approximation, causing divergence.
+
+\textbf{SPSA} (Simultaneous Perturbation Stochastic Approximation):
+Estimates the gradient using only 2 function evaluations (regardless of
+dimension \(d\)) by perturbing all parameters simultaneously with random
+\(\pm c_k\) shifts:
+
+\[\hat{g}_k = \frac{f(\boldsymbol{\theta} + c_k \boldsymbol{\Delta}) - f(\boldsymbol{\theta} - c_k \boldsymbol{\Delta})}{2c_k} \boldsymbol{\Delta}^{-1}\]
+
+where \(\boldsymbol{\Delta}\) is a random perturbation vector
+(Rademacher). The gain schedule \(a_k, c_k\) must be tuned. SPSA is the
+go-to optimiser for hardware because it needs constant circuit
+evaluations per step and is inherently noise-tolerant.
+
+\textbf{Adam:} Adaptive moment estimation with bias correction. Works
+brilliantly with exact gradients from autograd simulators (PennyLane's
+backpropagation or adjoint differentiation). Not directly usable on
+hardware unless combined with parameter-shift gradients, which adds
+overhead.
+
+\subsubsection{4.3 Gradient-Free vs Gradient-Based on Noisy
+Hardware}\label{gradient-free-vs-gradient-based-on-noisy-hardware}
+
+The fundamental tension:
+
+\begin{itemize}
+\item
+  \textbf{Gradient-based} methods (parameter-shift + Adam/L-BFGS-B) give
+  accurate search directions but require \(O(d)\) circuit evaluations
+  per gradient (2 per parameter via parameter-shift), each of which has
+  shot noise. The total gradient estimation error scales as
+  \(O(d/\sqrt{S})\) where \(S\) is the number of shots.
+\item
+  \textbf{Gradient-free} methods (COBYLA, Nelder-Mead, SPSA) avoid the
+  \(O(d)\) overhead but rely on noisy function evaluations to infer
+  descent directions, which may require more iterations to converge.
+\end{itemize}
+
+\textbf{Practical guidance:} - For simulators: use autograd (PennyLane's
+\texttt{diff\_method="backprop"}) with Adam. This is exact and fast. -
+For hardware with \(d \leq 10\) (QAOA \(p \leq 5\)): COBYLA or SPSA. -
+For hardware with \(d > 10\): SPSA is the only viable option due to its
+constant evaluation cost per step. - Hybrid: optimise on simulator to
+find a good initialisation, then fine-tune on hardware with SPSA.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Part 2 --- Software
+Architecture}\label{part-2-software-architecture}
+
+\subsection{Project Structure}\label{project-structure}
+
+\begin{verbatim}
+qaoa_explorer/
+├── main.py                  # Orchestration, CLI, entry point
+├── graph_generator.py       # Graph construction, adjacency → Ising
+├── qaoa_circuit.py          # QAOA circuit construction (PennyLane)
+├── optimizer.py             # Classical optimization loop
+├── landscape_sampler.py     # Grid sampling of (β, γ) space
+├── noise_model.py           # Noise simulation (PennyLane + QuTiP)
+├── hardware_runner.py       # IBM Quantum / IQM hardware submission
+├── error_mitigation.py      # ZNE implementation
+├── renderer.py              # OpenGL 3D landscape visualization
+├── requirements.txt
+├── config.yaml              # Default configuration
+└── tests/
+    ├── test_graph.py
+    ├── test_circuit.py
+    ├── test_optimizer.py
+    ├── test_sampler.py
+    └── test_renderer.py
+\end{verbatim}
+
+\subsection{Data Flow Diagram}\label{data-flow-diagram}
+
+\begin{verbatim}
+                     ┌───────────────┐
+                     │  config.yaml  │
+                     └──────┬────────┘
+                            │
+                     ┌──────▼────────┐
+                     │   main.py     │  CLI / orchestration
+                     └──────┬────────┘
+                            │
+              ┌─────────────┼─────────────────┐
+              │             │                  │
+     ┌────────▼──────┐ ┌───▼────────────┐ ┌───▼──────────────┐
+     │graph_generator│ │landscape_sampler│ │   optimizer.py   │
+     │   .py         │ │   .py           │ │                  │
+     └────────┬──────┘ └───┬────────────┘ └───┬──────────────┘
+              │            │                   │
+              │   ┌────────▼─────────┐         │
+              └──►│ qaoa_circuit.py  │◄────────┘
+                  └────────┬─────────┘
+                           │
+           ┌───────────────┼───────────────────┐
+           │               │                    │
+  ┌────────▼──────┐ ┌──────▼───────┐  ┌────────▼──────────┐
+  │noise_model.py │ │hardware_     │  │error_mitigation.py│
+  │(default.mixed)│ │runner.py     │  │  (ZNE)            │
+  └────────┬──────┘ │(IBM/IQM)     │  └────────┬──────────┘
+           │        └──────┬───────┘           │
+           └───────────────┼───────────────────┘
+                           │
+                    ┌──────▼───────┐
+                    │ renderer.py  │  OpenGL surface
+                    │ (β,γ,⟨H_C⟩) │
+                    └──────────────┘
+\end{verbatim}
+
+\subsection{Module Specifications}\label{module-specifications}
+
+\subsubsection{\texorpdfstring{1.
+\texttt{graph\_generator.py}}{1. graph\_generator.py}}\label{graph_generator.py}
+
+\textbf{Purpose:} Construct graphs and convert adjacency representations
+to Ising Hamiltonians.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ \_\_future\_\_ }\ImportTok{import}\NormalTok{ annotations}
+\ImportTok{import}\NormalTok{ networkx }\ImportTok{as}\NormalTok{ nx}
+\ImportTok{import}\NormalTok{ pennylane }\ImportTok{as}\NormalTok{ qml}
+
+
+\KeywordTok{def}\NormalTok{ create\_graph(}
+\NormalTok{    graph\_type: }\BuiltInTok{str}\NormalTok{,}
+\NormalTok{    n\_nodes: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    seed: }\BuiltInTok{int} \OperatorTok{|} \VariableTok{None} \OperatorTok{=} \VariableTok{None}\NormalTok{,}
+    \OperatorTok{**}\NormalTok{kwargs,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ nx.Graph:}
+    \CommentTok{"""Create a NetworkX graph of the specified type.}
+
+\CommentTok{    Supported types: \textquotesingle{}cycle\textquotesingle{}, \textquotesingle{}complete\textquotesingle{}, \textquotesingle{}erdos\_renyi\textquotesingle{}, \textquotesingle{}random\_regular\textquotesingle{},}
+\CommentTok{    \textquotesingle{}grid\_2d\textquotesingle{}, \textquotesingle{}petersen\textquotesingle{}, \textquotesingle{}custom\textquotesingle{}. Stochastic families accept a random}
+\CommentTok{    seed for reproducibility. Extra kwargs control family{-}specific}
+\CommentTok{    parameters (e.g. p=0.5 for Erdos{-}Renyi, d=3 for random regular).}
+
+\CommentTok{    Returns:}
+\CommentTok{        A weighted undirected NetworkX graph with unit{-}weight edges}
+\CommentTok{        by default.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ adjacency\_to\_ising(}
+\NormalTok{    graph: nx.Graph,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \BuiltInTok{tuple}\NormalTok{[}\BuiltInTok{list}\NormalTok{[}\BuiltInTok{float}\NormalTok{], }\BuiltInTok{list}\NormalTok{[}\BuiltInTok{tuple}\NormalTok{[}\BuiltInTok{int}\NormalTok{, }\BuiltInTok{int}\NormalTok{]], }\BuiltInTok{float}\NormalTok{]:}
+    \CommentTok{"""Convert a graph\textquotesingle{}s adjacency structure to Ising Hamiltonian coefficients.}
+
+\CommentTok{    Uses the MaxCut formulation:}
+\CommentTok{        H\_C = sum\_\{(i,j)\} w\_ij/2 (I {-} Z\_i Z\_j)}
+
+\CommentTok{    For each edge (i,j) with weight w\_ij, produces coefficient {-}w\_ij/2}
+\CommentTok{    paired with the Pauli{-}Z index pair (i,j), plus a constant energy}
+\CommentTok{    offset sum\_\{(i,j)\} w\_ij/2.}
+
+\CommentTok{    Returns:}
+\CommentTok{        Tuple of (coefficients, observable\_index\_pairs, offset).}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ build\_cost\_hamiltonian(graph: nx.Graph) }\OperatorTok{{-}\textgreater{}}\NormalTok{ qml.Hamiltonian:}
+    \CommentTok{"""Wrap the Ising conversion into a PennyLane Hamiltonian.}
+
+\CommentTok{    Each edge contributes a {-}w\_ij/2 * Z\_i @ Z\_j term. The identity}
+\CommentTok{    offset is included as an explicit qml.Identity term so that}
+\CommentTok{    absolute energy values are preserved.}
+
+\CommentTok{    Returns:}
+\CommentTok{        PennyLane Hamiltonian ready for circuit evaluation.}
+\CommentTok{    """}
+\NormalTok{    ...}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation:
+\texttt{report1\_scripts/graph\_generator.py})}
+
+\subsubsection{\texorpdfstring{2.
+\texttt{qaoa\_circuit.py}}{2. qaoa\_circuit.py}}\label{qaoa_circuit.py}
+
+\textbf{Purpose:} Construct and evaluate QAOA circuits using PennyLane.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ \_\_future\_\_ }\ImportTok{import}\NormalTok{ annotations}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ pennylane }\ImportTok{as}\NormalTok{ qml}
+
+
+\KeywordTok{def}\NormalTok{ cost\_layer(}
+\NormalTok{    gamma: }\BuiltInTok{float}\NormalTok{,}
+\NormalTok{    graph\_edges: }\BuiltInTok{list}\NormalTok{[}\BuiltInTok{tuple}\NormalTok{[}\BuiltInTok{int}\NormalTok{, }\BuiltInTok{int}\NormalTok{, }\BuiltInTok{float}\NormalTok{]],}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \VariableTok{None}\NormalTok{:}
+    \CommentTok{"""Apply the cost unitary U\_C(gamma) = exp({-}i gamma H\_C).}
+
+\CommentTok{    Decomposes each weighted edge (i, j, w\_ij) into an IsingZZ rotation:}
+\CommentTok{        exp({-}i gamma w\_ij Z\_i Z\_j / 2)}
+\CommentTok{    implemented via qml.IsingZZ(gamma * w\_ij, wires=[i, j]).}
+\CommentTok{    All ZZ terms commute, so ordering is irrelevant.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ mixer\_layer(beta: }\BuiltInTok{float}\NormalTok{, n\_qubits: }\BuiltInTok{int}\NormalTok{) }\OperatorTok{{-}\textgreater{}} \VariableTok{None}\NormalTok{:}
+    \CommentTok{"""Apply the mixer unitary U\_B(beta) = exp({-}i beta H\_B).}
+
+\CommentTok{    Applies independent single{-}qubit RX(2*beta) rotations on every}
+\CommentTok{    qubit, since H\_B = sum\_i X\_i factorises across qubits.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ qaoa\_ansatz(}
+\NormalTok{    params: np.ndarray,}
+\NormalTok{    cost\_hamiltonian: qml.Hamiltonian,}
+\NormalTok{    n\_qubits: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    p: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \VariableTok{None}\NormalTok{:}
+    \CommentTok{"""Apply the full QAOA state{-}preparation sequence inside a QNode context.}
+
+\CommentTok{    Prepares |+\textgreater{}\^{}N via a Hadamard layer, then applies p alternating}
+\CommentTok{    rounds of cost and mixer unitaries:}
+\CommentTok{        prod\_\{k=1\}\^{}\{p\} [U\_B(beta\_k) U\_C(gamma\_k)]}
+
+\CommentTok{    Args:}
+\CommentTok{        params: Array of shape (2p,). First p entries are gamma\_k,}
+\CommentTok{                last p entries are beta\_k.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ build\_qaoa\_circuit(}
+\NormalTok{    cost\_hamiltonian: qml.Hamiltonian,}
+\NormalTok{    n\_qubits: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    p: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    device: qml.Device,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ qml.QNode:}
+    \CommentTok{"""Wrap the QAOA ansatz into a PennyLane QNode bound to the given device.}
+
+\CommentTok{    The QNode accepts a parameter array of shape (2p,) {-}{-} the first p}
+\CommentTok{    entries are the gamma\_k values, the last p are the beta\_k values {-}{-}}
+\CommentTok{    and returns \textless{}H\_C\textgreater{}. Differentiation method is set to \textquotesingle{}best\textquotesingle{}}
+\CommentTok{    (backprop for simulators, parameter{-}shift for hardware).}
+
+\CommentTok{    Returns:}
+\CommentTok{        A PennyLane QNode returning the cost expectation value.}
+\CommentTok{    """}
+\NormalTok{    ...}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation: \texttt{report1\_scripts/qaoa\_circuit.py})}
+
+\subsubsection{\texorpdfstring{3.
+\texttt{optimizer.py}}{3. optimizer.py}}\label{optimizer.py}
+
+\textbf{Purpose:} Classical optimization of QAOA parameters with
+multiple backends.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ \_\_future\_\_ }\ImportTok{import}\NormalTok{ annotations}
+\ImportTok{from}\NormalTok{ dataclasses }\ImportTok{import}\NormalTok{ dataclass, field}
+\ImportTok{from}\NormalTok{ typing }\ImportTok{import}\NormalTok{ Callable}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ pennylane }\ImportTok{as}\NormalTok{ qml}
+
+
+\AttributeTok{@dataclass}
+\KeywordTok{class}\NormalTok{ OptimizationResult:}
+    \CommentTok{"""Container for QAOA optimization results.}
+
+\CommentTok{    Attributes:}
+\CommentTok{        best\_params: Optimal parameter vector of shape (2p,).}
+\CommentTok{        optimal\_energy: Best \textless{}H\_C\textgreater{} value found.}
+\CommentTok{        trajectory: List of (params, energy) pairs at each iteration.}
+\CommentTok{        n\_evaluations: Total number of circuit evaluations.}
+\CommentTok{        converged: Whether the optimizer reached the tolerance.}
+\CommentTok{    """}
+\NormalTok{    best\_params: np.ndarray}
+\NormalTok{    optimal\_energy: }\BuiltInTok{float}
+\NormalTok{    trajectory: }\BuiltInTok{list}\NormalTok{[}\BuiltInTok{tuple}\NormalTok{[np.ndarray, }\BuiltInTok{float}\NormalTok{]] }\OperatorTok{=}\NormalTok{ field(default\_factory}\OperatorTok{=}\BuiltInTok{list}\NormalTok{)}
+\NormalTok{    n\_evaluations: }\BuiltInTok{int} \OperatorTok{=} \DecValTok{0}
+\NormalTok{    converged: }\BuiltInTok{bool} \OperatorTok{=} \VariableTok{False}
+
+
+\KeywordTok{def}\NormalTok{ optimize\_qaoa(}
+\NormalTok{    qnode: qml.QNode,}
+\NormalTok{    p: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    method: }\BuiltInTok{str} \OperatorTok{=} \StringTok{"COBYLA"}\NormalTok{,}
+\NormalTok{    init\_params: np.ndarray }\OperatorTok{|} \VariableTok{None} \OperatorTok{=} \VariableTok{None}\NormalTok{,}
+\NormalTok{    maxiter: }\BuiltInTok{int} \OperatorTok{=} \DecValTok{500}\NormalTok{,}
+\NormalTok{    tol: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{1e{-}6}\NormalTok{,}
+\NormalTok{    callback: Callable[[np.ndarray, }\BuiltInTok{float}\NormalTok{, }\BuiltInTok{int}\NormalTok{], }\VariableTok{None}\NormalTok{] }\OperatorTok{|} \VariableTok{None} \OperatorTok{=} \VariableTok{None}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ OptimizationResult:}
+    \CommentTok{"""Run classical optimisation of the 2p QAOA parameters.}
+
+\CommentTok{    Wraps the QNode in a negated objective (QAOA maximises \textless{}H\_C\textgreater{} but}
+\CommentTok{    standard optimisers minimise).}
+
+\CommentTok{    Supported methods:}
+\CommentTok{        {-} \textquotesingle{}COBYLA\textquotesingle{}: Gradient{-}free trust{-}region via scipy.optimize.minimize.}
+\CommentTok{          Best for few parameters (d \textless{}= 20).}
+\CommentTok{        {-} \textquotesingle{}L{-}BFGS{-}B\textquotesingle{}: Quasi{-}Newton requiring exact gradients via the}
+\CommentTok{          parameter{-}shift rule. Fast near optima in noiseless settings.}
+\CommentTok{        {-} \textquotesingle{}SPSA\textquotesingle{}: Stochastic perturbation gradient approximation. Uses}
+\CommentTok{          only 2 function evaluations per step regardless of dimension,}
+\CommentTok{          with Rademacher perturbation vectors and standard gain schedule}
+\CommentTok{          a\_k = a0/(k+A)\^{}alpha, c\_k = c0/k\^{}gamma.}
+\CommentTok{        {-} \textquotesingle{}Adam\textquotesingle{}: PennyLane\textquotesingle{}s adaptive moment{-}based gradient descent,}
+\CommentTok{          suited for autograd{-}differentiated simulators.}
+
+\CommentTok{    If init\_params is None, gamma\_k \textasciitilde{} Uniform(0, pi) and}
+\CommentTok{    beta\_k \textasciitilde{} Uniform(0, pi/2). The optional callback is invoked at}
+\CommentTok{    each iteration with (params, energy, iteration).}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ parameter\_shift\_gradient(}
+\NormalTok{    qnode: qml.QNode,}
+\NormalTok{    params: np.ndarray,}
+\NormalTok{    shift: }\BuiltInTok{float} \OperatorTok{=}\NormalTok{ np.pi }\OperatorTok{/} \DecValTok{2}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ np.ndarray:}
+    \CommentTok{"""Compute the gradient of the QNode via the parameter{-}shift rule.}
+
+\CommentTok{    For each parameter theta\_i, evaluates at theta\_i +/{-} pi/2:}
+\CommentTok{        d\textless{}H\_C\textgreater{}/d(theta\_i) = [f(theta\_i + pi/2) {-} f(theta\_i {-} pi/2)] / 2}
+
+\CommentTok{    Requires 2d circuit evaluations for d parameters. Hardware{-}compatible}
+\CommentTok{    (does not rely on autograd). Exact for gates whose generators have}
+\CommentTok{    eigenvalues +/{-}1 (all Pauli{-}based rotations in the QAOA circuit).}
+
+\CommentTok{    Returns:}
+\CommentTok{        Gradient array of shape (2p,).}
+\CommentTok{    """}
+\NormalTok{    ...}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation: \texttt{report1\_scripts/optimizer.py})}
+
+\subsubsection{\texorpdfstring{4.
+\texttt{landscape\_sampler.py}}{4. landscape\_sampler.py}}\label{landscape_sampler.py}
+
+\textbf{Purpose:} Efficient grid sampling of the \((\beta, \gamma)\)
+landscape.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ \_\_future\_\_ }\ImportTok{import}\NormalTok{ annotations}
+\ImportTok{from}\NormalTok{ dataclasses }\ImportTok{import}\NormalTok{ dataclass}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ pennylane }\ImportTok{as}\NormalTok{ qml}
+
+
+\AttributeTok{@dataclass}
+\KeywordTok{class}\NormalTok{ LandscapeData:}
+    \CommentTok{"""Container for energy landscape sampling results.}
+
+\CommentTok{    Attributes:}
+\CommentTok{        gamma\_vals: 1D array of gamma sample points, shape (N\_gamma,).}
+\CommentTok{        beta\_vals: 1D array of beta sample points, shape (N\_beta,).}
+\CommentTok{        energies: 2D energy array of shape (N\_gamma, N\_beta).}
+\CommentTok{        approx\_ratios: 2D approximation ratios normalised by C\_max,}
+\CommentTok{                        shape (N\_gamma, N\_beta).}
+\CommentTok{    """}
+\NormalTok{    gamma\_vals: np.ndarray}
+\NormalTok{    beta\_vals: np.ndarray}
+\NormalTok{    energies: np.ndarray}
+\NormalTok{    approx\_ratios: np.ndarray}
+
+
+\KeywordTok{def}\NormalTok{ sample\_landscape(}
+\NormalTok{    qnode: qml.QNode,}
+\NormalTok{    p: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    gamma\_range: }\BuiltInTok{tuple}\NormalTok{[}\BuiltInTok{float}\NormalTok{, }\BuiltInTok{float}\NormalTok{],}
+\NormalTok{    beta\_range: }\BuiltInTok{tuple}\NormalTok{[}\BuiltInTok{float}\NormalTok{, }\BuiltInTok{float}\NormalTok{],}
+\NormalTok{    n\_gamma: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    n\_beta: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    fixed\_params: np.ndarray }\OperatorTok{|} \VariableTok{None} \OperatorTok{=} \VariableTok{None}\NormalTok{,}
+\NormalTok{    c\_max: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{1.0}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ LandscapeData:}
+    \CommentTok{"""Evaluate \textless{}H\_C\textgreater{} on a uniform (N\_gamma x N\_beta) grid.}
+
+\CommentTok{    For p=1 the two parameters are swept directly. For p\textgreater{}1, all}
+\CommentTok{    parameters except the first gamma and first beta are held fixed}
+\CommentTok{    at fixed\_params, producing a 2D slice through the higher{-}dimensional}
+\CommentTok{    landscape.}
+
+\CommentTok{    Returns:}
+\CommentTok{        LandscapeData with energies and approximation ratios.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ sample\_landscape\_parallel(}
+\NormalTok{    qnode: qml.QNode,}
+\NormalTok{    p: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    gamma\_range: }\BuiltInTok{tuple}\NormalTok{[}\BuiltInTok{float}\NormalTok{, }\BuiltInTok{float}\NormalTok{],}
+\NormalTok{    beta\_range: }\BuiltInTok{tuple}\NormalTok{[}\BuiltInTok{float}\NormalTok{, }\BuiltInTok{float}\NormalTok{],}
+\NormalTok{    n\_gamma: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    n\_beta: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    c\_max: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{1.0}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ LandscapeData:}
+    \CommentTok{"""Batched grid evaluation using qml.execute over pre{-}constructed tapes.}
+
+\CommentTok{    Builds parameter grid via np.meshgrid (indexing=\textquotesingle{}ij\textquotesingle{}), flattens all}
+\CommentTok{    (N\_gamma * N\_beta) parameter sets, executes in a single call to}
+\CommentTok{    qml.execute, then reshapes into the 2D energy array. Avoids}
+\CommentTok{    Python{-}loop overhead; significantly faster on simulators.}
+
+\CommentTok{    Returns:}
+\CommentTok{        LandscapeData with energies and approximation ratios.}
+\CommentTok{    """}
+\NormalTok{    ...}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation:
+\texttt{report1\_scripts/landscape\_sampler.py})}
+
+\subsubsection{\texorpdfstring{5.
+\texttt{noise\_model.py}}{5. noise\_model.py}}\label{noise_model.py}
+
+\textbf{Purpose:} Noise simulation using PennyLane's
+\texttt{default.mixed} and QuTiP for Lindblad master equation analysis.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ \_\_future\_\_ }\ImportTok{import}\NormalTok{ annotations}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ pennylane }\ImportTok{as}\NormalTok{ qml}
+\ImportTok{import}\NormalTok{ qutip}
+
+
+\KeywordTok{def}\NormalTok{ create\_noisy\_device(}
+\NormalTok{    n\_qubits: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    depolarizing\_rate: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{0.001}\NormalTok{,}
+\NormalTok{    thermal\_relaxation\_t1: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{50e{-}6}\NormalTok{,}
+\NormalTok{    thermal\_relaxation\_t2: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{70e{-}6}\NormalTok{,}
+\NormalTok{    gate\_time\_1q: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{50e{-}9}\NormalTok{,}
+\NormalTok{    gate\_time\_2q: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{300e{-}9}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ qml.Device:}
+    \CommentTok{"""Return a PennyLane default.mixed device for mixed{-}state simulation.}
+
+\CommentTok{    The device itself is noise{-}agnostic; noise channels (depolarising,}
+\CommentTok{    thermal relaxation) are inserted explicitly inside the QNode via}
+\CommentTok{    channel operations.}
+
+\CommentTok{    Returns:}
+\CommentTok{        PennyLane default.mixed device with n\_qubits wires.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ noisy\_qaoa\_qnode(}
+\NormalTok{    cost\_hamiltonian: qml.Hamiltonian,}
+\NormalTok{    n\_qubits: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    p: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    noise\_params: }\BuiltInTok{dict}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ qml.QNode:}
+    \CommentTok{"""Construct a QNode on default.mixed that interleaves noise channels.}
+
+\CommentTok{    After each single{-}qubit gate: DepolarizingChannel + ThermalRelaxationError.}
+\CommentTok{    After each two{-}qubit IsingZZ: both qubits receive depolarising noise}
+\CommentTok{    at \textasciitilde{}10x the single{-}qubit rate (reflecting typical hardware) and}
+\CommentTok{    thermal relaxation scaled by the two{-}qubit gate duration.}
+
+\CommentTok{    Args:}
+\CommentTok{        noise\_params: Dict with keys \textquotesingle{}depol\_rate\textquotesingle{}, \textquotesingle{}t1\textquotesingle{}, \textquotesingle{}t2\textquotesingle{},}
+\CommentTok{                      \textquotesingle{}gate\_time\_1q\textquotesingle{}, \textquotesingle{}gate\_time\_2q\textquotesingle{}.}
+
+\CommentTok{    Returns:}
+\CommentTok{        QNode producing \textless{}H\_C\textgreater{} under gate{-}dependent incoherent noise.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ lindblad\_simulation(}
+\NormalTok{    initial\_state: qutip.Qobj,}
+\NormalTok{    hamiltonian: qutip.Qobj,}
+\NormalTok{    collapse\_ops: }\BuiltInTok{list}\NormalTok{[qutip.Qobj],}
+\NormalTok{    tlist: np.ndarray,}
+\NormalTok{    observables: }\BuiltInTok{dict}\NormalTok{[}\BuiltInTok{str}\NormalTok{, qutip.Qobj],}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \BuiltInTok{dict}\NormalTok{[}\BuiltInTok{str}\NormalTok{, np.ndarray]:}
+    \CommentTok{"""Run a full Lindblad master equation simulation via qutip.mesolve.}
+
+\CommentTok{    Evolves the density matrix under:}
+\CommentTok{        drho/dt = {-}i[H, rho] + sum\_k (L\_k rho L\_k\^{}dag {-} 1/2 \{L\_k\^{}dag L\_k, rho\})}
+
+\CommentTok{    Collapse operators encode amplitude damping (L = sqrt(gamma\_1) sigma\_{-})}
+\CommentTok{    and pure dephasing (L = sqrt(gamma\_phi) Z/2).}
+
+\CommentTok{    Returns:}
+\CommentTok{        Dict mapping observable labels to time{-}series arrays of}
+\CommentTok{        shape (len(tlist),).}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ compare\_noise\_channels(}
+\NormalTok{    n\_qubits: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    circuit\_params: np.ndarray,}
+\NormalTok{    noise\_params: }\BuiltInTok{dict}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \BuiltInTok{dict}\NormalTok{[}\BuiltInTok{str}\NormalTok{, }\BuiltInTok{float}\NormalTok{]:}
+    \CommentTok{"""Compare PennyLane channel model vs QuTiP Lindblad for the same circuit.}
+
+\CommentTok{    Runs the same QAOA circuit under both models and compares:}
+\CommentTok{    {-} Energy expectation values}
+\CommentTok{    {-} Inter{-}model state fidelity}
+\CommentTok{    {-} Output{-}state purity Tr(rho\^{}2)}
+
+\CommentTok{    Returns:}
+\CommentTok{        Dict with keys \textquotesingle{}energy\_pennylane\textquotesingle{}, \textquotesingle{}energy\_qutip\textquotesingle{}, \textquotesingle{}fidelity\textquotesingle{},}
+\CommentTok{        \textquotesingle{}purity\_pl\textquotesingle{}, \textquotesingle{}purity\_qt\textquotesingle{}.}
+\CommentTok{    """}
+\NormalTok{    ...}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation: \texttt{report1\_scripts/noise\_model.py})}
+
+\subsubsection{\texorpdfstring{6.
+\texttt{hardware\_runner.py}}{6. hardware\_runner.py}}\label{hardware_runner.py}
+
+\textbf{Purpose:} Submit QAOA circuits to IBM Quantum or IQM via
+PennyLane device plugins.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ \_\_future\_\_ }\ImportTok{import}\NormalTok{ annotations}
+\ImportTok{from}\NormalTok{ dataclasses }\ImportTok{import}\NormalTok{ dataclass}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ pennylane }\ImportTok{as}\NormalTok{ qml}
+
+
+\AttributeTok{@dataclass}
+\KeywordTok{class}\NormalTok{ HardwareResult:}
+    \CommentTok{"""Container for hardware execution results.}
+
+\CommentTok{    Attributes:}
+\CommentTok{        expectation\_value: Measured \textless{}H\_C\textgreater{}.}
+\CommentTok{        bitstring\_counts: Raw bitstring counts dict.}
+\CommentTok{        shots: Number of shots used.}
+\CommentTok{        backend\_name: Name of the quantum backend.}
+\CommentTok{        wall\_time: Wall{-}clock execution time in seconds.}
+\CommentTok{    """}
+\NormalTok{    expectation\_value: }\BuiltInTok{float}
+\NormalTok{    bitstring\_counts: }\BuiltInTok{dict}\NormalTok{[}\BuiltInTok{str}\NormalTok{, }\BuiltInTok{int}\NormalTok{]}
+\NormalTok{    shots: }\BuiltInTok{int}
+\NormalTok{    backend\_name: }\BuiltInTok{str}
+\NormalTok{    wall\_time: }\BuiltInTok{float}
+
+
+\KeywordTok{def}\NormalTok{ create\_ibm\_device(}
+\NormalTok{    n\_qubits: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    backend\_name: }\BuiltInTok{str} \OperatorTok{=} \StringTok{"ibm\_brisbane"}\NormalTok{,}
+\NormalTok{    shots: }\BuiltInTok{int} \OperatorTok{=} \DecValTok{4096}\NormalTok{,}
+\NormalTok{    ibm\_token: }\BuiltInTok{str} \OperatorTok{|} \VariableTok{None} \OperatorTok{=} \VariableTok{None}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ qml.Device:}
+    \CommentTok{"""Return a PennyLane device targeting IBM Quantum hardware.}
+
+\CommentTok{    Uses the PennyLane{-}Qiskit plugin (qml.device(\textquotesingle{}qiskit.ibmq\textquotesingle{}, ...)).}
+\CommentTok{    The API token is read from the IBMQ\_TOKEN environment variable if}
+\CommentTok{    not supplied explicitly. PennyLane handles transpilation internally.}
+
+\CommentTok{    Returns:}
+\CommentTok{        PennyLane device bound to an IBM Quantum backend.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ create\_iqm\_device(}
+\NormalTok{    n\_qubits: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    backend\_url: }\BuiltInTok{str}\NormalTok{,}
+\NormalTok{    shots: }\BuiltInTok{int} \OperatorTok{=} \DecValTok{4096}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ qml.Device:}
+    \CommentTok{"""Return a PennyLane device targeting IQM hardware.}
+
+\CommentTok{    Uses the PennyLane{-}IQM plugin.}
+
+\CommentTok{    Returns:}
+\CommentTok{        PennyLane device bound to an IQM backend.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ execute\_on\_hardware(}
+\NormalTok{    qnode: qml.QNode,}
+\NormalTok{    params: np.ndarray,}
+\NormalTok{    cost\_hamiltonian: qml.Hamiltonian,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ HardwareResult:}
+    \CommentTok{"""Run the QAOA circuit on hardware and measure \textless{}H\_C\textgreater{}.}
+
+\CommentTok{    Two measurement strategies:}
+\CommentTok{        1. Direct: qml.expval(H\_C) {-}{-} PennyLane decomposes the}
+\CommentTok{           Hamiltonian into commuting Pauli groups.}
+\CommentTok{        2. Sample{-}based: qml.sample() returns raw bitstrings of}
+\CommentTok{           shape (S, N). Energy per sample computed classically via}
+\CommentTok{           C(z) = sum\_\{(i,j)\} w\_ij/2 * (1 {-} s\_i * s\_j) where s\_i = 1 {-} 2*z\_i.}
+
+\CommentTok{    Returns:}
+\CommentTok{        HardwareResult with expectation value, counts, and metadata.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ select\_optimal\_qubits(}
+\NormalTok{    backend\_name: }\BuiltInTok{str}\NormalTok{,}
+\NormalTok{    n\_qubits: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    ibm\_token: }\BuiltInTok{str} \OperatorTok{|} \VariableTok{None} \OperatorTok{=} \VariableTok{None}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \BuiltInTok{list}\NormalTok{[}\BuiltInTok{int}\NormalTok{]:}
+    \CommentTok{"""Select the best{-}performing connected subgraph of physical qubits.}
+
+\CommentTok{    Loads backend calibration data (T1, T2, CNOT error rates) and builds}
+\CommentTok{    a weighted graph over physical qubits (edges weighted by 1/eps\_CX).}
+\CommentTok{    Searches for the size{-}N connected subgraph maximising}
+\CommentTok{        sum\_edges 1/eps\_CX + alpha * sum\_nodes T1*T2}
+\CommentTok{    via BFS enumeration.}
+
+\CommentTok{    Returns:}
+\CommentTok{        List of physical qubit indices for the initial\_layout.}
+\CommentTok{    """}
+\NormalTok{    ...}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation:
+\texttt{report1\_scripts/hardware\_runner.py})}
+
+\subsubsection{\texorpdfstring{7.
+\texttt{error\_mitigation.py}}{7. error\_mitigation.py}}\label{error_mitigation.py}
+
+\textbf{Purpose:} Zero-noise extrapolation (ZNE) and supporting error
+mitigation techniques.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ \_\_future\_\_ }\ImportTok{import}\NormalTok{ annotations}
+\ImportTok{from}\NormalTok{ typing }\ImportTok{import}\NormalTok{ Callable, Literal}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ pennylane }\ImportTok{as}\NormalTok{ qml}
+
+
+\KeywordTok{def}\NormalTok{ zne\_extrapolate(}
+\NormalTok{    qnode: qml.QNode,}
+\NormalTok{    params: np.ndarray,}
+\NormalTok{    scale\_factors: }\BuiltInTok{list}\NormalTok{[}\BuiltInTok{float}\NormalTok{] }\OperatorTok{=}\NormalTok{ [}\FloatTok{1.0}\NormalTok{, }\FloatTok{3.0}\NormalTok{, }\FloatTok{5.0}\NormalTok{],}
+\NormalTok{    extrapolation: Literal[}\StringTok{"linear"}\NormalTok{, }\StringTok{"richardson"}\NormalTok{] }\OperatorTok{=} \StringTok{"richardson"}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \BuiltInTok{tuple}\NormalTok{[}\BuiltInTok{float}\NormalTok{, }\BuiltInTok{dict}\NormalTok{]:}
+    \CommentTok{"""Apply zero{-}noise extrapolation to a hardware or noisy{-}simulator QNode.}
+
+\CommentTok{    For each scale factor lambda, amplifies circuit noise via global}
+\CommentTok{    unitary folding and measures \textless{}H\_C\textgreater{}\_lambda. Extrapolates the}
+\CommentTok{    (lambda, E(lambda)) data to lambda=0.}
+
+\CommentTok{    Returns:}
+\CommentTok{        Tuple of (extrapolated\_value, details\_dict) where details\_dict}
+\CommentTok{        contains \textquotesingle{}noisy\_values\textquotesingle{}, \textquotesingle{}scale\_factors\textquotesingle{}, and \textquotesingle{}fit\_coefficients\textquotesingle{}.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ global\_fold(}
+\NormalTok{    circuit\_fn: Callable,}
+\NormalTok{    scale\_factor: }\BuiltInTok{float}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ Callable:}
+    \CommentTok{"""Produce a noise{-}amplified circuit by global unitary folding.}
+
+\CommentTok{    For scale factor lambda, replaces circuit U with U(U\^{}dag U)\^{}n where}
+\CommentTok{    n = floor((lambda{-}1)/2). For non{-}integer scale factors, partial}
+\CommentTok{    folding applies to the last frac * N\_gates gates where}
+\CommentTok{    frac = (lambda{-}1)/2 {-} n.}
+
+\CommentTok{    Returns:}
+\CommentTok{        A callable that applies the folded circuit.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ richardson\_extrapolation(}
+\NormalTok{    scale\_factors: np.ndarray,}
+\NormalTok{    noisy\_values: np.ndarray,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \BuiltInTok{float}\NormalTok{:}
+    \CommentTok{"""Fit a degree{-}(M{-}1) polynomial through M data points via Vandermonde.}
+
+\CommentTok{    Solves V @ a = E for the coefficient vector a, where V is the}
+\CommentTok{    Vandermonde matrix of the scale factors. Returns a\_0 = E(0).}
+
+\CommentTok{    Returns:}
+\CommentTok{        Extrapolated zero{-}noise energy value.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ linear\_extrapolation(}
+\NormalTok{    scale\_factors: np.ndarray,}
+\NormalTok{    noisy\_values: np.ndarray,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \BuiltInTok{float}\NormalTok{:}
+    \CommentTok{"""Fit E(lambda) = a + b*lambda via least{-}squares.}
+
+\CommentTok{    Returns:}
+\CommentTok{        a = E(0), the extrapolated zero{-}noise energy value.}
+\CommentTok{    """}
+\NormalTok{    ...}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation:
+\texttt{report1\_scripts/error\_mitigation.py})}
+
+\subsubsection{\texorpdfstring{8.
+\texttt{renderer.py}}{8. renderer.py}}\label{renderer.py}
+
+\textbf{Purpose:} OpenGL 3D surface rendering of the
+\((\beta, \gamma, \langle H_C \rangle)\) landscape.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ \_\_future\_\_ }\ImportTok{import}\NormalTok{ annotations}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ glfw}
+\ImportTok{from}\NormalTok{ OpenGL.GL }\ImportTok{import} \OperatorTok{*}
+
+
+\KeywordTok{def}\NormalTok{ init\_opengl\_context(}
+\NormalTok{    width: }\BuiltInTok{int} \OperatorTok{=} \DecValTok{1280}\NormalTok{,}
+\NormalTok{    height: }\BuiltInTok{int} \OperatorTok{=} \DecValTok{720}\NormalTok{,}
+\NormalTok{    title: }\BuiltInTok{str} \OperatorTok{=} \StringTok{"QAOA Energy Landscape"}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ glfw.\_GLFWwindow:}
+    \CommentTok{"""Initialise a GLFW window with OpenGL 3.3 core profile.}
+
+\CommentTok{    Enables depth testing, 4x MSAA, and alpha blending.}
+
+\CommentTok{    Returns:}
+\CommentTok{        The GLFW window handle.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ compile\_shader\_program(}
+\NormalTok{    vertex\_source: }\BuiltInTok{str}\NormalTok{,}
+\NormalTok{    fragment\_source: }\BuiltInTok{str}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \BuiltInTok{int}\NormalTok{:}
+    \CommentTok{"""Compile and link a vertex{-}fragment shader pair.}
+
+\CommentTok{    Returns:}
+\CommentTok{        OpenGL shader program ID.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ create\_surface\_vbo(}
+\NormalTok{    gamma\_vals: np.ndarray,}
+\NormalTok{    beta\_vals: np.ndarray,}
+\NormalTok{    energies: np.ndarray,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \BuiltInTok{tuple}\NormalTok{[}\BuiltInTok{int}\NormalTok{, }\BuiltInTok{int}\NormalTok{, }\BuiltInTok{int}\NormalTok{, }\BuiltInTok{int}\NormalTok{]:}
+    \CommentTok{"""Build a triangle{-}mesh VAO/VBO/EBO from the (N\_gamma x N\_beta) grid.}
+
+\CommentTok{    Each vertex stores 7 float32 values (28 bytes): position}
+\CommentTok{    (gamma, beta, \textless{}H\_C\textgreater{}), surface normal (n\_x, n\_y, n\_z) from}
+\CommentTok{    finite{-}difference gradients, and normalised energy in [0,1].}
+\CommentTok{    Two triangles per grid cell. Uses GL\_DYNAMIC\_DRAW for streaming.}
+
+\CommentTok{    Returns:}
+\CommentTok{        Tuple of (vao\_id, vbo\_id, ebo\_id, n\_indices).}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ update\_surface\_vbo(}
+\NormalTok{    vbo\_id: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    gamma\_vals: np.ndarray,}
+\NormalTok{    beta\_vals: np.ndarray,}
+\NormalTok{    energies: np.ndarray,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \VariableTok{None}\NormalTok{:}
+    \CommentTok{"""Overwrite existing VBO vertex data in{-}place via glBufferSubData."""}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ draw\_optimizer\_trajectory(}
+\NormalTok{    trajectory: }\BuiltInTok{list}\NormalTok{[}\BuiltInTok{tuple}\NormalTok{[}\BuiltInTok{float}\NormalTok{, }\BuiltInTok{float}\NormalTok{, }\BuiltInTok{float}\NormalTok{]],}
+\NormalTok{    shader\_program: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \VariableTok{None}\NormalTok{:}
+    \CommentTok{"""Render the optimiser\textquotesingle{}s path as a GL\_LINE\_STRIP above the surface.}
+
+\CommentTok{    Each vertex carries a normalised progress attribute t in [0,1]}
+\CommentTok{    for blue{-}to{-}red colour interpolation. Slight positive z{-}offset}
+\CommentTok{    (\textasciitilde{}0.01) prevents z{-}fighting. Uses GL\_STREAM\_DRAW.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ render\_side\_panel(}
+\NormalTok{    p: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{    current\_energy: }\BuiltInTok{float}\NormalTok{,}
+\NormalTok{    approximation\_ratio: }\BuiltInTok{float}\NormalTok{,}
+\NormalTok{    gradient\_norm: }\BuiltInTok{float}\NormalTok{,}
+\NormalTok{    iteration: }\BuiltInTok{int}\NormalTok{,}
+\NormalTok{) }\OperatorTok{{-}\textgreater{}} \VariableTok{None}\NormalTok{:}
+    \CommentTok{"""Draw a text overlay with live optimisation statistics."""}
+\NormalTok{    ...}
+
+
+\KeywordTok{class}\NormalTok{ ArcballCamera:}
+    \CommentTok{"""Interactive 3D camera with arcball rotation, zoom, and pan.}
+
+\CommentTok{    Mouse drag rotates around a focus point (yaw/pitch angles),}
+\CommentTok{    scroll wheel zooms by adjusting camera{-}target distance,}
+\CommentTok{    middle{-}click pans. Pitch clamped to +/{-}89 degrees.}
+\CommentTok{    """}
+
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}
+        \VariableTok{self}\NormalTok{,}
+\NormalTok{        target: np.ndarray }\OperatorTok{=}\NormalTok{ np.zeros(}\DecValTok{3}\NormalTok{),}
+\NormalTok{        distance: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{5.0}\NormalTok{,}
+\NormalTok{        yaw: }\BuiltInTok{float} \OperatorTok{=} \OperatorTok{{-}}\FloatTok{90.0}\NormalTok{,}
+\NormalTok{        pitch: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{30.0}\NormalTok{,}
+\NormalTok{    ) }\OperatorTok{{-}\textgreater{}} \VariableTok{None}\NormalTok{:}
+\NormalTok{        ...}
+
+    \KeywordTok{def}\NormalTok{ get\_view\_matrix(}\VariableTok{self}\NormalTok{) }\OperatorTok{{-}\textgreater{}}\NormalTok{ np.ndarray:}
+        \CommentTok{"""Return a 4x4 look{-}at view matrix (float32)."""}
+\NormalTok{        ...}
+
+    \KeywordTok{def}\NormalTok{ get\_projection\_matrix(}
+        \VariableTok{self}\NormalTok{,}
+\NormalTok{        aspect\_ratio: }\BuiltInTok{float}\NormalTok{,}
+\NormalTok{        fov: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{45.0}\NormalTok{,}
+\NormalTok{        near: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{0.1}\NormalTok{,}
+\NormalTok{        far: }\BuiltInTok{float} \OperatorTok{=} \FloatTok{100.0}\NormalTok{,}
+\NormalTok{    ) }\OperatorTok{{-}\textgreater{}}\NormalTok{ np.ndarray:}
+        \CommentTok{"""Return a 4x4 perspective projection matrix (float32)."""}
+\NormalTok{        ...}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation: \texttt{report1\_scripts/renderer.py})}
+
+\subsubsection{\texorpdfstring{9.
+\texttt{main.py}}{9. main.py}}\label{main.py}
+
+\textbf{Purpose:} CLI entry point and workflow orchestration.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ \_\_future\_\_ }\ImportTok{import}\NormalTok{ annotations}
+\ImportTok{import}\NormalTok{ argparse}
+\ImportTok{from}\NormalTok{ pathlib }\ImportTok{import}\NormalTok{ Path}
+
+
+\KeywordTok{def}\NormalTok{ parse\_args() }\OperatorTok{{-}\textgreater{}}\NormalTok{ argparse.Namespace:}
+    \CommentTok{"""Define and parse CLI arguments.}
+
+\CommentTok{    Key flags:}
+\CommentTok{        {-}{-}graph{-}type    Graph family (cycle, complete, erdos\_renyi, etc.)}
+\CommentTok{        {-}{-}n{-}nodes       Number of graph nodes}
+\CommentTok{        {-}{-}p             QAOA depth (number of layers)}
+\CommentTok{        {-}{-}optimizer     Optimiser backend (COBYLA / L{-}BFGS{-}B / SPSA / Adam)}
+\CommentTok{        {-}{-}grid{-}size     Landscape sampling resolution}
+\CommentTok{        {-}{-}noise         Enable noisy simulation (default.mixed)}
+\CommentTok{        {-}{-}hardware      Run on a real quantum processor}
+\CommentTok{        {-}{-}backend       Backend name (e.g. ibm\_brisbane)}
+\CommentTok{        {-}{-}zne           Enable zero{-}noise extrapolation}
+\CommentTok{        {-}{-}render        Launch OpenGL visualisation}
+\CommentTok{        {-}{-}config        Path to a YAML configuration file}
+\CommentTok{        {-}{-}seed          Random seed for reproducibility}
+
+\CommentTok{    Returns:}
+\CommentTok{        Parsed arguments namespace.}
+\CommentTok{    """}
+\NormalTok{    ...}
+
+
+\KeywordTok{def}\NormalTok{ run\_pipeline(args: argparse.Namespace) }\OperatorTok{{-}\textgreater{}} \VariableTok{None}\NormalTok{:}
+    \CommentTok{"""Execute the full QAOA exploration pipeline.}
+
+\CommentTok{    Steps:}
+\CommentTok{        1. Graph generation {-}{-} create\_graph + build\_cost\_hamiltonian;}
+\CommentTok{           compute C\_max via brute force (N \textless{}= 20).}
+\CommentTok{        2. Circuit construction {-}{-} build QNode on appropriate backend}
+\CommentTok{           (noiseless simulator, noisy default.mixed, or hardware).}
+\CommentTok{        3. Landscape sampling {-}{-} for p=1 with rendering, sample the}
+\CommentTok{           2D (gamma, beta) energy grid.}
+\CommentTok{        4. Classical optimisation {-}{-} run optimize\_qaoa, recording the}
+\CommentTok{           trajectory for visualisation.}
+\CommentTok{        5. Error mitigation {-}{-} if ZNE requested, apply zne\_extrapolate}
+\CommentTok{           at optimal parameters.}
+\CommentTok{        6. Rendering {-}{-} if enabled, launch OpenGL window with surface,}
+\CommentTok{           trajectory overlay, and status panel.}
+\CommentTok{    """}
+\NormalTok{    ...}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation: \texttt{report1\_scripts/main.py})}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Part 3 --- Implementation Guidelines (Instructional
+Pseudocode)}\label{part-3-implementation-guidelines-instructional-pseudocode}
+
+\subsection{\texorpdfstring{Module 1:
+\texttt{graph\_generator.py}}{Module 1: graph\_generator.py}}\label{module-1-graph_generator.py}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} graph\_generator.py pseudocode {-}{-}{-}}
+
+\KeywordTok{def}\NormalTok{ create\_graph(graph\_type, n\_nodes, seed, }\OperatorTok{**}\NormalTok{kwargs):}
+    \CommentTok{\# Dispatch on graph\_type string}
+    \ControlFlowTok{if}\NormalTok{ graph\_type }\OperatorTok{==} \StringTok{"cycle"}\NormalTok{:}
+\NormalTok{        G }\OperatorTok{=}\NormalTok{ nx.cycle\_graph(n\_nodes)}
+    \ControlFlowTok{elif}\NormalTok{ graph\_type }\OperatorTok{==} \StringTok{"complete"}\NormalTok{:}
+\NormalTok{        G }\OperatorTok{=}\NormalTok{ nx.complete\_graph(n\_nodes)}
+    \ControlFlowTok{elif}\NormalTok{ graph\_type }\OperatorTok{==} \StringTok{"erdos\_renyi"}\NormalTok{:}
+\NormalTok{        G }\OperatorTok{=}\NormalTok{ nx.erdos\_renyi\_graph(n\_nodes, kwargs[}\StringTok{"p"}\NormalTok{], seed}\OperatorTok{=}\NormalTok{seed)}
+    \ControlFlowTok{elif}\NormalTok{ graph\_type }\OperatorTok{==} \StringTok{"random\_regular"}\NormalTok{:}
+\NormalTok{        G }\OperatorTok{=}\NormalTok{ nx.random\_regular\_graph(kwargs[}\StringTok{"d"}\NormalTok{], n\_nodes, seed}\OperatorTok{=}\NormalTok{seed)}
+    \ControlFlowTok{elif}\NormalTok{ graph\_type }\OperatorTok{==} \StringTok{"grid\_2d"}\NormalTok{:}
+\NormalTok{        rows, cols }\OperatorTok{=}\NormalTok{ kwargs.get(}\StringTok{"rows"}\NormalTok{, n\_nodes), kwargs.get(}\StringTok{"cols"}\NormalTok{, n\_nodes)}
+\NormalTok{        G }\OperatorTok{=}\NormalTok{ nx.grid\_2d\_graph(rows, cols)}
+\NormalTok{        G }\OperatorTok{=}\NormalTok{ nx.convert\_node\_labels\_to\_integers(G)  }\CommentTok{\# relabel (i,j) {-}\textgreater{} int}
+    \ControlFlowTok{elif}\NormalTok{ graph\_type }\OperatorTok{==} \StringTok{"petersen"}\NormalTok{:}
+\NormalTok{        G }\OperatorTok{=}\NormalTok{ nx.petersen\_graph()}
+    \ControlFlowTok{elif}\NormalTok{ graph\_type }\OperatorTok{==} \StringTok{"custom"}\NormalTok{:}
+\NormalTok{        G }\OperatorTok{=}\NormalTok{ nx.Graph()}
+\NormalTok{        G.add\_edges\_from(kwargs[}\StringTok{"edges"}\NormalTok{])}
+    \CommentTok{\# ... other types ...}
+
+    \CommentTok{\# Assign unit weights to edges that don\textquotesingle{}t have a weight}
+    \ControlFlowTok{for}\NormalTok{ u, v }\KeywordTok{in}\NormalTok{ G.edges():}
+        \ControlFlowTok{if} \StringTok{"weight"} \KeywordTok{not} \KeywordTok{in}\NormalTok{ G[u][v]:}
+\NormalTok{            G[u][v][}\StringTok{"weight"}\NormalTok{] }\OperatorTok{=} \FloatTok{1.0}
+    \ControlFlowTok{return}\NormalTok{ G}
+
+
+\KeywordTok{def}\NormalTok{ adjacency\_to\_ising(graph):}
+\NormalTok{    coeffs }\OperatorTok{=}\NormalTok{ []                         }\CommentTok{\# list of float}
+\NormalTok{    obs }\OperatorTok{=}\NormalTok{ []                            }\CommentTok{\# list of (int, int) qubit pairs}
+\NormalTok{    offset }\OperatorTok{=} \FloatTok{0.0}
+    \ControlFlowTok{for}\NormalTok{ i, j, w }\KeywordTok{in}\NormalTok{ graph.edges(data}\OperatorTok{=}\StringTok{"weight"}\NormalTok{):}
+        \CommentTok{\# MaxCut: H\_C = sum w\_ij/2 (I {-} Z\_i Z\_j)}
+\NormalTok{        coeffs.append(}\OperatorTok{{-}}\NormalTok{w }\OperatorTok{/} \DecValTok{2}\NormalTok{)}
+\NormalTok{        obs.append((i, j))              }\CommentTok{\# Pauli Z\_i Z\_j pair}
+\NormalTok{        offset }\OperatorTok{+=}\NormalTok{ w }\OperatorTok{/} \DecValTok{2}                 \CommentTok{\# identity contribution}
+    \ControlFlowTok{return}\NormalTok{ coeffs, obs, offset}
+
+
+\KeywordTok{def}\NormalTok{ build\_cost\_hamiltonian(graph):}
+\NormalTok{    coeffs, obs, offset }\OperatorTok{=}\NormalTok{ adjacency\_to\_ising(graph)}
+    \CommentTok{\# Build PennyLane Hamiltonian}
+\NormalTok{    all\_coeffs }\OperatorTok{=}\NormalTok{ coeffs }\OperatorTok{+}\NormalTok{ [offset]}
+\NormalTok{    all\_obs }\OperatorTok{=}\NormalTok{ [qml.PauliZ(i) }\OperatorTok{@}\NormalTok{ qml.PauliZ(j) }\ControlFlowTok{for}\NormalTok{ i, j }\KeywordTok{in}\NormalTok{ obs] }\OperatorTok{+}\NormalTok{ [qml.Identity(}\DecValTok{0}\NormalTok{)]}
+    \ControlFlowTok{return}\NormalTok{ qml.Hamiltonian(all\_coeffs, all\_obs)}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation:
+\texttt{report1\_scripts/graph\_generator.py})}
+
+\subsection{\texorpdfstring{Module 2:
+\texttt{qaoa\_circuit.py}}{Module 2: qaoa\_circuit.py}}\label{module-2-qaoa_circuit.py}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} qaoa\_circuit.py pseudocode {-}{-}{-}}
+
+\KeywordTok{def}\NormalTok{ cost\_layer(gamma, graph\_edges):}
+    \CommentTok{\# graph\_edges: list of (i, j, w\_ij)}
+    \ControlFlowTok{for}\NormalTok{ i, j, w }\KeywordTok{in}\NormalTok{ graph\_edges:}
+        \CommentTok{\# IsingZZ implements exp({-}i phi Z⊗Z / 2), so pass phi = gamma * w}
+\NormalTok{        qml.IsingZZ(gamma }\OperatorTok{*}\NormalTok{ w, wires}\OperatorTok{=}\NormalTok{[i, j])}
+
+
+\KeywordTok{def}\NormalTok{ mixer\_layer(beta, n\_qubits):}
+    \ControlFlowTok{for}\NormalTok{ q }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_qubits):}
+        \CommentTok{\# RX(theta) = exp({-}i theta X / 2), so theta = 2*beta for exp({-}i beta X)}
+\NormalTok{        qml.RX(}\DecValTok{2} \OperatorTok{*}\NormalTok{ beta, wires}\OperatorTok{=}\NormalTok{q)}
+
+
+\KeywordTok{def}\NormalTok{ extract\_edges\_from\_hamiltonian(cost\_hamiltonian):}
+    \CommentTok{"""Recover weighted edge list from qml.Hamiltonian."""}
+\NormalTok{    edges }\OperatorTok{=}\NormalTok{ []}
+    \ControlFlowTok{for}\NormalTok{ coeff, obs }\KeywordTok{in} \BuiltInTok{zip}\NormalTok{(cost\_hamiltonian.coeffs, cost\_hamiltonian.ops):}
+        \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(obs, qml.Identity):}
+            \ControlFlowTok{continue}  \CommentTok{\# skip the offset term}
+        \CommentTok{\# obs is PauliZ(i) @ PauliZ(j); coeff is {-}w/2}
+\NormalTok{        wires }\OperatorTok{=}\NormalTok{ obs.wires.tolist()       }\CommentTok{\# [i, j]}
+\NormalTok{        w }\OperatorTok{=} \OperatorTok{{-}}\DecValTok{2} \OperatorTok{*}\NormalTok{ coeff                   }\CommentTok{\# recover original weight}
+\NormalTok{        edges.append((wires[}\DecValTok{0}\NormalTok{], wires[}\DecValTok{1}\NormalTok{], w))}
+    \ControlFlowTok{return}\NormalTok{ edges}
+
+
+\KeywordTok{def}\NormalTok{ qaoa\_ansatz(params, cost\_hamiltonian, n\_qubits, p):}
+    \CommentTok{\# params shape: (2p,) {-}{-} [gamma\_1, ..., gamma\_p, beta\_1, ..., beta\_p]}
+\NormalTok{    gammas }\OperatorTok{=}\NormalTok{ params[:p]                  }\CommentTok{\# shape (p,)}
+\NormalTok{    betas }\OperatorTok{=}\NormalTok{ params[p:]                   }\CommentTok{\# shape (p,)}
+\NormalTok{    edges }\OperatorTok{=}\NormalTok{ extract\_edges\_from\_hamiltonian(cost\_hamiltonian)}
+
+    \CommentTok{\# 1. Prepare |+\textgreater{}\^{}N}
+    \ControlFlowTok{for}\NormalTok{ q }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_qubits):}
+\NormalTok{        qml.Hadamard(wires}\OperatorTok{=}\NormalTok{q)}
+
+    \CommentTok{\# 2. Apply p layers of cost + mixer}
+    \ControlFlowTok{for}\NormalTok{ k }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(p):}
+\NormalTok{        cost\_layer(gammas[k], edges)     }\CommentTok{\# U\_C(gamma\_k)}
+\NormalTok{        mixer\_layer(betas[k], n\_qubits)  }\CommentTok{\# U\_B(beta\_k)}
+
+
+\KeywordTok{def}\NormalTok{ build\_qaoa\_circuit(cost\_hamiltonian, n\_qubits, p, device):}
+    \AttributeTok{@qml.qnode}\NormalTok{(device, diff\_method}\OperatorTok{=}\StringTok{"best"}\NormalTok{)}
+    \KeywordTok{def}\NormalTok{ circuit(params):}
+        \CommentTok{\# params: np.ndarray of shape (2p,)}
+\NormalTok{        qaoa\_ansatz(params, cost\_hamiltonian, n\_qubits, p)}
+        \ControlFlowTok{return}\NormalTok{ qml.expval(cost\_hamiltonian)}
+    \ControlFlowTok{return}\NormalTok{ circuit}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation: \texttt{report1\_scripts/qaoa\_circuit.py})}
+
+\subsection{\texorpdfstring{Module 3:
+\texttt{optimizer.py}}{Module 3: optimizer.py}}\label{module-3-optimizer.py}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} optimizer.py pseudocode {-}{-}{-}}
+
+\KeywordTok{def}\NormalTok{ optimize\_qaoa(qnode, p, method, init\_params, maxiter, tol, callback):}
+\NormalTok{    d }\OperatorTok{=} \DecValTok{2} \OperatorTok{*}\NormalTok{ p                         }\CommentTok{\# total number of parameters}
+\NormalTok{    eval\_count }\OperatorTok{=} \DecValTok{0}                    \CommentTok{\# mutable circuit evaluation counter}
+\NormalTok{    trajectory }\OperatorTok{=}\NormalTok{ []                   }\CommentTok{\# list of (params\_copy, energy)}
+
+    \CommentTok{\# {-}{-}{-} Initialisation {-}{-}{-}}
+    \ControlFlowTok{if}\NormalTok{ init\_params }\KeywordTok{is} \VariableTok{None}\NormalTok{:}
+\NormalTok{        gammas }\OperatorTok{=}\NormalTok{ np.random.uniform(}\DecValTok{0}\NormalTok{, np.pi, size}\OperatorTok{=}\NormalTok{p)       }\CommentTok{\# shape (p,)}
+\NormalTok{        betas }\OperatorTok{=}\NormalTok{ np.random.uniform(}\DecValTok{0}\NormalTok{, np.pi }\OperatorTok{/} \DecValTok{2}\NormalTok{, size}\OperatorTok{=}\NormalTok{p)    }\CommentTok{\# shape (p,)}
+\NormalTok{        params }\OperatorTok{=}\NormalTok{ np.concatenate([gammas, betas])            }\CommentTok{\# shape (d,)}
+    \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{        params }\OperatorTok{=}\NormalTok{ init\_params.copy()}
+
+    \CommentTok{\# Negated objective: optimisers minimise, QAOA maximises \textless{}H\_C\textgreater{}}
+    \KeywordTok{def}\NormalTok{ objective(theta):}
+        \KeywordTok{nonlocal}\NormalTok{ eval\_count}
+\NormalTok{        eval\_count }\OperatorTok{+=} \DecValTok{1}
+\NormalTok{        val }\OperatorTok{=} \BuiltInTok{float}\NormalTok{(qnode(theta))}
+        \ControlFlowTok{return} \OperatorTok{{-}}\NormalTok{val}
+
+    \CommentTok{\# {-}{-}{-} COBYLA {-}{-}{-}}
+    \ControlFlowTok{if}\NormalTok{ method }\OperatorTok{==} \StringTok{"COBYLA"}\NormalTok{:}
+        \ImportTok{from}\NormalTok{ scipy.optimize }\ImportTok{import}\NormalTok{ minimize}
+\NormalTok{        result }\OperatorTok{=}\NormalTok{ minimize(}
+\NormalTok{            objective, params, method}\OperatorTok{=}\StringTok{"COBYLA"}\NormalTok{,}
+\NormalTok{            options}\OperatorTok{=}\NormalTok{\{}\StringTok{"maxiter"}\NormalTok{: maxiter, }\StringTok{"rhobeg"}\NormalTok{: }\FloatTok{0.5}\NormalTok{\},}
+\NormalTok{            callback}\OperatorTok{=}\KeywordTok{lambda}\NormalTok{ x: trajectory.append((x.copy(), }\OperatorTok{{-}}\NormalTok{objective(x))),}
+\NormalTok{        )}
+\NormalTok{        best\_params }\OperatorTok{=}\NormalTok{ result.x}
+
+    \CommentTok{\# {-}{-}{-} L{-}BFGS{-}B {-}{-}{-}}
+    \ControlFlowTok{elif}\NormalTok{ method }\OperatorTok{==} \StringTok{"L{-}BFGS{-}B"}\NormalTok{:}
+        \ImportTok{from}\NormalTok{ scipy.optimize }\ImportTok{import}\NormalTok{ minimize}
+        \KeywordTok{def}\NormalTok{ jac(theta):}
+            \ControlFlowTok{return} \OperatorTok{{-}}\NormalTok{parameter\_shift\_gradient(qnode, theta)}
+\NormalTok{        result }\OperatorTok{=}\NormalTok{ minimize(}
+\NormalTok{            objective, params, method}\OperatorTok{=}\StringTok{"L{-}BFGS{-}B"}\NormalTok{, jac}\OperatorTok{=}\NormalTok{jac,}
+\NormalTok{            options}\OperatorTok{=}\NormalTok{\{}\StringTok{"maxiter"}\NormalTok{: maxiter, }\StringTok{"ftol"}\NormalTok{: tol\},}
+\NormalTok{        )}
+\NormalTok{        best\_params }\OperatorTok{=}\NormalTok{ result.x}
+
+    \CommentTok{\# {-}{-}{-} SPSA {-}{-}{-}}
+    \ControlFlowTok{elif}\NormalTok{ method }\OperatorTok{==} \StringTok{"SPSA"}\NormalTok{:}
+        \CommentTok{\# Gain schedule constants}
+\NormalTok{        a0, c0 }\OperatorTok{=} \FloatTok{0.1}\NormalTok{, }\FloatTok{0.1}
+\NormalTok{        alpha, gamma\_spsa }\OperatorTok{=} \FloatTok{0.602}\NormalTok{, }\FloatTok{0.101}
+\NormalTok{        A }\OperatorTok{=} \FloatTok{0.1} \OperatorTok{*}\NormalTok{ maxiter}
+
+        \ControlFlowTok{for}\NormalTok{ k }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{, maxiter }\OperatorTok{+} \DecValTok{1}\NormalTok{):}
+\NormalTok{            a\_k }\OperatorTok{=}\NormalTok{ a0 }\OperatorTok{/}\NormalTok{ (k }\OperatorTok{+}\NormalTok{ A) }\OperatorTok{**}\NormalTok{ alpha       }\CommentTok{\# step size schedule}
+\NormalTok{            c\_k }\OperatorTok{=}\NormalTok{ c0 }\OperatorTok{/}\NormalTok{ k }\OperatorTok{**}\NormalTok{ gamma\_spsa         }\CommentTok{\# perturbation size schedule}
+
+            \CommentTok{\# Rademacher random perturbation vector: each entry +1 or {-}1}
+\NormalTok{            delta }\OperatorTok{=}\NormalTok{ np.random.choice([}\OperatorTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{], size}\OperatorTok{=}\NormalTok{d)   }\CommentTok{\# shape (d,)}
+
+            \CommentTok{\# Two{-}point gradient estimate (only 2 evaluations per step)}
+\NormalTok{            f\_plus }\OperatorTok{=}\NormalTok{ objective(params }\OperatorTok{+}\NormalTok{ c\_k }\OperatorTok{*}\NormalTok{ delta)}
+\NormalTok{            f\_minus }\OperatorTok{=}\NormalTok{ objective(params }\OperatorTok{{-}}\NormalTok{ c\_k }\OperatorTok{*}\NormalTok{ delta)}
+\NormalTok{            g\_hat }\OperatorTok{=}\NormalTok{ (f\_plus }\OperatorTok{{-}}\NormalTok{ f\_minus) }\OperatorTok{/}\NormalTok{ (}\DecValTok{2} \OperatorTok{*}\NormalTok{ c\_k) }\OperatorTok{*}\NormalTok{ (}\FloatTok{1.0} \OperatorTok{/}\NormalTok{ delta)  }\CommentTok{\# shape (d,)}
+
+\NormalTok{            params }\OperatorTok{=}\NormalTok{ params }\OperatorTok{{-}}\NormalTok{ a\_k }\OperatorTok{*}\NormalTok{ g\_hat      }\CommentTok{\# gradient descent step}
+\NormalTok{            trajectory.append((params.copy(), }\OperatorTok{{-}}\BuiltInTok{float}\NormalTok{(qnode(params))))}
+
+            \ControlFlowTok{if}\NormalTok{ callback:}
+\NormalTok{                callback(params, trajectory[}\OperatorTok{{-}}\DecValTok{1}\NormalTok{][}\DecValTok{1}\NormalTok{], k)}
+
+\NormalTok{        best\_params }\OperatorTok{=}\NormalTok{ params}
+
+    \CommentTok{\# {-}{-}{-} Adam {-}{-}{-}}
+    \ControlFlowTok{elif}\NormalTok{ method }\OperatorTok{==} \StringTok{"Adam"}\NormalTok{:}
+\NormalTok{        opt }\OperatorTok{=}\NormalTok{ qml.AdamOptimizer(stepsize}\OperatorTok{=}\FloatTok{0.05}\NormalTok{)}
+        \ControlFlowTok{for}\NormalTok{ k }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(maxiter):}
+\NormalTok{            params, cost }\OperatorTok{=}\NormalTok{ opt.step\_and\_cost(}\KeywordTok{lambda}\NormalTok{ t: }\OperatorTok{{-}}\NormalTok{qnode(t), params)}
+\NormalTok{            energy }\OperatorTok{=} \OperatorTok{{-}}\NormalTok{cost}
+\NormalTok{            trajectory.append((params.copy(), energy))}
+            \ControlFlowTok{if}\NormalTok{ callback:}
+\NormalTok{                callback(params, energy, k)}
+            \CommentTok{\# Convergence check}
+            \ControlFlowTok{if}\NormalTok{ k }\OperatorTok{\textgreater{}} \DecValTok{0} \KeywordTok{and} \BuiltInTok{abs}\NormalTok{(trajectory[}\OperatorTok{{-}}\DecValTok{1}\NormalTok{][}\DecValTok{1}\NormalTok{] }\OperatorTok{{-}}\NormalTok{ trajectory[}\OperatorTok{{-}}\DecValTok{2}\NormalTok{][}\DecValTok{1}\NormalTok{]) }\OperatorTok{\textless{}}\NormalTok{ tol:}
+                \ControlFlowTok{break}
+\NormalTok{        best\_params }\OperatorTok{=}\NormalTok{ params}
+
+    \ControlFlowTok{return}\NormalTok{ OptimizationResult(}
+\NormalTok{        best\_params}\OperatorTok{=}\NormalTok{best\_params,}
+\NormalTok{        optimal\_energy}\OperatorTok{={-}}\NormalTok{objective(best\_params),}
+\NormalTok{        trajectory}\OperatorTok{=}\NormalTok{trajectory,}
+\NormalTok{        n\_evaluations}\OperatorTok{=}\NormalTok{eval\_count,}
+\NormalTok{        converged}\OperatorTok{=}\NormalTok{...,}
+\NormalTok{    )}
+
+
+\KeywordTok{def}\NormalTok{ parameter\_shift\_gradient(qnode, params, shift}\OperatorTok{=}\NormalTok{np.pi }\OperatorTok{/} \DecValTok{2}\NormalTok{):}
+\NormalTok{    d }\OperatorTok{=} \BuiltInTok{len}\NormalTok{(params)                    }\CommentTok{\# number of parameters}
+\NormalTok{    grad }\OperatorTok{=}\NormalTok{ np.zeros(d)                 }\CommentTok{\# shape (d,)}
+    \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(d):}
+\NormalTok{        shifted\_plus }\OperatorTok{=}\NormalTok{ params.copy()}
+\NormalTok{        shifted\_minus }\OperatorTok{=}\NormalTok{ params.copy()}
+\NormalTok{        shifted\_plus[i] }\OperatorTok{+=}\NormalTok{ shift       }\CommentTok{\# theta\_i + pi/2}
+\NormalTok{        shifted\_minus[i] }\OperatorTok{{-}=}\NormalTok{ shift      }\CommentTok{\# theta\_i {-} pi/2}
+        \CommentTok{\# Exact parameter{-}shift formula (valid for eigenvalues +/{-}1)}
+\NormalTok{        grad[i] }\OperatorTok{=}\NormalTok{ (}\BuiltInTok{float}\NormalTok{(qnode(shifted\_plus)) }\OperatorTok{{-}} \BuiltInTok{float}\NormalTok{(qnode(shifted\_minus))) }\OperatorTok{/} \FloatTok{2.0}
+    \CommentTok{\# Total: 2*d circuit evaluations}
+    \ControlFlowTok{return}\NormalTok{ grad}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation: \texttt{report1\_scripts/optimizer.py})}
+
+\subsection{\texorpdfstring{Module 4:
+\texttt{landscape\_sampler.py}}{Module 4: landscape\_sampler.py}}\label{module-4-landscape_sampler.py}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} landscape\_sampler.py pseudocode {-}{-}{-}}
+
+\KeywordTok{def}\NormalTok{ sample\_landscape(qnode, p, gamma\_range, beta\_range, n\_gamma, n\_beta,}
+\NormalTok{                     fixed\_params, c\_max):}
+\NormalTok{    gamma\_vals }\OperatorTok{=}\NormalTok{ np.linspace(gamma\_range[}\DecValTok{0}\NormalTok{], gamma\_range[}\DecValTok{1}\NormalTok{], n\_gamma)  }\CommentTok{\# (N\_gamma,)}
+\NormalTok{    beta\_vals }\OperatorTok{=}\NormalTok{ np.linspace(beta\_range[}\DecValTok{0}\NormalTok{], beta\_range[}\DecValTok{1}\NormalTok{], n\_beta)      }\CommentTok{\# (N\_beta,)}
+\NormalTok{    energies }\OperatorTok{=}\NormalTok{ np.zeros((n\_gamma, n\_beta))                              }\CommentTok{\# (N\_gamma, N\_beta)}
+
+    \ControlFlowTok{for}\NormalTok{ i, gamma }\KeywordTok{in} \BuiltInTok{enumerate}\NormalTok{(gamma\_vals):}
+        \ControlFlowTok{for}\NormalTok{ j, beta }\KeywordTok{in} \BuiltInTok{enumerate}\NormalTok{(beta\_vals):}
+            \ControlFlowTok{if}\NormalTok{ p }\OperatorTok{==} \DecValTok{1}\NormalTok{:}
+\NormalTok{                params }\OperatorTok{=}\NormalTok{ np.array([gamma, beta])                        }\CommentTok{\# (2,)}
+            \ControlFlowTok{else}\NormalTok{:}
+                \CommentTok{\# 2D slice through higher{-}dimensional landscape}
+\NormalTok{                params }\OperatorTok{=}\NormalTok{ fixed\_params.copy()                            }\CommentTok{\# (2p,)}
+\NormalTok{                params[}\DecValTok{0}\NormalTok{] }\OperatorTok{=}\NormalTok{ gamma      }\CommentTok{\# overwrite first gamma}
+\NormalTok{                params[p] }\OperatorTok{=}\NormalTok{ beta       }\CommentTok{\# overwrite first beta}
+\NormalTok{            energies[i, j] }\OperatorTok{=} \BuiltInTok{float}\NormalTok{(qnode(params))}
+
+\NormalTok{    approx\_ratios }\OperatorTok{=}\NormalTok{ energies }\OperatorTok{/}\NormalTok{ c\_max                                    }\CommentTok{\# (N\_gamma, N\_beta)}
+    \ControlFlowTok{return}\NormalTok{ LandscapeData(gamma\_vals, beta\_vals, energies, approx\_ratios)}
+
+
+\KeywordTok{def}\NormalTok{ sample\_landscape\_parallel(qnode, p, gamma\_range, beta\_range,}
+\NormalTok{                              n\_gamma, n\_beta, c\_max):}
+\NormalTok{    gamma\_vals }\OperatorTok{=}\NormalTok{ np.linspace(gamma\_range[}\DecValTok{0}\NormalTok{], gamma\_range[}\DecValTok{1}\NormalTok{], n\_gamma)  }\CommentTok{\# (N\_gamma,)}
+\NormalTok{    beta\_vals }\OperatorTok{=}\NormalTok{ np.linspace(beta\_range[}\DecValTok{0}\NormalTok{], beta\_range[}\DecValTok{1}\NormalTok{], n\_beta)      }\CommentTok{\# (N\_beta,)}
+
+    \CommentTok{\# Build full parameter grid via meshgrid with \textquotesingle{}ij\textquotesingle{} indexing}
+\NormalTok{    gamma\_grid, beta\_grid }\OperatorTok{=}\NormalTok{ np.meshgrid(gamma\_vals, beta\_vals, indexing}\OperatorTok{=}\StringTok{\textquotesingle{}ij\textquotesingle{}}\NormalTok{)}
+    \CommentTok{\# gamma\_grid shape: (N\_gamma, N\_beta)}
+    \CommentTok{\# beta\_grid  shape: (N\_gamma, N\_beta)}
+
+    \CommentTok{\# Flatten into 1D arrays of length N\_gamma * N\_beta}
+\NormalTok{    gamma\_flat }\OperatorTok{=}\NormalTok{ gamma\_grid.ravel()                                     }\CommentTok{\# (N\_gamma*N\_beta,)}
+\NormalTok{    beta\_flat }\OperatorTok{=}\NormalTok{ beta\_grid.ravel()                                       }\CommentTok{\# (N\_gamma*N\_beta,)}
+
+    \CommentTok{\# Assemble parameter matrix for all grid points}
+\NormalTok{    n\_points }\OperatorTok{=}\NormalTok{ n\_gamma }\OperatorTok{*}\NormalTok{ n\_beta}
+\NormalTok{    all\_params }\OperatorTok{=}\NormalTok{ np.zeros((n\_points, }\DecValTok{2} \OperatorTok{*}\NormalTok{ p))                            }\CommentTok{\# (N\_total, 2p)}
+\NormalTok{    all\_params[:, }\DecValTok{0}\NormalTok{] }\OperatorTok{=}\NormalTok{ gamma\_flat      }\CommentTok{\# first gamma for each point}
+\NormalTok{    all\_params[:, p] }\OperatorTok{=}\NormalTok{ beta\_flat       }\CommentTok{\# first beta for each point}
+
+    \CommentTok{\# Convert each parameter set into a PennyLane QuantumTape}
+\NormalTok{    tapes }\OperatorTok{=}\NormalTok{ []}
+    \ControlFlowTok{for}\NormalTok{ idx }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_points):}
+\NormalTok{        tape }\OperatorTok{=}\NormalTok{ qml.tape.QuantumScript(...)  }\CommentTok{\# build tape from qnode with all\_params[idx]}
+\NormalTok{        tapes.append(tape)}
+
+    \CommentTok{\# Execute all tapes in one batch {-}{-} exploits simulator vectorisation}
+\NormalTok{    results }\OperatorTok{=}\NormalTok{ qml.execute(tapes, device}\OperatorTok{=}\NormalTok{qnode.device, gradient\_fn}\OperatorTok{=}\VariableTok{None}\NormalTok{)}
+    \CommentTok{\# results: list of length N\_total, each a scalar expectation value}
+
+\NormalTok{    energies }\OperatorTok{=}\NormalTok{ np.array(results).reshape(n\_gamma, n\_beta)               }\CommentTok{\# (N\_gamma, N\_beta)}
+\NormalTok{    approx\_ratios }\OperatorTok{=}\NormalTok{ energies }\OperatorTok{/}\NormalTok{ c\_max}
+    \ControlFlowTok{return}\NormalTok{ LandscapeData(gamma\_vals, beta\_vals, energies, approx\_ratios)}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation:
+\texttt{report1\_scripts/landscape\_sampler.py})}
+
+\subsection{\texorpdfstring{Module 5:
+\texttt{noise\_model.py}}{Module 5: noise\_model.py}}\label{module-5-noise_model.py}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} noise\_model.py pseudocode {-}{-}{-}}
+
+\KeywordTok{def}\NormalTok{ create\_noisy\_device(n\_qubits, }\OperatorTok{**}\NormalTok{noise\_kwargs):}
+    \CommentTok{\# Device is noise{-}agnostic; channels are inserted inside the QNode}
+    \ControlFlowTok{return}\NormalTok{ qml.device(}\StringTok{"default.mixed"}\NormalTok{, wires}\OperatorTok{=}\NormalTok{n\_qubits)}
+
+
+\KeywordTok{def}\NormalTok{ noisy\_qaoa\_qnode(cost\_hamiltonian, n\_qubits, p, noise\_params):}
+\NormalTok{    dev }\OperatorTok{=}\NormalTok{ create\_noisy\_device(n\_qubits, }\OperatorTok{**}\NormalTok{noise\_params)}
+\NormalTok{    edges }\OperatorTok{=}\NormalTok{ extract\_edges\_from\_hamiltonian(cost\_hamiltonian)}
+
+    \AttributeTok{@qml.qnode}\NormalTok{(dev, diff\_method}\OperatorTok{=}\StringTok{"best"}\NormalTok{)}
+    \KeywordTok{def}\NormalTok{ circuit(params):}
+\NormalTok{        gammas }\OperatorTok{=}\NormalTok{ params[:p]                                   }\CommentTok{\# shape (p,)}
+\NormalTok{        betas }\OperatorTok{=}\NormalTok{ params[p:]                                    }\CommentTok{\# shape (p,)}
+
+        \CommentTok{\# {-}{-}{-} Hadamard layer + noise {-}{-}{-}}
+        \ControlFlowTok{for}\NormalTok{ q }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_qubits):}
+\NormalTok{            qml.Hadamard(wires}\OperatorTok{=}\NormalTok{q)}
+            \CommentTok{\# Insert single{-}qubit noise after each Hadamard}
+\NormalTok{            qml.DepolarizingChannel(noise\_params[}\StringTok{"depol\_rate"}\NormalTok{], wires}\OperatorTok{=}\NormalTok{q)}
+\NormalTok{            qml.ThermalRelaxationError(}
+\NormalTok{                noise\_params[}\StringTok{"t1"}\NormalTok{], noise\_params[}\StringTok{"t2"}\NormalTok{],}
+\NormalTok{                noise\_params[}\StringTok{"gate\_time\_1q"}\NormalTok{], wires}\OperatorTok{=}\NormalTok{q}
+\NormalTok{            )}
+
+        \ControlFlowTok{for}\NormalTok{ k }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(p):}
+            \CommentTok{\# {-}{-}{-} Cost layer + two{-}qubit noise {-}{-}{-}}
+            \ControlFlowTok{for}\NormalTok{ i, j, w }\KeywordTok{in}\NormalTok{ edges:}
+\NormalTok{                qml.IsingZZ(gammas[k] }\OperatorTok{*}\NormalTok{ w, wires}\OperatorTok{=}\NormalTok{[i, j])}
+                \CommentTok{\# Two{-}qubit noise: \textasciitilde{}10x single{-}qubit depol rate}
+                \ControlFlowTok{for}\NormalTok{ qubit }\KeywordTok{in}\NormalTok{ [i, j]:}
+\NormalTok{                    qml.DepolarizingChannel(}
+\NormalTok{                        noise\_params[}\StringTok{"depol\_rate"}\NormalTok{] }\OperatorTok{*} \DecValTok{10}\NormalTok{, wires}\OperatorTok{=}\NormalTok{qubit}
+\NormalTok{                    )}
+\NormalTok{                    qml.ThermalRelaxationError(}
+\NormalTok{                        noise\_params[}\StringTok{"t1"}\NormalTok{], noise\_params[}\StringTok{"t2"}\NormalTok{],}
+\NormalTok{                        noise\_params[}\StringTok{"gate\_time\_2q"}\NormalTok{], wires}\OperatorTok{=}\NormalTok{qubit}
+\NormalTok{                    )}
+
+            \CommentTok{\# {-}{-}{-} Mixer layer + single{-}qubit noise {-}{-}{-}}
+            \ControlFlowTok{for}\NormalTok{ q }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_qubits):}
+\NormalTok{                qml.RX(}\DecValTok{2} \OperatorTok{*}\NormalTok{ betas[k], wires}\OperatorTok{=}\NormalTok{q)}
+\NormalTok{                qml.DepolarizingChannel(noise\_params[}\StringTok{"depol\_rate"}\NormalTok{], wires}\OperatorTok{=}\NormalTok{q)}
+\NormalTok{                qml.ThermalRelaxationError(}
+\NormalTok{                    noise\_params[}\StringTok{"t1"}\NormalTok{], noise\_params[}\StringTok{"t2"}\NormalTok{],}
+\NormalTok{                    noise\_params[}\StringTok{"gate\_time\_1q"}\NormalTok{], wires}\OperatorTok{=}\NormalTok{q}
+\NormalTok{                )}
+
+        \ControlFlowTok{return}\NormalTok{ qml.expval(cost\_hamiltonian)}
+    \ControlFlowTok{return}\NormalTok{ circuit}
+
+
+\KeywordTok{def}\NormalTok{ lindblad\_simulation(initial\_state, hamiltonian, collapse\_ops, tlist,}
+\NormalTok{                        observables):}
+    \CommentTok{\# initial\_state: qutip.Qobj density matrix of shape (2\^{}N, 2\^{}N)}
+    \CommentTok{\# hamiltonian:   qutip.Qobj Hamiltonian of shape (2\^{}N, 2\^{}N)}
+    \CommentTok{\# collapse\_ops:  list of qutip.Qobj, each shape (2\^{}N, 2\^{}N)}
+    \CommentTok{\# tlist:         np.ndarray of time points, shape (T,)}
+
+    \CommentTok{\# Build per{-}qubit collapse operators as tensor products:}
+    \CommentTok{\#   Amplitude damping: L\_ad = sqrt(1/T1) * sigma\_minus, tensored}
+    \CommentTok{\#   Pure dephasing:    L\_pd = sqrt(1/T2 {-} 1/(2*T1)) * Z/2, tensored}
+    \ControlFlowTok{for}\NormalTok{ q }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_qubits):}
+\NormalTok{        gamma\_1 }\OperatorTok{=} \FloatTok{1.0} \OperatorTok{/}\NormalTok{ T1}
+\NormalTok{        gamma\_phi }\OperatorTok{=} \FloatTok{1.0} \OperatorTok{/}\NormalTok{ T2 }\OperatorTok{{-}} \FloatTok{1.0} \OperatorTok{/}\NormalTok{ (}\DecValTok{2} \OperatorTok{*}\NormalTok{ T1)}
+        \CommentTok{\# Tensor product: I (x) ... (x) sigma\_minus (x) ... (x) I}
+\NormalTok{        L\_ad }\OperatorTok{=}\NormalTok{ np.sqrt(gamma\_1) }\OperatorTok{*}\NormalTok{ tensor\_single\_op(qutip.destroy(}\DecValTok{2}\NormalTok{), q, n\_qubits)}
+\NormalTok{        L\_pd }\OperatorTok{=}\NormalTok{ np.sqrt(gamma\_phi) }\OperatorTok{*}\NormalTok{ tensor\_single\_op(qutip.sigmaz() }\OperatorTok{/} \DecValTok{2}\NormalTok{, q, n\_qubits)}
+\NormalTok{        collapse\_ops.extend([L\_ad, L\_pd])}
+
+    \CommentTok{\# Solve Lindblad master equation}
+\NormalTok{    result }\OperatorTok{=}\NormalTok{ qutip.mesolve(}
+\NormalTok{        hamiltonian, initial\_state, tlist,}
+\NormalTok{        c\_ops}\OperatorTok{=}\NormalTok{collapse\_ops,}
+\NormalTok{        e\_ops}\OperatorTok{=}\NormalTok{[observables[label] }\ControlFlowTok{for}\NormalTok{ label }\KeywordTok{in}\NormalTok{ observables],}
+\NormalTok{    )}
+    \CommentTok{\# result.expect[k] is np.ndarray of shape (T,) for k{-}th observable}
+    \ControlFlowTok{return}\NormalTok{ \{label: result.expect[k] }\ControlFlowTok{for}\NormalTok{ k, label }\KeywordTok{in} \BuiltInTok{enumerate}\NormalTok{(observables)\}}
+
+
+\KeywordTok{def}\NormalTok{ compare\_noise\_channels(n\_qubits, circuit\_params, noise\_params):}
+    \CommentTok{\# 1. PennyLane channel model}
+\NormalTok{    qnode\_pl }\OperatorTok{=}\NormalTok{ noisy\_qaoa\_qnode(...)}
+\NormalTok{    energy\_pl }\OperatorTok{=} \BuiltInTok{float}\NormalTok{(qnode\_pl(circuit\_params))}
+    \CommentTok{\# Extract density matrix from PennyLane (via qml.state())}
+\NormalTok{    rho\_pl }\OperatorTok{=}\NormalTok{ ...                         }\CommentTok{\# shape (2\^{}N, 2\^{}N) complex}
+
+    \CommentTok{\# 2. QuTiP Lindblad model}
+    \CommentTok{\# Initialise |+\textgreater{}\^{}N as a density matrix}
+\NormalTok{    plus }\OperatorTok{=}\NormalTok{ (qutip.basis(}\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{) }\OperatorTok{+}\NormalTok{ qutip.basis(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{)).unit()}
+\NormalTok{    rho0 }\OperatorTok{=}\NormalTok{ qutip.tensor([plus }\OperatorTok{*}\NormalTok{ plus.dag()] }\OperatorTok{*}\NormalTok{ n\_qubits)    }\CommentTok{\# (2\^{}N, 2\^{}N)}
+    \CommentTok{\# Step through each gate as piecewise{-}constant Hamiltonian evolution}
+    \CommentTok{\# ... (build H\_gate for each gate, evolve for gate\_time) ...}
+\NormalTok{    result }\OperatorTok{=}\NormalTok{ lindblad\_simulation(rho0, H\_total, collapse\_ops, tlist, ...)}
+\NormalTok{    energy\_qt }\OperatorTok{=}\NormalTok{ result[}\StringTok{"H\_C"}\NormalTok{][}\OperatorTok{{-}}\DecValTok{1}\NormalTok{]        }\CommentTok{\# final time{-}step energy}
+
+    \CommentTok{\# 3. Compare}
+\NormalTok{    fidelity }\OperatorTok{=}\NormalTok{ qutip.fidelity(rho\_pl\_qobj, rho\_qt)}
+\NormalTok{    purity\_pl }\OperatorTok{=}\NormalTok{ np.real(np.trace(rho\_pl }\OperatorTok{@}\NormalTok{ rho\_pl))}
+\NormalTok{    purity\_qt }\OperatorTok{=}\NormalTok{ np.real((rho\_qt }\OperatorTok{*}\NormalTok{ rho\_qt).tr())}
+    \ControlFlowTok{return}\NormalTok{ \{}\StringTok{"energy\_pennylane"}\NormalTok{: energy\_pl, }\StringTok{"energy\_qutip"}\NormalTok{: energy\_qt,}
+            \StringTok{"fidelity"}\NormalTok{: fidelity, }\StringTok{"purity\_pl"}\NormalTok{: purity\_pl, }\StringTok{"purity\_qt"}\NormalTok{: purity\_qt\}}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation: \texttt{report1\_scripts/noise\_model.py})}
+
+\subsection{\texorpdfstring{Module 6:
+\texttt{hardware\_runner.py}}{Module 6: hardware\_runner.py}}\label{module-6-hardware_runner.py}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} hardware\_runner.py pseudocode {-}{-}{-}}
+
+\KeywordTok{def}\NormalTok{ create\_ibm\_device(n\_qubits, backend\_name, shots, ibm\_token):}
+    \ImportTok{import}\NormalTok{ os}
+\NormalTok{    token }\OperatorTok{=}\NormalTok{ ibm\_token }\KeywordTok{or}\NormalTok{ os.environ.get(}\StringTok{"IBMQ\_TOKEN"}\NormalTok{)}
+    \CommentTok{\# PennyLane{-}Qiskit plugin handles transpilation internally}
+\NormalTok{    dev }\OperatorTok{=}\NormalTok{ qml.device(}\StringTok{"qiskit.ibmq"}\NormalTok{, wires}\OperatorTok{=}\NormalTok{n\_qubits,}
+\NormalTok{                      backend}\OperatorTok{=}\NormalTok{backend\_name, shots}\OperatorTok{=}\NormalTok{shots, ibmqx\_token}\OperatorTok{=}\NormalTok{token)}
+    \ControlFlowTok{return}\NormalTok{ dev}
+
+
+\KeywordTok{def}\NormalTok{ create\_iqm\_device(n\_qubits, backend\_url, shots):}
+\NormalTok{    dev }\OperatorTok{=}\NormalTok{ qml.device(}\StringTok{"iqm.iqm\_device"}\NormalTok{, wires}\OperatorTok{=}\NormalTok{n\_qubits,}
+\NormalTok{                      url}\OperatorTok{=}\NormalTok{backend\_url, shots}\OperatorTok{=}\NormalTok{shots)}
+    \ControlFlowTok{return}\NormalTok{ dev}
+
+
+\KeywordTok{def}\NormalTok{ execute\_on\_hardware(qnode, params, cost\_hamiltonian):}
+    \ImportTok{import}\NormalTok{ time}
+\NormalTok{    t0 }\OperatorTok{=}\NormalTok{ time.perf\_counter()}
+
+    \CommentTok{\# Strategy 1: direct expectation (preferred)}
+\NormalTok{    energy }\OperatorTok{=} \BuiltInTok{float}\NormalTok{(qnode(params))         }\CommentTok{\# qml.expval(H\_C) internally}
+
+    \CommentTok{\# Strategy 2 (alternative): sample{-}based post{-}processing}
+    \CommentTok{\# samples = qnode\_sample(params)      \# shape (S, N) binary array}
+    \CommentTok{\# for s in range(S):}
+    \CommentTok{\#     z = samples[s]                  \# shape (N,) binary}
+    \CommentTok{\#     spin = 1 {-} 2 * z               \# \{0,1\} {-}\textgreater{} \{+1,{-}1\}}
+    \CommentTok{\#     for i, j, w in edges:}
+    \CommentTok{\#         C\_s += w/2 * (1 {-} spin[i] * spin[j])}
+    \CommentTok{\# energy = np.mean(C\_values)}
+
+\NormalTok{    wall\_time }\OperatorTok{=}\NormalTok{ time.perf\_counter() }\OperatorTok{{-}}\NormalTok{ t0}
+    \ControlFlowTok{return}\NormalTok{ HardwareResult(energy, ..., shots, backend\_name, wall\_time)}
+
+
+\KeywordTok{def}\NormalTok{ select\_optimal\_qubits(backend\_name, n\_qubits, ibm\_token):}
+    \ImportTok{from}\NormalTok{ qiskit\_ibm\_runtime }\ImportTok{import}\NormalTok{ QiskitRuntimeService}
+\NormalTok{    service }\OperatorTok{=}\NormalTok{ QiskitRuntimeService(channel}\OperatorTok{=}\StringTok{"ibm\_quantum"}\NormalTok{, token}\OperatorTok{=}\NormalTok{ibm\_token)}
+\NormalTok{    backend }\OperatorTok{=}\NormalTok{ service.backend(backend\_name)}
+\NormalTok{    props }\OperatorTok{=}\NormalTok{ backend.properties()}
+
+    \CommentTok{\# Build weighted graph over physical qubits}
+\NormalTok{    coupling }\OperatorTok{=}\NormalTok{ backend.configuration().coupling\_map   }\CommentTok{\# list of [q\_i, q\_j] pairs}
+\NormalTok{    G }\OperatorTok{=}\NormalTok{ nx.Graph()}
+    \ControlFlowTok{for}\NormalTok{ qi, qj }\KeywordTok{in}\NormalTok{ coupling:}
+\NormalTok{        cx\_error }\OperatorTok{=}\NormalTok{ props.gate\_error(}\StringTok{"cx"}\NormalTok{, [qi, qj])}
+\NormalTok{        G.add\_edge(qi, qj, weight}\OperatorTok{=}\FloatTok{1.0} \OperatorTok{/}\NormalTok{ cx\_error)    }\CommentTok{\# weight = 1 / eps\_CX}
+
+    \ControlFlowTok{for}\NormalTok{ q }\KeywordTok{in}\NormalTok{ G.nodes():}
+\NormalTok{        G.nodes[q][}\StringTok{"t1"}\NormalTok{] }\OperatorTok{=}\NormalTok{ props.t1(q)}
+\NormalTok{        G.nodes[q][}\StringTok{"t2"}\NormalTok{] }\OperatorTok{=}\NormalTok{ props.t2(q)}
+
+    \CommentTok{\# Search for the best size{-}N connected subgraph via BFS enumeration}
+\NormalTok{    best\_score }\OperatorTok{=} \OperatorTok{{-}}\NormalTok{np.inf}
+\NormalTok{    best\_subgraph }\OperatorTok{=} \VariableTok{None}
+\NormalTok{    alpha }\OperatorTok{=} \FloatTok{0.1}
+    \ControlFlowTok{for}\NormalTok{ seed\_node }\KeywordTok{in}\NormalTok{ G.nodes():}
+\NormalTok{        subgraph }\OperatorTok{=}\NormalTok{ bfs\_subgraph(G, seed\_node, n\_qubits)   }\CommentTok{\# first N reachable nodes}
+\NormalTok{        score }\OperatorTok{=}\NormalTok{ (}
+            \BuiltInTok{sum}\NormalTok{(G[u][v][}\StringTok{"weight"}\NormalTok{] }\ControlFlowTok{for}\NormalTok{ u, v }\KeywordTok{in}\NormalTok{ subgraph.edges())}
+            \OperatorTok{+}\NormalTok{ alpha }\OperatorTok{*} \BuiltInTok{sum}\NormalTok{(G.nodes[q][}\StringTok{"t1"}\NormalTok{] }\OperatorTok{*}\NormalTok{ G.nodes[q][}\StringTok{"t2"}\NormalTok{]}
+                          \ControlFlowTok{for}\NormalTok{ q }\KeywordTok{in}\NormalTok{ subgraph.nodes())}
+\NormalTok{        )}
+        \ControlFlowTok{if}\NormalTok{ score }\OperatorTok{\textgreater{}}\NormalTok{ best\_score:}
+\NormalTok{            best\_score }\OperatorTok{=}\NormalTok{ score}
+\NormalTok{            best\_subgraph }\OperatorTok{=}\NormalTok{ subgraph}
+    \ControlFlowTok{return} \BuiltInTok{list}\NormalTok{(best\_subgraph.nodes())}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation:
+\texttt{report1\_scripts/hardware\_runner.py})}
+
+\subsection{\texorpdfstring{Module 7:
+\texttt{error\_mitigation.py}}{Module 7: error\_mitigation.py}}\label{module-7-error_mitigation.py}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} error\_mitigation.py pseudocode {-}{-}{-}}
+
+\KeywordTok{def}\NormalTok{ global\_fold(circuit\_fn, scale\_factor):}
+    \CommentTok{"""Produce a noise{-}amplified circuit by global unitary folding."""}
+\NormalTok{    n }\OperatorTok{=} \BuiltInTok{int}\NormalTok{((scale\_factor }\OperatorTok{{-}} \DecValTok{1}\NormalTok{) }\OperatorTok{/} \DecValTok{2}\NormalTok{)           }\CommentTok{\# full folding repetitions}
+\NormalTok{    frac }\OperatorTok{=}\NormalTok{ (scale\_factor }\OperatorTok{{-}} \DecValTok{1}\NormalTok{) }\OperatorTok{/} \DecValTok{2} \OperatorTok{{-}}\NormalTok{ n         }\CommentTok{\# fractional remainder}
+
+    \CommentTok{\# Record original circuit operations from PennyLane tape}
+\NormalTok{    original\_tape }\OperatorTok{=}\NormalTok{ qml.tape.QuantumScript(...)}
+\NormalTok{    ops }\OperatorTok{=}\NormalTok{ original\_tape.operations              }\CommentTok{\# list of gate operations}
+\NormalTok{    N\_gates }\OperatorTok{=} \BuiltInTok{len}\NormalTok{(ops)}
+
+    \KeywordTok{def}\NormalTok{ folded\_circuit(params):}
+        \CommentTok{\# 1. Apply original circuit U}
+        \ControlFlowTok{for}\NormalTok{ op }\KeywordTok{in}\NormalTok{ ops:}
+\NormalTok{            qml.}\BuiltInTok{apply}\NormalTok{(op)}
+
+        \CommentTok{\# 2. Apply n full folds: (U\^{}dag U) repeated n times}
+        \ControlFlowTok{for}\NormalTok{ \_ }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n):}
+            \CommentTok{\# U\^{}dag: apply ops in reverse, each adjointed}
+            \ControlFlowTok{for}\NormalTok{ op }\KeywordTok{in} \BuiltInTok{reversed}\NormalTok{(ops):}
+\NormalTok{                qml.adjoint(op)}
+            \CommentTok{\# U: apply ops forward again}
+            \ControlFlowTok{for}\NormalTok{ op }\KeywordTok{in}\NormalTok{ ops:}
+\NormalTok{                qml.}\BuiltInTok{apply}\NormalTok{(op)}
+
+        \CommentTok{\# 3. Partial fold for non{-}integer scale factors}
+        \ControlFlowTok{if}\NormalTok{ frac }\OperatorTok{\textgreater{}} \DecValTok{0}\NormalTok{:}
+\NormalTok{            n\_partial }\OperatorTok{=} \BuiltInTok{int}\NormalTok{(}\BuiltInTok{round}\NormalTok{(frac }\OperatorTok{*}\NormalTok{ N\_gates))  }\CommentTok{\# gates to partially fold}
+\NormalTok{            tail\_ops }\OperatorTok{=}\NormalTok{ ops[}\OperatorTok{{-}}\NormalTok{n\_partial:]              }\CommentTok{\# last n\_partial gates}
+            \CommentTok{\# Adjoint of the tail}
+            \ControlFlowTok{for}\NormalTok{ op }\KeywordTok{in} \BuiltInTok{reversed}\NormalTok{(tail\_ops):}
+\NormalTok{                qml.adjoint(op)}
+            \CommentTok{\# Re{-}apply the tail}
+            \ControlFlowTok{for}\NormalTok{ op }\KeywordTok{in}\NormalTok{ tail\_ops:}
+\NormalTok{                qml.}\BuiltInTok{apply}\NormalTok{(op)}
+
+    \ControlFlowTok{return}\NormalTok{ folded\_circuit}
+
+
+\KeywordTok{def}\NormalTok{ zne\_extrapolate(qnode, params, scale\_factors, extrapolation):}
+\NormalTok{    noisy\_values }\OperatorTok{=}\NormalTok{ []                              }\CommentTok{\# shape will be (M,)}
+    \ControlFlowTok{for}\NormalTok{ lam }\KeywordTok{in}\NormalTok{ scale\_factors:}
+        \CommentTok{\# Build a folded QNode at scale factor lambda}
+\NormalTok{        folded\_qnode }\OperatorTok{=}\NormalTok{ build\_folded\_qnode(qnode, lam)   }\CommentTok{\# uses global\_fold}
+\NormalTok{        E\_lam }\OperatorTok{=} \BuiltInTok{float}\NormalTok{(folded\_qnode(params))}
+\NormalTok{        noisy\_values.append(E\_lam)}
+
+\NormalTok{    scale\_arr }\OperatorTok{=}\NormalTok{ np.array(scale\_factors)            }\CommentTok{\# shape (M,)}
+\NormalTok{    noisy\_arr }\OperatorTok{=}\NormalTok{ np.array(noisy\_values)             }\CommentTok{\# shape (M,)}
+
+    \ControlFlowTok{if}\NormalTok{ extrapolation }\OperatorTok{==} \StringTok{"linear"}\NormalTok{:}
+\NormalTok{        E0 }\OperatorTok{=}\NormalTok{ linear\_extrapolation(scale\_arr, noisy\_arr)}
+    \ControlFlowTok{elif}\NormalTok{ extrapolation }\OperatorTok{==} \StringTok{"richardson"}\NormalTok{:}
+\NormalTok{        E0 }\OperatorTok{=}\NormalTok{ richardson\_extrapolation(scale\_arr, noisy\_arr)}
+
+    \ControlFlowTok{return}\NormalTok{ E0, \{}\StringTok{"noisy\_values"}\NormalTok{: noisy\_arr, }\StringTok{"scale\_factors"}\NormalTok{: scale\_arr\}}
+
+
+\KeywordTok{def}\NormalTok{ richardson\_extrapolation(scale\_factors, noisy\_values):}
+    \CommentTok{\# scale\_factors: shape (M,)   noisy\_values: shape (M,)}
+\NormalTok{    M }\OperatorTok{=} \BuiltInTok{len}\NormalTok{(scale\_factors)}
+    \CommentTok{\# Build Vandermonde matrix V[i, j] = scale\_factors[i]\^{}j}
+\NormalTok{    V }\OperatorTok{=}\NormalTok{ np.vander(scale\_factors, N}\OperatorTok{=}\NormalTok{M, increasing}\OperatorTok{=}\VariableTok{True}\NormalTok{)  }\CommentTok{\# shape (M, M)}
+    \CommentTok{\# Solve V @ a = E for coefficient vector a}
+\NormalTok{    a }\OperatorTok{=}\NormalTok{ np.linalg.solve(V, noisy\_values)                }\CommentTok{\# shape (M,)}
+    \ControlFlowTok{return}\NormalTok{ a[}\DecValTok{0}\NormalTok{]                           }\CommentTok{\# a\_0 = E(lambda=0)}
+
+
+\KeywordTok{def}\NormalTok{ linear\_extrapolation(scale\_factors, noisy\_values):}
+    \CommentTok{\# Fit E(lambda) = a + b*lambda via least{-}squares}
+    \CommentTok{\# Design matrix: [[1, lambda\_1], [1, lambda\_2], ...]}
+\NormalTok{    A }\OperatorTok{=}\NormalTok{ np.column\_stack([np.ones\_like(scale\_factors), scale\_factors])  }\CommentTok{\# (M, 2)}
+\NormalTok{    coeffs, }\OperatorTok{*}\NormalTok{\_ }\OperatorTok{=}\NormalTok{ np.linalg.lstsq(A, noisy\_values, rcond}\OperatorTok{=}\VariableTok{None}\NormalTok{)        }\CommentTok{\# (2,)}
+    \ControlFlowTok{return}\NormalTok{ coeffs[}\DecValTok{0}\NormalTok{]                      }\CommentTok{\# a = E(0)}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation:
+\texttt{report1\_scripts/error\_mitigation.py})}
+
+\subsection{\texorpdfstring{Module 8:
+\texttt{renderer.py}}{Module 8: renderer.py}}\label{module-8-renderer.py}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} renderer.py pseudocode {-}{-}{-}}
+
+\KeywordTok{def}\NormalTok{ init\_opengl\_context(width, height, title):}
+\NormalTok{    glfw.init()}
+\NormalTok{    glfw.window\_hint(glfw.CONTEXT\_VERSION\_MAJOR, }\DecValTok{3}\NormalTok{)}
+\NormalTok{    glfw.window\_hint(glfw.CONTEXT\_VERSION\_MINOR, }\DecValTok{3}\NormalTok{)}
+\NormalTok{    glfw.window\_hint(glfw.OPENGL\_PROFILE, glfw.OPENGL\_CORE\_PROFILE)}
+\NormalTok{    glfw.window\_hint(glfw.SAMPLES, }\DecValTok{4}\NormalTok{)              }\CommentTok{\# 4x MSAA}
+\NormalTok{    window }\OperatorTok{=}\NormalTok{ glfw.create\_window(width, height, title, }\VariableTok{None}\NormalTok{, }\VariableTok{None}\NormalTok{)}
+\NormalTok{    glfw.make\_context\_current(window)}
+\NormalTok{    glEnable(GL\_DEPTH\_TEST)}
+\NormalTok{    glEnable(GL\_MULTISAMPLE)}
+\NormalTok{    glEnable(GL\_BLEND)}
+\NormalTok{    glBlendFunc(GL\_SRC\_ALPHA, GL\_ONE\_MINUS\_SRC\_ALPHA)}
+    \ControlFlowTok{return}\NormalTok{ window}
+
+
+\KeywordTok{def}\NormalTok{ create\_surface\_vbo(gamma\_vals, beta\_vals, energies):}
+\NormalTok{    n\_gamma, n\_beta }\OperatorTok{=} \BuiltInTok{len}\NormalTok{(gamma\_vals), }\BuiltInTok{len}\NormalTok{(beta\_vals)}
+
+    \CommentTok{\# {-}{-}{-} Vertex data: 7 floats per vertex (28 bytes) {-}{-}{-}}
+    \CommentTok{\# [gamma, beta, energy, nx, ny, nz, norm\_energy]}
+\NormalTok{    vertices }\OperatorTok{=}\NormalTok{ np.zeros((n\_gamma }\OperatorTok{*}\NormalTok{ n\_beta, }\DecValTok{7}\NormalTok{), dtype}\OperatorTok{=}\NormalTok{np.float32)}
+    \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_gamma):}
+        \ControlFlowTok{for}\NormalTok{ j }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_beta):}
+\NormalTok{            idx }\OperatorTok{=}\NormalTok{ i }\OperatorTok{*}\NormalTok{ n\_beta }\OperatorTok{+}\NormalTok{ j}
+\NormalTok{            E }\OperatorTok{=}\NormalTok{ energies[i, j]}
+\NormalTok{            vertices[idx, }\DecValTok{0}\NormalTok{:}\DecValTok{3}\NormalTok{] }\OperatorTok{=}\NormalTok{ [gamma\_vals[i], beta\_vals[j], E]}
+            \CommentTok{\# Finite{-}difference surface normals: n = ({-}dE/dgamma, {-}dE/dbeta, 1)}
+\NormalTok{            dEdg }\OperatorTok{=}\NormalTok{ (energies[}\BuiltInTok{min}\NormalTok{(i}\OperatorTok{+}\DecValTok{1}\NormalTok{, n\_gamma}\OperatorTok{{-}}\DecValTok{1}\NormalTok{), j] }\OperatorTok{{-}}\NormalTok{ energies[}\BuiltInTok{max}\NormalTok{(i}\OperatorTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{), j]) }\OperatorTok{/}\NormalTok{ ...}
+\NormalTok{            dEdb }\OperatorTok{=}\NormalTok{ (energies[i, }\BuiltInTok{min}\NormalTok{(j}\OperatorTok{+}\DecValTok{1}\NormalTok{, n\_beta}\OperatorTok{{-}}\DecValTok{1}\NormalTok{)] }\OperatorTok{{-}}\NormalTok{ energies[i, }\BuiltInTok{max}\NormalTok{(j}\OperatorTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)]) }\OperatorTok{/}\NormalTok{ ...}
+\NormalTok{            normal }\OperatorTok{=}\NormalTok{ np.array([}\OperatorTok{{-}}\NormalTok{dEdg, }\OperatorTok{{-}}\NormalTok{dEdb, }\FloatTok{1.0}\NormalTok{])}
+\NormalTok{            normal }\OperatorTok{/=}\NormalTok{ np.linalg.norm(normal)}
+\NormalTok{            vertices[idx, }\DecValTok{3}\NormalTok{:}\DecValTok{6}\NormalTok{] }\OperatorTok{=}\NormalTok{ normal}
+\NormalTok{            vertices[idx, }\DecValTok{6}\NormalTok{] }\OperatorTok{=}\NormalTok{ ...                  }\CommentTok{\# normalised energy in [0, 1]}
+
+    \CommentTok{\# {-}{-}{-} Index data: 2 triangles per grid cell {-}{-}{-}}
+\NormalTok{    indices }\OperatorTok{=}\NormalTok{ []                                     }\CommentTok{\# uint32}
+    \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_gamma }\OperatorTok{{-}} \DecValTok{1}\NormalTok{):}
+        \ControlFlowTok{for}\NormalTok{ j }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(n\_beta }\OperatorTok{{-}} \DecValTok{1}\NormalTok{):}
+\NormalTok{            tl }\OperatorTok{=}\NormalTok{ i }\OperatorTok{*}\NormalTok{ n\_beta }\OperatorTok{+}\NormalTok{ j                      }\CommentTok{\# top{-}left}
+\NormalTok{            tr }\OperatorTok{=}\NormalTok{ (i }\OperatorTok{+} \DecValTok{1}\NormalTok{) }\OperatorTok{*}\NormalTok{ n\_beta }\OperatorTok{+}\NormalTok{ j                }\CommentTok{\# top{-}right}
+\NormalTok{            bl }\OperatorTok{=}\NormalTok{ i }\OperatorTok{*}\NormalTok{ n\_beta }\OperatorTok{+}\NormalTok{ (j }\OperatorTok{+} \DecValTok{1}\NormalTok{)                }\CommentTok{\# bottom{-}left}
+\NormalTok{            br }\OperatorTok{=}\NormalTok{ (i }\OperatorTok{+} \DecValTok{1}\NormalTok{) }\OperatorTok{*}\NormalTok{ n\_beta }\OperatorTok{+}\NormalTok{ (j }\OperatorTok{+} \DecValTok{1}\NormalTok{)          }\CommentTok{\# bottom{-}right}
+\NormalTok{            indices.extend([tl, bl, tr, bl, br, tr])}
+    \CommentTok{\# Total triangles: 2 * (N\_gamma {-} 1) * (N\_beta {-} 1)}
+
+    \CommentTok{\# {-}{-}{-} GPU upload {-}{-}{-}}
+\NormalTok{    vao }\OperatorTok{=}\NormalTok{ glGenVertexArrays(}\DecValTok{1}\NormalTok{)}
+\NormalTok{    vbo }\OperatorTok{=}\NormalTok{ glGenBuffers(}\DecValTok{1}\NormalTok{)}
+\NormalTok{    ebo }\OperatorTok{=}\NormalTok{ glGenBuffers(}\DecValTok{1}\NormalTok{)}
+\NormalTok{    glBindVertexArray(vao)}
+\NormalTok{    glBindBuffer(GL\_ARRAY\_BUFFER, vbo)}
+\NormalTok{    glBufferData(GL\_ARRAY\_BUFFER, vertices.nbytes, vertices, GL\_DYNAMIC\_DRAW)}
+\NormalTok{    glBindBuffer(GL\_ELEMENT\_ARRAY\_BUFFER, ebo)}
+\NormalTok{    glBufferData(GL\_ELEMENT\_ARRAY\_BUFFER, ...)}
+    \CommentTok{\# Attribute 0: position (3 floats, offset 0, stride 28)}
+\NormalTok{    glVertexAttribPointer(}\DecValTok{0}\NormalTok{, }\DecValTok{3}\NormalTok{, GL\_FLOAT, GL\_FALSE, }\DecValTok{28}\NormalTok{, ctypes.c\_void\_p(}\DecValTok{0}\NormalTok{))}
+    \CommentTok{\# Attribute 1: normal (3 floats, offset 12, stride 28)}
+\NormalTok{    glVertexAttribPointer(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, GL\_FLOAT, GL\_FALSE, }\DecValTok{28}\NormalTok{, ctypes.c\_void\_p(}\DecValTok{12}\NormalTok{))}
+    \CommentTok{\# Attribute 2: energy (1 float, offset 24, stride 28)}
+\NormalTok{    glVertexAttribPointer(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{, GL\_FLOAT, GL\_FALSE, }\DecValTok{28}\NormalTok{, ctypes.c\_void\_p(}\DecValTok{24}\NormalTok{))}
+\NormalTok{    ...}
+    \ControlFlowTok{return}\NormalTok{ vao, vbo, ebo, }\BuiltInTok{len}\NormalTok{(indices)}
+
+
+\KeywordTok{def}\NormalTok{ draw\_optimizer\_trajectory(trajectory, shader\_program):}
+\NormalTok{    n }\OperatorTok{=} \BuiltInTok{len}\NormalTok{(trajectory)}
+    \CommentTok{\# Each vertex: (gamma, beta, energy, t) {-}{-} t in [0,1] for colour}
+\NormalTok{    verts }\OperatorTok{=}\NormalTok{ np.zeros((n, }\DecValTok{4}\NormalTok{), dtype}\OperatorTok{=}\NormalTok{np.float32)}
+    \ControlFlowTok{for}\NormalTok{ k, (gamma, beta, energy) }\KeywordTok{in} \BuiltInTok{enumerate}\NormalTok{(trajectory):}
+\NormalTok{        verts[k] }\OperatorTok{=}\NormalTok{ [gamma, beta, energy }\OperatorTok{+} \FloatTok{0.01}\NormalTok{, k }\OperatorTok{/} \BuiltInTok{max}\NormalTok{(n }\OperatorTok{{-}} \DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)]  }\CommentTok{\# z{-}offset}
+    \CommentTok{\# Upload as GL\_STREAM\_DRAW, draw as GL\_LINE\_STRIP}
+\NormalTok{    ...}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation: \texttt{report1\_scripts/renderer.py})}
+
+\subsection{\texorpdfstring{Module 9:
+\texttt{main.py}}{Module 9: main.py}}\label{module-9-main.py}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-} main.py pseudocode {-}{-}{-}}
+
+\KeywordTok{def}\NormalTok{ parse\_args():}
+\NormalTok{    parser }\OperatorTok{=}\NormalTok{ argparse.ArgumentParser(description}\OperatorTok{=}\StringTok{"QAOA Energy Landscape Explorer"}\NormalTok{)}
+\NormalTok{    parser.add\_argument(}\StringTok{"{-}{-}graph{-}type"}\NormalTok{, choices}\OperatorTok{=}\NormalTok{[...], default}\OperatorTok{=}\StringTok{"cycle"}\NormalTok{)}
+\NormalTok{    parser.add\_argument(}\StringTok{"{-}{-}n{-}nodes"}\NormalTok{, }\BuiltInTok{type}\OperatorTok{=}\BuiltInTok{int}\NormalTok{, default}\OperatorTok{=}\DecValTok{6}\NormalTok{)}
+\NormalTok{    parser.add\_argument(}\StringTok{"{-}{-}p"}\NormalTok{, }\BuiltInTok{type}\OperatorTok{=}\BuiltInTok{int}\NormalTok{, default}\OperatorTok{=}\DecValTok{1}\NormalTok{)}
+\NormalTok{    parser.add\_argument(}\StringTok{"{-}{-}optimizer"}\NormalTok{, choices}\OperatorTok{=}\NormalTok{[}\StringTok{"COBYLA"}\NormalTok{,}\StringTok{"L{-}BFGS{-}B"}\NormalTok{,}\StringTok{"SPSA"}\NormalTok{,}\StringTok{"Adam"}\NormalTok{])}
+\NormalTok{    parser.add\_argument(}\StringTok{"{-}{-}grid{-}size"}\NormalTok{, }\BuiltInTok{type}\OperatorTok{=}\BuiltInTok{int}\NormalTok{, default}\OperatorTok{=}\DecValTok{50}\NormalTok{)}
+\NormalTok{    parser.add\_argument(}\StringTok{"{-}{-}noise"}\NormalTok{, action}\OperatorTok{=}\StringTok{"store\_true"}\NormalTok{)}
+\NormalTok{    parser.add\_argument(}\StringTok{"{-}{-}hardware"}\NormalTok{, action}\OperatorTok{=}\StringTok{"store\_true"}\NormalTok{)}
+\NormalTok{    parser.add\_argument(}\StringTok{"{-}{-}backend"}\NormalTok{, }\BuiltInTok{type}\OperatorTok{=}\BuiltInTok{str}\NormalTok{, default}\OperatorTok{=}\StringTok{"ibm\_brisbane"}\NormalTok{)}
+\NormalTok{    parser.add\_argument(}\StringTok{"{-}{-}zne"}\NormalTok{, action}\OperatorTok{=}\StringTok{"store\_true"}\NormalTok{)}
+\NormalTok{    parser.add\_argument(}\StringTok{"{-}{-}render"}\NormalTok{, action}\OperatorTok{=}\StringTok{"store\_true"}\NormalTok{)}
+\NormalTok{    parser.add\_argument(}\StringTok{"{-}{-}config"}\NormalTok{, }\BuiltInTok{type}\OperatorTok{=}\BuiltInTok{str}\NormalTok{, default}\OperatorTok{=}\StringTok{"config.yaml"}\NormalTok{)}
+\NormalTok{    parser.add\_argument(}\StringTok{"{-}{-}seed"}\NormalTok{, }\BuiltInTok{type}\OperatorTok{=}\BuiltInTok{int}\NormalTok{, default}\OperatorTok{=}\DecValTok{42}\NormalTok{)}
+    \ControlFlowTok{return}\NormalTok{ parser.parse\_args()}
+
+
+\KeywordTok{def}\NormalTok{ run\_pipeline(args):}
+    \CommentTok{\# 1. Graph generation}
+\NormalTok{    graph }\OperatorTok{=}\NormalTok{ create\_graph(args.graph\_type, args.n\_nodes, seed}\OperatorTok{=}\NormalTok{args.seed)}
+\NormalTok{    H\_C }\OperatorTok{=}\NormalTok{ build\_cost\_hamiltonian(graph)}
+    \CommentTok{\# Brute{-}force C\_max for N \textless{}= 20}
+    \ControlFlowTok{if}\NormalTok{ args.n\_nodes }\OperatorTok{\textless{}=} \DecValTok{20}\NormalTok{:}
+\NormalTok{        c\_max }\OperatorTok{=}\NormalTok{ brute\_force\_max\_cut(graph)}
+\NormalTok{    ...}
+
+    \CommentTok{\# 2. Device selection}
+    \ControlFlowTok{if}\NormalTok{ args.hardware:}
+\NormalTok{        dev }\OperatorTok{=}\NormalTok{ create\_ibm\_device(args.n\_nodes, args.backend)}
+    \ControlFlowTok{elif}\NormalTok{ args.noise:}
+\NormalTok{        dev }\OperatorTok{=}\NormalTok{ create\_noisy\_device(args.n\_nodes, ...)}
+    \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{        dev }\OperatorTok{=}\NormalTok{ qml.device(}\StringTok{"default.qubit"}\NormalTok{, wires}\OperatorTok{=}\NormalTok{args.n\_nodes)}
+
+\NormalTok{    qnode }\OperatorTok{=}\NormalTok{ build\_qaoa\_circuit(H\_C, args.n\_nodes, args.p, dev)}
+
+    \CommentTok{\# 3. Landscape sampling (p=1 with rendering)}
+    \ControlFlowTok{if}\NormalTok{ args.render }\KeywordTok{and}\NormalTok{ args.p }\OperatorTok{==} \DecValTok{1}\NormalTok{:}
+\NormalTok{        landscape }\OperatorTok{=}\NormalTok{ sample\_landscape\_parallel(}
+\NormalTok{            qnode, args.p, (}\DecValTok{0}\NormalTok{, np.pi), (}\DecValTok{0}\NormalTok{, np.pi}\OperatorTok{/}\DecValTok{2}\NormalTok{),}
+\NormalTok{            args.grid\_size, args.grid\_size, c\_max)}
+
+    \CommentTok{\# 4. Classical optimisation}
+\NormalTok{    result }\OperatorTok{=}\NormalTok{ optimize\_qaoa(qnode, args.p, method}\OperatorTok{=}\NormalTok{args.optimizer, ...)}
+
+    \CommentTok{\# 5. ZNE error mitigation}
+    \ControlFlowTok{if}\NormalTok{ args.zne }\KeywordTok{and}\NormalTok{ (args.noise }\KeywordTok{or}\NormalTok{ args.hardware):}
+\NormalTok{        E0, details }\OperatorTok{=}\NormalTok{ zne\_extrapolate(qnode, result.best\_params,}
+\NormalTok{                                       scale\_factors}\OperatorTok{=}\NormalTok{[}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{])}
+
+    \CommentTok{\# 6. Rendering}
+    \ControlFlowTok{if}\NormalTok{ args.render:}
+\NormalTok{        window }\OperatorTok{=}\NormalTok{ init\_opengl\_context(}\DecValTok{1280}\NormalTok{, }\DecValTok{720}\NormalTok{, }\StringTok{"QAOA Landscape"}\NormalTok{)}
+\NormalTok{        vao, vbo, ebo, n\_idx }\OperatorTok{=}\NormalTok{ create\_surface\_vbo(}
+\NormalTok{            landscape.gamma\_vals, landscape.beta\_vals, landscape.energies)}
+        \CommentTok{\# Main render loop}
+        \ControlFlowTok{while} \KeywordTok{not}\NormalTok{ glfw.window\_should\_close(window):}
+\NormalTok{            glClear(GL\_COLOR\_BUFFER\_BIT }\OperatorTok{|}\NormalTok{ GL\_DEPTH\_BUFFER\_BIT)}
+            \CommentTok{\# Draw surface, trajectory, side panel}
+\NormalTok{            ...}
+\NormalTok{            glfw.swap\_buffers(window)}
+\NormalTok{            glfw.poll\_events()}
+\NormalTok{        glfw.terminate()}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{(Full implementation: \texttt{report1\_scripts/main.py})}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Part 4 --- OpenGL Visualization
+Design}\label{part-4-opengl-visualization-design}
+
+\subsection{\texorpdfstring{1. Full Rendering Pipeline for the 3D
+\((\beta, \gamma, \langle H_C \rangle)\)
+Surface}{1. Full Rendering Pipeline for the 3D (\textbackslash beta, \textbackslash gamma, \textbackslash langle H\_C \textbackslash rangle) Surface}}\label{full-rendering-pipeline-for-the-3d-beta-gamma-langle-h_c-rangle-surface}
+
+\subsubsection{Vertex Buffer Layout}\label{vertex-buffer-layout}
+
+Each vertex has 7 float32 values (28 bytes per vertex):
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+Offset (bytes)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Attribute
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Size
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & Position & 3 floats &
+\((x, y, z) = (\gamma, \beta, \langle H_C \rangle)\) \\
+12 & Normal & 3 floats & Surface normal \((n_x, n_y, n_z)\) for Phong
+lighting \\
+24 & Energy & 1 float & Normalised energy \(\in [0, 1]\) for colour
+mapping \\
+\end{longtable}
+}
+
+The surface mesh is a regular grid of \((N_\gamma \times N_\beta)\)
+vertices connected by \((N_\gamma - 1)(N_\beta - 1) \times 2\) triangles
+(two per grid cell). The index buffer stores triangle indices as uint32.
+
+\subsubsection{GLSL Shaders}\label{glsl-shaders}
+
+\textbf{Vertex Shader (\texttt{surface.vert}):}
+
+The vertex shader receives three per-vertex attributes at layout
+locations 0--2: position \((\gamma, \beta, \langle H_C\rangle)\), the
+surface normal, and the normalised energy scalar. It transforms the
+position into world space via the model matrix, computes the correct
+world-space normal using the inverse-transpose of the model matrix (to
+handle non-uniform scaling), passes the normalised energy through as a
+varying, and outputs clip-space position via the MVP chain.
+
+\emph{(Full source: \texttt{report1\_scripts/shaders/surface.vert})}
+
+\textbf{Fragment Shader (\texttt{surface.frag}):}
+
+The fragment shader implements Phong illumination with an energy-based
+colour map. The normalised energy \(e \in [0,1]\) is mapped to a hue via
+\(h = (1 - e) \times 0.66\), producing a blue-to-red gradient (blue =
+low energy, red = high energy) through an HSV→RGB conversion. Phong
+shading combines three terms:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Ambient} (\(0.2 \times\) base colour) --- constant fill light.
+\item
+  \textbf{Diffuse} (\(\max(\hat{n} \cdot \hat{l},\, 0) \times\) base
+  colour) --- Lambertian term.
+\item
+  \textbf{Specular}
+  (\(0.5 \times [\max(\hat{v} \cdot \hat{r},\, 0)]^{32}\)) --- shininess
+  highlights.
+\end{itemize}
+
+The output alpha is \(0.9\) (slight transparency) to allow seeing the
+trajectory through the surface edges.
+
+\emph{(Full source: \texttt{report1\_scripts/shaders/surface.frag})}
+
+\subsubsection{Camera Controls (Arcball
+Rotation)}\label{camera-controls-arcball-rotation}
+
+The \texttt{ArcballCamera} class (Module 8) handles: -
+\textbf{Left-click drag:} Rotate the view around the scene centre. The
+yaw/pitch angles update proportionally to mouse displacement. -
+\textbf{Scroll wheel:} Zoom in/out by adjusting the camera-to-target
+distance. - \textbf{Middle-click drag:} Pan the target point in the view
+plane.
+
+GLFW callbacks wire mouse events to the camera. A cursor-position
+callback computes the delta from the last position and calls
+\texttt{camera.on\_mouse\_drag(dx,\ dy)} when the left button is held. A
+scroll callback forwards the vertical offset to
+\texttt{camera.on\_scroll(yoffset)}. Both callbacks are registered via
+\texttt{glfw.set\_cursor\_pos\_callback} and
+\texttt{glfw.set\_scroll\_callback}.
+
+\emph{(Full implementation: \texttt{report1\_scripts/renderer.py})}
+
+\subsubsection{Live Surface Update During
+Optimization}\label{live-surface-update-during-optimization}
+
+As the optimizer progresses, the landscape surface can be updated in two
+ways:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Full recompute (for changing landscape slice in \(p > 1\)):}
+  When the fixed parameters change, resample the 2D landscape and call
+  \texttt{update\_surface\_vbo} with new energy data. This uses
+  \texttt{glBufferSubData} for an in-place update. The recompute is
+  throttled (e.g., every 10 optimiser steps) to avoid bottlenecking the
+  render loop.
+\item
+  \textbf{Streaming VBO update (double buffering):} Two VBOs are
+  allocated. While one is bound for rendering, the other is updated on a
+  background thread. After the update completes, the buffer IDs are
+  swapped. This prevents stalls in the render loop during data upload.
+\end{enumerate}
+
+\subsection{2. Optimizer Trajectory
+Overlay}\label{optimizer-trajectory-overlay}
+
+The optimizer trajectory is rendered as a 3D polyline lying on (or
+slightly above) the energy surface. Each vertex is
+\((\gamma_k, \beta_k, \langle H_C \rangle_k + \epsilon)\) where
+\(\epsilon \approx 0.01\) prevents z-fighting.
+
+\textbf{Trajectory shaders:}
+
+The trajectory vertex shader (\texttt{trajectory.vert}) takes position
+and a progress scalar \(t \in [0,1]\) as inputs, applies the combined
+model--view--projection matrix, and forwards \(t\) to the fragment
+stage. The fragment shader (\texttt{trajectory.frag}) interpolates
+colour from blue \((0.0, 0.3, 1.0)\) at \(t = 0\) to red
+\((1.0, 0.1, 0.0)\) at \(t = 1\) using GLSL's \texttt{mix} function,
+with full opacity.
+
+\emph{(Full source: \texttt{report1\_scripts/shaders/trajectory.vert}
+and \texttt{trajectory.frag})}
+
+The trajectory VBO is rebuilt every frame (or every N iterations) from
+the \texttt{trajectory\_log} list using \texttt{GL\_STREAM\_DRAW}.
+
+\subsection{3. Side Panel}\label{side-panel}
+
+Using Dear ImGui (via \texttt{imgui{[}glfw{]}} Python bindings) for the
+info panel. Each frame, a fixed-size window is positioned in the
+top-left corner and populated with live text fields: circuit depth
+\(p\), current \(\langle \hat{H}_C \rangle\), approximation ratio,
+gradient norm, iteration count, optimiser name, and graph metadata. The
+ImGui draw data is rendered to the OpenGL framebuffer after the 3D
+scene.
+
+\emph{(Full implementation: \texttt{report1\_scripts/renderer.py})}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Part 5 --- Hardware Execution
+Plan}\label{part-5-hardware-execution-plan}
+
+\subsection{1. IBM Quantum Submission via
+PennyLane}\label{ibm-quantum-submission-via-pennylane}
+
+\subsubsection{1.1 Transpilation for a Specific
+Backend}\label{transpilation-for-a-specific-backend}
+
+PennyLane's \texttt{qiskit.ibmq} device handles transpilation
+internally. When the QNode is executed, PennyLane:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Converts PennyLane operations to Qiskit gates.
+\item
+  Calls \texttt{qiskit.transpile()} targeting the backend's native gate
+  set (typically \(\{CX, \text{ID}, R_Z, \sqrt{X}, X\}\) for IBM
+  Eagle/Heron processors).
+\item
+  Maps virtual qubits to physical qubits based on the coupling map.
+\item
+  Applies routing passes (SABRE, stochastic swap) to handle non-adjacent
+  CNOT requirements.
+\end{enumerate}
+
+To control transpilation, the PennyLane-Qiskit device accepts a
+\texttt{transpile\_options} dictionary specifying
+\texttt{optimization\_level} (0--3, where 3 enables the most aggressive
+gate cancellation and resynthesis passes) and \texttt{initial\_layout}
+(the list of physical qubit indices returned by
+\texttt{select\_optimal\_qubits}). These are forwarded directly to
+\texttt{qiskit.transpile()}.
+
+\emph{(Full implementation:
+\texttt{report1\_scripts/hardware\_runner.py})}
+
+\subsubsection{1.2 Qubit Selection via Coupling Map
+Analysis}\label{qubit-selection-via-coupling-map-analysis}
+
+Use \texttt{select\_optimal\_qubits()} (Module 6). The key heuristic:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Load calibration data for all qubits (T1, T2) and all CNOT/ECR gates
+  (error rates).
+\item
+  Build a weighted graph over physical qubits.
+\item
+  Find the connected subgraph of size \(N\) that maximises
+  \(\sum_{\text{edges}} 1/\epsilon_{CX} + \alpha \sum_{\text{nodes}} T_1 T_2\).
+\item
+  Use this subgraph as the \texttt{initial\_layout} in transpilation.
+\end{enumerate}
+
+For the QAOA circuit on \(C_4\) (4 qubits, ring topology), select 4
+physical qubits that form a ring in the coupling map with minimal CNOT
+error.
+
+\subsubsection{\texorpdfstring{1.3 Shots: \texttt{qml.sample} vs
+\texttt{qml.expval}}{1.3 Shots: qml.sample vs qml.expval}}\label{shots-qml.sample-vs-qml.expval}
+
+\textbf{\texttt{qml.expval(H\_C)} on hardware:} PennyLane decomposes
+\(H_C = \sum_k c_k P_k\) into Pauli terms, groups commuting terms, and
+measures each group separately. For MaxCut on \(|E|\) edges, \(H_C\) has
+\(|E|\) ZZ terms --- all mutually commuting (all diagonal), so they can
+be measured in a single circuit run. This is optimal.
+
+\textbf{\texttt{qml.sample()} on hardware:} Returns raw bitstrings,
+shape \texttt{(shots,\ n\_qubits)}. You compute \(\langle H_C \rangle\)
+classically:
+
+\[\langle H_C \rangle \approx \frac{1}{S}\sum_{s=1}^{S} C(\mathbf{z}^{(s)})\]
+
+where \(C(\mathbf{z})\) is the MaxCut cost evaluated on bitstring
+\(\mathbf{z}\). This avoids PennyLane's Pauli grouping overhead and
+gives access to the full distribution for post-processing.
+
+\textbf{Shot budget:} For standard deviation \(\sigma\) in the energy
+estimate:
+
+\[\sigma = \frac{\Delta E}{\sqrt{S}}\]
+
+where \(\Delta E = E_{\max} - E_{\min}\) is the spectral range of
+\(H_C\). To achieve precision \(\epsilon\), need
+\(S \geq (\Delta E / \epsilon)^2\) shots. For MaxCut on 4-10 qubits,
+\(\Delta E \sim 10\), so for \(\epsilon = 0.1\): \(S \geq 10000\) shots.
+
+\subsubsection{1.4 Readout Error Handling}\label{readout-error-handling}
+
+Readout (measurement) errors are the dominant noise source on IBM
+hardware (typically 1-5\% per qubit). Strategies:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Readout error mitigation:} Prepare all \(2^N\) computational
+  basis states, measure, and build a calibration matrix \(M\) where
+  \(M_{ij} = P(\text{measure } i | \text{prepared } j)\). Then invert:
+  \(\mathbf{p}_{\text{corrected}} = M^{-1} \mathbf{p}_{\text{raw}}\).
+\item
+  \textbf{Twirled readout error mitigation (TREX):} Randomly flip
+  measurement outcomes using Pauli-\(X\) twirling to convert general
+  readout error into a symmetric channel, then correct analytically.
+\item
+  \textbf{PennyLane integration:} Use
+  \texttt{qml.transforms.mitigate\_with\_zne} or custom post-processing
+  on the raw counts.
+\end{enumerate}
+
+\subsection{2. Error Mitigation
+Strategy}\label{error-mitigation-strategy}
+
+\subsubsection{2.1 ZNE with Linear + Richardson
+Extrapolation}\label{zne-with-linear-richardson-extrapolation}
+
+\textbf{Global unitary folding:} To amplify noise by factor \(\lambda\),
+replace circuit \(U\) with \(U(U^\dagger U)^{(\lambda-1)/2}\):
+
+\begin{itemize}
+\tightlist
+\item
+  \(\lambda = 1\): original circuit (depth \(d\))
+\item
+  \(\lambda = 3\): circuit followed by \(U^\dagger U\) (depth \(3d\))
+\item
+  \(\lambda = 5\): circuit followed by \(U^\dagger U U^\dagger U\)
+  (depth \(5d\))
+\end{itemize}
+
+For each \(\lambda\), measure \(\langle H_C \rangle_\lambda\).
+
+\textbf{Linear extrapolation:} Fit \(E(\lambda) = a + b\lambda\) and
+extrapolate to \(\lambda = 0\): \(E_0 = a = E(\lambda=1) - b\). Assumes
+noise effect is linear in noise strength.
+
+\textbf{Richardson extrapolation:} Fit
+\(E(\lambda) = \sum_{k=0}^{M-1} a_k \lambda^k\) through \(M\) data
+points and evaluate at \(\lambda = 0\). More accurate but more sensitive
+to statistical noise.
+
+\textbf{ZNE for QAOA MaxCut on \(C_4\) at \(p = 1\):}
+
+With the circuit depth being \(|E| + N = 4 + 4 = 8\) gates (4
+ZZ-rotations + 4 RX gates): - \(\lambda = 1\): 8 gates -
+\(\lambda = 3\): 24 gates - \(\lambda = 5\): 40 gates
+
+Use 3 scale factors with Richardson extrapolation by calling
+\texttt{zne\_extrapolate(hardware\_qnode,\ optimal\_params,\ scale\_factors={[}1,\ 3,\ 5{]},\ extrapolation="richardson")}.
+
+\emph{(Full implementation:
+\texttt{report1\_scripts/error\_mitigation.py})}
+
+\subsubsection{2.2 Pauli Twirling as
+Precursor}\label{pauli-twirling-as-precursor}
+
+Pauli twirling converts general coherent errors on 2-qubit gates into
+stochastic Pauli channels (incoherent noise), which ZNE handles more
+effectively. For each CNOT (or ECR) gate in the transpiled circuit:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Sample random Pauli pair \((P_a, P_b)\) from the twirl group.
+\item
+  Replace \(\text{CNOT}\) with \(P_b \cdot \text{CNOT} \cdot P_a\).
+\item
+  Average over many random twirls.
+\end{enumerate}
+
+This should be applied before ZNE. PennyLane does not have built-in
+Pauli twirling, so it must be implemented via tape transforms.
+
+\subsubsection{2.3 Realistic Fidelity
+Expectations}\label{realistic-fidelity-expectations}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\centering\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\centering\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Configuration
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Expected \(\langle H_C \rangle\) error
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Approx. ratio degradation
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(p=1\), 4 qubits, noiseless & 0 & 0 \\
+\(p=1\), 4 qubits, ibm\_brisbane (raw) & \textasciitilde0.2-0.5 &
+\textasciitilde5-15\% \\
+\(p=1\), 4 qubits, ibm\_brisbane + ZNE & \textasciitilde0.05-0.15 &
+\textasciitilde2-5\% \\
+\(p=1\), 10 qubits, ibm\_brisbane (raw) & \textasciitilde0.5-1.5 &
+\textasciitilde10-30\% \\
+\(p=1\), 10 qubits, ibm\_brisbane + ZNE & \textasciitilde0.2-0.5 &
+\textasciitilde5-15\% \\
+\(p=2\), 10 qubits, ibm\_brisbane (raw) & \textasciitilde1.0-3.0 &
+\textasciitilde20-50\% \\
+\(p=2\), 10 qubits, ibm\_brisbane + ZNE & \textasciitilde0.3-1.0 &
+\textasciitilde10-25\% \\
+\end{longtable}
+}
+
+These are order-of-magnitude estimates based on typical 2024-2025 IBM
+Eagle processor performance with \(\sim 1\%\) two-qubit gate error rates
+and \(\sim 2\%\) readout error rates.
+
+\subsection{3. Benchmarking Checklist}\label{benchmarking-checklist}
+
+\textbf{Metrics to record for each experiment:}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Metric
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Noiseless Sim
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Noisy Sim
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Hardware
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Hardware+ZNE
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(\langle H_C \rangle\) & ✓ & ✓ & ✓ & ✓ \\
+Approximation ratio \(r = \langle H_C \rangle / C_{\max}\) & ✓ & ✓ & ✓ &
+✓ \\
+Optimal \((\gamma^*, \beta^*)\) & ✓ & ✓ & ✓ & ✓ \\
+Optimizer iterations to convergence & ✓ & ✓ & ✓ & ✓ \\
+Total circuit evaluations & ✓ & ✓ & ✓ & ✓ \\
+Wall-clock time & ✓ & ✓ & ✓ & ✓ \\
+Bitstring distribution (top-10 samples) & ✓ & ✓ & ✓ & ✓ \\
+Probability of sampling optimal cut & ✓ & ✓ & ✓ & ✓ \\
+\end{longtable}
+}
+
+\textbf{Plots:} 1. \(r\) vs \(p\) (circuit depth): noiseless, noisy,
+hardware, hardware+ZNE on same axes. 2. Energy landscape surface
+comparison: noiseless vs noisy (as 3D surfaces or heatmaps side by
+side). 3. Optimizer convergence curves: energy vs iteration for each
+configuration. 4. Histogram of sampled bitstring costs: noiseless vs
+hardware.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Part 6 --- Research Contribution
+Angle}\label{part-6-research-contribution-angle}
+
+\subsection{1. Three Directions Toward a Publishable
+Paper}\label{three-directions-toward-a-publishable-paper}
+
+\textbf{Direction 1: QAOA Landscape Phase Transitions in Frustrated
+Graphs}
+
+Study the QAOA energy landscape topology as a function of graph
+frustration index. For anti-ferromagnetic Ising models on non-bipartite
+graphs (triangular lattices, Petersen graph, random \(d\)-regular), map
+the landscape at \(p = 1, 2, 3\) and quantify: - Number of local minima
+(via landscape sampling + basin detection). - Hessian spectrum at
+critical points (positive definite, negative definite, saddle index). -
+Correlation between landscape complexity and classical hardness
+(brute-force time, simulated annealing residual energy).
+
+This extends the 2025 Boulebnane-Montanaro result by moving beyond
+regular graphs with uniform fields to arbitrary frustrated topologies.
+
+\textbf{Direction 2: Noise-Induced Landscape Smoothing and
+Concentration}
+
+Systematically compare the \((\beta, \gamma)\) landscape under
+noiseless, depolarising, and thermal relaxation noise at varying
+strengths. The hypothesis: moderate noise smooths away spurious local
+minima, potentially improving optimizer convergence (stochastic
+regularisation). Measure: - Gradient norm distribution across the
+landscape as a function of noise rate. - Number of local minima as noise
+increases (using persistent homology / topological data analysis on the
+landscape). - Optimal parameter stability: how much do
+\((\gamma^*, \beta^*)\) shift under noise?
+
+This connects to the barren plateau literature and provides practical
+guidance on when noise helps vs hurts variational optimization.
+
+\textbf{Direction 3: Adaptive QAOA Depth Selection via Landscape
+Diagnostics}
+
+Propose a protocol that examines the \(p\)-level landscape structure to
+decide whether increasing \(p\) is worthwhile: - Compute the landscape
+Hessian at the \(p\)-level optimum. - If the smallest Hessian eigenvalue
+is ``sufficiently negative'' (surface is steeply curved), the current
+\(p\) is under-parameterised and increasing \(p\) will help. - If the
+Hessian is nearly flat (plateau), further depth is wasteful. - Validate
+on families of graphs with known \(p^*\) (the smallest \(p\) for which
+QAOA is provably optimal).
+
+\subsection{2. Most Relevant 2024--2025
+Papers}\label{most-relevant-20242025-papers}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Boulebnane \& Montanaro (2025).} ``Solving optimization
+  problems with local light cones on fixedangle QAOA.'' \emph{Quantum}.
+  --- Phase transition in QAOA performance with longitudinal field.
+\item
+  \textbf{Kremenetski, Hogg, \& Hadfield (2025).} ``Quantum Alternating
+  Operator Ansatz (QAOA+): landscape structure with constraints.''
+  \emph{PRX Quantum}. --- Extended QAOA landscape analysis beyond
+  MaxCut.
+\item
+  \textbf{Shaydulin et al.~(2024).} ``Evidence of scaling advantage for
+  the quantum approximate optimization algorithm on a classically
+  intractable problem.'' \emph{Science Advances}. --- First empirical
+  evidence of QAOA advantage at scale.
+\item
+  \textbf{Wurtz \& Love (2024).} ``Counterdiabatically optimized QAOA.''
+  \emph{Physical Review A}. --- Improved initialisation strategies via
+  counterdiabatic terms.
+\item
+  \textbf{Cerezo et al.~(2024).} ``Does provable absence of barren
+  plateaus imply classical simulability?'' \emph{Physical Review X}. ---
+  Fundamental limits on trainability and simulability.
+\item
+  \textbf{Pelofske et al.~(2024).} ``Scaling whole-chip QAOA for
+  higher-order ising spin glass models on heavy-hex graphs.'' \emph{npj
+  Quantum Information}. --- Large-scale QAOA benchmarking on IBM
+  hardware.
+\item
+  \textbf{Zhou, Wang, Choi et al.~(2020).} ``Quantum Approximate
+  Optimization Algorithm: Performance, Mechanism, and Implementation on
+  Near-Term Devices.'' \emph{Physical Review X}. --- INTERP and FOURIER
+  strategies (seminal reference).
+\end{enumerate}
+
+\subsection{3. Interesting Graph Families and Problem
+Types}\label{interesting-graph-families-and-problem-types}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Graph Family
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Why Interesting
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Landscape Feature
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Random 3-regular} & Phase transition at clause density for
+SAT-like problems & Complex landscape with many near-degenerate
+minima \\
+\textbf{Petersen graph} & Highly symmetric, non-planar, frustrated &
+Discrete symmetry in landscape, symmetry-breaking effects \\
+\textbf{Triangular lattice} & Geometrically frustrated for AF Ising &
+Exponentially degenerate ground states, flat landscape regions \\
+\textbf{Erdős-Rényi \(G(n, p_c)\)} & Percolation transition at
+\(p_c = 1/n\) & Landscape topology changes at the percolation
+threshold \\
+\textbf{Complete bipartite \(K_{n,n}\)} & MaxCut is trivial but
+landscape is instructive & Single clean global minimum --- contrast with
+random graphs \\
+\textbf{Weighted Sherrington-Kirkpatrick} & Complete graph with Gaussian
+random weights & Full-RSB spin glass: hardest possible QAOA landscape \\
+\end{longtable}
+}
+
+The most visually dramatic landscapes come from frustrated systems
+(triangular, 3-regular non-bipartite, SK model) where near-degenerate
+minima create complex topography.
+
+\end{document}
