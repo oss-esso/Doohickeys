@@ -19,6 +19,7 @@ import networkx as nx
 import numpy as np
 import pennylane as qml
 
+from graph_decomposer import run_decomposed_qaoa
 from graph_generator import create_graph, build_cost_hamiltonian
 from qaoa_circuit import build_qaoa_circuit, qaoa_ansatz
 from landscape_sampler import sample_landscape, LandscapeData
@@ -49,6 +50,10 @@ def parse_args() -> argparse.Namespace:
                     help="Launch OpenGL 3-D visualisation")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--maxiter", type=int, default=200)
+    ap.add_argument(
+        "--qubit-threshold", type=int, default=12,
+        help="Max nodes before Kernighan-Lin decomposition is used (default 12).",
+    )
     return ap.parse_args()
 
 
@@ -222,6 +227,38 @@ def run_pipeline(args: argparse.Namespace) -> None:
     # ── 2. Circuit construction (ideal simulator) ─────────────────────────
     log.info("=== Stage 2: Circuit Construction ===")
     n_qubits = graph.number_of_nodes()
+    threshold = args.qubit_threshold
+
+    if n_qubits > threshold:
+        log.info(
+            "Graph has %d nodes > threshold %d — using Kernighan-Lin decomposition.",
+            n_qubits, threshold,
+        )
+        dr = run_decomposed_qaoa(
+            graph, threshold=threshold, p=args.p,
+            optimizer=args.optimizer, maxiter=args.maxiter, seed=args.seed,
+        )
+        results = {
+            "graph_type": args.graph_type,
+            "n_nodes": int(args.n_nodes),
+            "n_edges": int(graph.number_of_edges()),
+            "p": int(args.p),
+            "c_max_upper": float(dr.c_max_upper),
+            "optimizer": args.optimizer,
+            "total_cut": float(dr.total_cut),
+            "intra_cut": float(dr.intra_cut),
+            "cross_cut": float(dr.cross_cut),
+            "approximation_ratio": float(dr.approximation_ratio),
+            "n_partitions": int(dr.n_partitions),
+            "largest_partition": int(dr.largest_partition),
+        }
+        results_path = OUTPUT_DIR / "results.json"
+        with open(results_path, "w") as f:
+            json.dump(results, f, indent=2)
+        log.info("Saved results → %s", results_path)
+        log.info("=== Pipeline complete (decomposed) ===")
+        return
+
     dev = qml.device("default.qubit", wires=n_qubits)
     qnode = build_qaoa_circuit(cost_H, n_qubits, args.p, dev)
     log.info("Device: default.qubit (%d wires), depth p=%d", n_qubits, args.p)

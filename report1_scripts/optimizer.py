@@ -99,24 +99,33 @@ def optimize_qaoa(
             converged=res.success,
         )
     elif method_upper == 'L-BFGS-B':
+        # Use scipy's 3-point finite-difference gradient.
+        # Note: the hand-coded parameter_shift_gradient only works when each
+        # external QAOA angle appears in a SINGLE gate; since one gamma drives
+        # every IsingZZ gate simultaneously, E(γ) has period π/2 and the naive
+        # π/2 parameter-shift cancels exactly.  scipy handles this correctly.
         n_evals = 0
-        def cost_and_grad(params):
+
+        def neg_cost(params):
             nonlocal n_evals
             energy = float(qnode(params))
-            grad = parameter_shift_gradient(qnode, params)  # shape (2p,)
             n_evals += 1
             trajectory.append((params.copy(), energy))
             if callback:
                 callback(n_evals, params, energy)
-            # Negate both: minimise -⟨H_C⟩
-            return -energy, -grad
-        
+            return -energy
+
         res = sp_opt.minimize(
-            cost_and_grad,
+            neg_cost,
             init_params,
             method='L-BFGS-B',
-            jac=True,
-            options={'maxiter': maxiter, 'disp': False}
+            jac='3-point',
+            options={
+                'maxiter': maxiter,
+                'gtol': 1e-8,
+                'ftol': 2.22e-12,
+                'disp': False,
+            },
         )
         return OptimizationResult(
             optimal_params=res.x,
@@ -126,21 +135,23 @@ def optimize_qaoa(
             converged=res.success,
         )
     elif method_upper == 'SPSA':
-        a0, c0, alpha, gamma, A = 0.1, 0.1, 0.602, 0.101, 0.1 * maxiter
+        # Hyperparameters tuned for noiseless simulation (small c → sharper grad)
+        a0, c0, alpha, gamma_exp, A = 0.6, 0.05, 0.602, 0.101, max(1, 0.05 * maxiter)
         params = init_params.copy()
         for k in range(1, maxiter + 1):
             ak = a0 / (k + A) ** alpha
-            ck = c0 / k ** gamma
+            ck = c0 / k ** gamma_exp
             delta = np.random.choice([-1, 1], size=params.shape)  # Rademacher
             params_plus = params + ck * delta
             params_minus = params - ck * delta
             energy_plus = float(qnode(params_plus))
             energy_minus = float(qnode(params_minus))
             grad_estimate = (energy_plus - energy_minus) / (2 * ck) * delta
-            params -= ak * grad_estimate
-            trajectory.append((params.copy(), float(qnode(params))))
+            params += ak * grad_estimate   # ascent (maximise)
+            energy = float(qnode(params))
+            trajectory.append((params.copy(), energy))
             if callback:
-                callback(k, params, float(qnode(params)))
+                callback(k, params, energy)
         
         optimal_energy = float(qnode(params))
         return OptimizationResult(
@@ -151,11 +162,25 @@ def optimize_qaoa(
             converged=True,
         )
     elif method_upper == 'ADAM':
-        optimizer = qml.AdamOptimizer(stepsize=0.05)
-        params = init_params.copy()
+        # Manual Adam using central-difference numerical gradients.
+        # (Parameter-shift is only exact when each circuit angle appears in a
+        # single gate; QAOA couples gamma to all IsingZZ gates simultaneously,
+        # making the effective E-period half the naive shift.)
+        lr = 0.05
+        beta1, beta2, eps_adam = 0.9, 0.999, 1e-8
+        h_fd = 0.01  # central-difference step size
+        params = init_params.astype(float).copy()
+        m_moment = np.zeros_like(params)
+        v_moment = np.zeros_like(params)
+        k = 0
         prev_energy = float(qnode(params))
         for k in range(1, maxiter + 1):
-            params = optimizer.step(qnode, params)
+            grad = _central_diff_gradient(qnode, params, h=h_fd)
+            m_moment = beta1 * m_moment + (1 - beta1) * grad
+            v_moment = beta2 * v_moment + (1 - beta2) * grad ** 2
+            m_hat = m_moment / (1 - beta1 ** k)
+            v_hat = v_moment / (1 - beta2 ** k)
+            params = params + lr * m_hat / (np.sqrt(v_hat) + eps_adam)
             energy = float(qnode(params))
             trajectory.append((params.copy(), energy))
             if callback:
@@ -175,6 +200,22 @@ def optimize_qaoa(
 
 
 
+
+
+def _central_diff_gradient(
+    qnode: qml.QNode,
+    params: np.ndarray,
+    h: float = 0.01,
+) -> np.ndarray:
+    """Central-difference gradient estimate.  Requires ``2·d`` circuit evals."""
+    grad = np.zeros(len(params))
+    for i in range(len(params)):
+        p_plus = params.copy()
+        p_plus[i] += h
+        p_minus = params.copy()
+        p_minus[i] -= h
+        grad[i] = (float(qnode(p_plus)) - float(qnode(p_minus))) / (2 * h)
+    return grad
 
 
 def parameter_shift_gradient(
