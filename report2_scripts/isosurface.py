@@ -50,7 +50,15 @@ def marching_cubes(volume: np.ndarray, isovalue: float,
         IsosurfaceMesh with float32 vertices/normals, uint32 faces,
         and float32 signs (all +1.0).
     """
-    ...
+    verts, faces, normals, _ = sk_marching_cubes(volume, level=isovalue, spacing=grid_spacing)
+    verts += np.array(grid_origin)  # Translate to world coordinates
+    signs = np.ones(len(verts), dtype=np.float32)  # All +1.0 for this isosurface
+    return IsosurfaceMesh(
+        vertices=verts.astype(np.float32),
+        normals=normals.astype(np.float32),
+        faces=faces.astype(np.uint32),
+        signs=signs)
+
 
 
 def extract_dual_isosurface(volume: np.ndarray, isovalue: float,
@@ -81,4 +89,19 @@ def extract_dual_isosurface(volume: np.ndarray, isovalue: float,
     Returns:
         Combined IsosurfaceMesh with both lobes, signs indicating +1/-1.
     """
-    ...
+    positive_mesh = marching_cubes(volume, isovalue, grid_origin, grid_spacing)
+    negative_mesh = marching_cubes(volume, -isovalue, grid_origin, grid_spacing)
+    negative_mesh.signs *= -1.0
+
+    # Combine the meshes
+    verts = np.vstack([positive_mesh.vertices, negative_mesh.vertices])
+    normals = np.vstack([positive_mesh.normals, negative_mesh.normals])
+    faces = np.vstack([positive_mesh.faces, negative_mesh.faces + len(positive_mesh.vertices)])
+    signs = np.hstack([positive_mesh.signs, negative_mesh.signs])
+
+    return IsosurfaceMesh(
+        vertices=verts.astype(np.float32),
+        normals=normals.astype(np.float32),
+        faces=faces.astype(np.uint32),
+        signs=signs
+    )

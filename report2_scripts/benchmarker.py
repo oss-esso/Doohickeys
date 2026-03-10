@@ -39,7 +39,39 @@ def run_benchmark(pes_data: object) -> BenchmarkResult:
         BenchmarkResult with per-method energy arrays, correlation recovery
         ratios, and errors vs FCI.
     """
-    ...
+    methods = ["HF", "VQE"]
+    energies = {
+        "HF": pes_data.energies_hf,
+        "VQE": pes_data.energies_vqe,
+        "FCI": pes_data.energies_fci
+    }
+    if pes_data.energies_cisd is not None:
+        methods.append("CISD")
+        energies["CISD"] = pes_data.energies_cisd
+    if pes_data.energies_ccsd_t is not None:
+        methods.append("CCSD(T)")
+        energies["CCSD(T)"] = pes_data.energies_ccsd_t
+
+    correlation_recovery = {}
+    errors_vs_fci = {}
+    for method in methods:
+        if method == "FCI":
+            continue
+        e_method = energies[method]
+        e_hf = energies["HF"]
+        e_fci = energies["FCI"]
+        denom = e_fci - e_hf
+        r = np.where(np.abs(denom) > 1e-10, (e_method - e_hf) / denom, 0.0)
+        correlation_recovery[method] = r
+        errors_vs_fci[method] = np.abs(e_method - e_fci)
+
+    return BenchmarkResult(
+        bond_lengths=pes_data.bond_lengths,
+        methods=methods,
+        energies=energies,
+        correlation_recovery=correlation_recovery,
+        errors_vs_fci=errors_vs_fci
+    )
 
 
 def print_benchmark_table(result: BenchmarkResult,
@@ -60,4 +92,17 @@ def print_benchmark_table(result: BenchmarkResult,
     Returns:
         Multi-line string with header, separator, and data rows.
     """
-    ...
+    if bond_lengths_subset is None:
+        indices = np.linspace(0, len(result.bond_lengths)-1, 5, dtype=int)
+    else:
+        indices = [np.argmin(np.abs(result.bond_lengths - R)) for R in bond_lengths_subset]
+
+    header = "R (A) | " + " | ".join(f"{m:>10}" for m in result.methods) + " | FCI (ref) | |VQE-FCI|"
+    separator = "-" * len(header)
+    rows = []
+    for idx in indices:
+        R = result.bond_lengths[idx]
+        row = f"{R:6.3f} | " + " | ".join(f"{result.energies[m][idx]:10.6f}" for m in result.methods) + f" | {result.energies['FCI'][idx]:10.6f} | {result.errors_vs_fci['VQE'][idx]:10.6f}"
+        rows.append(row)
+    table = "\n".join([header, separator] + rows)
+    return table

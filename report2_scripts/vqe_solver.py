@@ -71,4 +71,102 @@ def run_vqe(hamiltonian: object, ansatz_fn: Callable[[np.ndarray], None],
     Returns:
         VQEResult with optimal energy, parameters, and optimisation history.
     """
-    ...
+    device = qml.device(device_name, wires=n_qubits)
+    @qml.qnode(device, diff_method=diff_method)
+
+    def cost_fn(params):
+        ansatz_fn(params)
+        return qml.expval(hamiltonian)
+    
+    if init_params is None:
+        init_params = np.random.normal(0, 0.01, size=n_params)
+
+    trajectory = []
+    gradient_norms = []
+
+    if optimizer == 'Adam':
+        opt = qml.AdamOptimizer(stepsize=learning_rate)
+        params = init_params.copy()
+        energy = cost_fn(params)
+        for n in range(maxiter):
+            params, energy = opt.step_and_cost(cost_fn, params)
+            grad = qml.grad(cost_fn)(params)
+            grad_norm = np.linalg.norm(grad)
+            gradient_norms.append(grad_norm)
+            trajectory.append((params.copy(), energy))
+            if callback:
+                callback(n, params, energy)
+            if n > 0 and abs(trajectory[-2][1] - energy) < tol:
+                break
+    elif optimizer == 'GradientDescent':
+        opt = qml.GradientDescentOptimizer(stepsize=learning_rate)
+        params = init_params.copy()
+        energy = cost_fn(params)
+        for n in range(maxiter):
+            params, energy = opt.step_and_cost(cost_fn, params)
+            grad = qml.grad(cost_fn)(params)
+            grad_norm = np.linalg.norm(grad)
+            gradient_norms.append(grad_norm)
+            trajectory.append((params.copy(), energy))
+            if callback:
+                callback(n, params, energy)
+            if n > 0 and abs(trajectory[-2][1] - energy) < tol:
+                break
+    elif optimizer == 'COBYLA':
+        # COBYLA trajectory tracking via callback
+        cobyla_trajectory = []
+        
+        def scipy_cost_fn(params):
+            energy = float(cost_fn(params))
+            cobyla_trajectory.append((params.copy(), energy))
+            if callback:
+                callback(len(cobyla_trajectory) - 1, params, energy)
+            return energy
+        
+        res = sp_opt.minimize(scipy_cost_fn, init_params, method='COBYLA', 
+                              options={'maxiter': maxiter, 'rhobeg': 0.5})
+        params = res.x
+        energy = res.fun
+        trajectory = cobyla_trajectory if cobyla_trajectory else [(params.copy(), energy)]
+        gradient_norms = [0.0] * len(trajectory)  # COBYLA is gradient-free
+    elif optimizer == 'SPSA':
+        a0 = 0.1
+        c0 = 0.1
+        alpha = 0.602
+        gamma = 0.101
+        A = maxiter * 0.1
+        params = init_params.copy()
+        energy = cost_fn(params)
+        for n in range(maxiter):
+            ak = a0 / (n + 1 + A) ** alpha
+            ck = c0 / (n + 1) ** gamma
+            delta = np.random.choice([-1, 1], size=n_params)
+            energy_plus = cost_fn(params + ck * delta)
+            energy_minus = cost_fn(params - ck * delta)
+            grad_estimate = (energy_plus - energy_minus) / (2 * ck * delta)
+            params -= ak * grad_estimate
+            energy = cost_fn(params)
+            gradient_norms.append(np.linalg.norm(grad_estimate))
+            trajectory.append((params.copy(), energy))
+            if callback:
+                callback(n, params, energy)
+            if n > 0 and abs(trajectory[-2][1] - energy) < tol:
+                break
+            
+    else:
+        raise ValueError(f"Unsupported optimizer: {optimizer}") 
+    
+    optimal_energy = min(trajectory, key=lambda x: x[1])[1]
+    optimal_params = min(trajectory, key=lambda x: x[1])[0]
+    n_iterations = len(trajectory)
+    converged = n_iterations < maxiter
+
+    return VQEResult(
+        optimal_energy=optimal_energy,
+        optimal_params=optimal_params,
+        trajectory=trajectory,
+        n_iterations=n_iterations,
+        converged=converged,
+        gradient_norms=gradient_norms)
+
+

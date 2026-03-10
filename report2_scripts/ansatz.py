@@ -37,7 +37,24 @@ def build_uccsd_ansatz(n_qubits: int, n_electrons: int,
         Tuple of (ansatz_fn, n_params, excitations) where excitations
         is the concatenated list of singles + doubles.
     """
-    ...
+    if hf_state is None:
+        # Create HF reference: first n_electrons spin-orbitals occupied
+        hf_state = np.zeros(n_qubits, dtype=int)
+        hf_state[:n_electrons] = 1
+
+    singles, doubles = qml.qchem.excitations(n_electrons, n_qubits)
+    excitations = singles + doubles
+    n_params = len(excitations)
+
+    def ansatz_fn(params):
+        qml.BasisState(hf_state, wires=range(n_qubits))
+        for i, excitation in enumerate(excitations):
+            if len(excitation) == 2:
+                qml.SingleExcitation(params[i], wires=excitation)
+            else:
+                qml.DoubleExcitation(params[i], wires=excitation)
+
+    return ansatz_fn, n_params, excitations
 
 
 def build_hardware_efficient_ansatz(n_qubits: int, n_layers: int = 2,
@@ -61,4 +78,19 @@ def build_hardware_efficient_ansatz(n_qubits: int, n_layers: int = 2,
     Returns:
         Tuple of (ansatz_fn, n_params).
     """
-    ...
+    n_params = 2 * n_qubits * n_layers
+    
+    def ansatz_fn(params):
+        p = params.reshape(n_layers, n_qubits, 2)
+        for l in range(n_layers):
+            for q in range(n_qubits):
+                qml.RY(p[l, q, 0], wires=q)
+                qml.RZ(p[l, q, 1], wires=q)
+            for q in range(n_qubits - 1):
+                if entangler == "CNOT":
+                    qml.CNOT(wires=[q, q + 1])
+                elif entangler == "CZ":
+                    qml.CZ(wires=[q, q + 1])
+    
+    return ansatz_fn, n_params
+    

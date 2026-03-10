@@ -6,6 +6,7 @@ import numpy as np
 from pyscf import gto
 
 
+
 @dataclass
 class OrbitalVolumeData:
     """Volumetric data for a molecular orbital on a 3D grid."""
@@ -57,7 +58,21 @@ def evaluate_orbital_on_grid(mo_coefficients: np.ndarray,
     Returns:
         OrbitalVolumeData with the 3D volume and grid metadata.
     """
-    ...
+    mol = _build_pyscf_mol_from_coords(atom_coords, atom_symbols, basis_name)
+    centre = np.mean(atom_coords, axis=0)
+    grid_x, grid_y, grid_z, grid_points = grid_from_coords(atom_coords, grid_extent, grid_spacing)
+    ao_values = mol.eval_gto("GTOval_cart", grid_points)  # shape (N, n_ao)
+    mo_values = ao_values @ mo_coefficients[:, orbital_index]  # shape (N,)
+    volume = mo_values.reshape(grid_x.shape)  # shape (nx, ny, nz)
+    return OrbitalVolumeData(
+        values=volume,
+        grid_origin=(grid_x[0, 0, 0], grid_y[0, 0, 0], grid_z[0, 0, 0]),
+        grid_spacing=(grid_spacing, grid_spacing, grid_spacing),
+        grid_shape=grid_x.shape,
+        orbital_index=orbital_index
+    )
+
+
 
 
 def evaluate_electron_density(mo_coefficients: np.ndarray,
@@ -90,4 +105,48 @@ def evaluate_electron_density(mo_coefficients: np.ndarray,
     Returns:
         OrbitalVolumeData with electron density volume (orbital_index=-1).
     """
-    ...
+    density_volume = None
+    for i in range(n_occupied):
+        orbital_data = evaluate_orbital_on_grid(
+            mo_coefficients, i, atom_coords, atom_symbols, basis_name,
+            grid_extent, grid_spacing)
+        if density_volume is None:
+            density_volume = 2 * orbital_data.values**2
+        else:
+            density_volume += 2 * orbital_data.values**2
+    grid_x, grid_y, grid_z, _ = grid_from_coords(atom_coords, grid_extent, grid_spacing)
+    return OrbitalVolumeData(
+        values=density_volume,
+        grid_origin=(grid_x[0, 0, 0], grid_y[0, 0, 0], grid_z[0, 0, 0]),
+        grid_spacing=(grid_spacing, grid_spacing, grid_spacing),
+        grid_shape=grid_x.shape,
+        orbital_index=-1
+    )
+
+
+def _build_pyscf_mol_from_coords(atom_coords: np.ndarray,
+                              atom_symbols: list[str],
+                              basis_name: str) -> gto.Mole:
+    """Helper to build a PySCF Mole from atomic coordinates and symbols."""
+    atom_str = "; ".join(
+        f"{sym} {coord[0]} {coord[1]} {coord[2]}"
+        for sym, coord in zip(atom_symbols, atom_coords))
+    mol = gto.Mole()
+    mol.atom = atom_str
+    mol.basis = basis_name
+    mol.unit = "Bohr"
+    mol.build()
+    return mol
+
+
+def grid_from_coords(atom_coords: np.ndarray,
+                     grid_extent: float,
+                     grid_spacing: float):
+    
+    centre = np.mean(atom_coords, axis=0)
+    x = np.arange(centre[0] - grid_extent, centre[0] + grid_extent + grid_spacing, grid_spacing)
+    y = np.arange(centre[1] - grid_extent, centre[1] + grid_extent + grid_spacing, grid_spacing)
+    z = np.arange(centre[2] - grid_extent, centre[2] + grid_extent + grid_spacing, grid_spacing)
+    grid_x, grid_y, grid_z = np.meshgrid(x, y, z, indexing='ij')
+    grid_points = np.stack([grid_x.ravel(), grid_y.ravel(), grid_z.ravel()], axis=1)
+    return grid_x, grid_y, grid_z, grid_points

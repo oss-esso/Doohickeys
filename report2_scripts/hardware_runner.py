@@ -24,7 +24,14 @@ def create_ibm_device(n_qubits: int, backend_name: str = "ibm_brisbane",
     Returns:
         A PennyLane device configured for the IBM backend.
     """
-    ...
+    if ibm_token is None:
+        ibm_token = os.getenv("IBMQ_TOKEN")
+        if ibm_token is None:
+            raise ValueError("IBM Quantum API token not provided. Set the "
+                             "IBMQ_TOKEN environment variable or pass ibm_token.")
+    provider = qml.qiskit.IBMProvider(token=ibm_token)
+    return qml.qiskit.IBMQDevice(wires=n_qubits, backend=backend_name, provider=provider, shots=shots)
+
 
 
 def create_ionq_device(n_qubits: int, backend: str = "ionq_harmony",
@@ -45,7 +52,12 @@ def create_ionq_device(n_qubits: int, backend: str = "ionq_harmony",
     Returns:
         A PennyLane device configured for the IonQ backend.
     """
-    ...
+    if api_key is None:
+        api_key = os.getenv("IONQ_API_KEY")
+        if api_key is None:
+            raise ValueError("IonQ API key not provided. Set the "
+                             "IONQ_API_KEY environment variable or pass api_key.")
+    return qml.ionq.IonQDevice(wires=n_qubits, backend=backend, api_key=api_key, shots=shots)
 
 
 def estimate_shot_budget(hamiltonian: object,
@@ -74,4 +86,7 @@ def estimate_shot_budget(hamiltonian: object,
     Returns:
         Estimated shot count (int), clamped to [1_000, 10_000_000].
     """
-    ...
+    coeffs = np.array(hamiltonian.coeffs)
+    sum_squared = np.sum(np.abs(coeffs)**2)
+    shots = int(np.ceil(sum_squared / target_precision**2))
+    return max(1_000, min(shots, 10_000_000))

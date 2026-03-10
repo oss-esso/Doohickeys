@@ -36,7 +36,15 @@ def create_h2(bond_length: float = 0.735) -> MoleculeSpec:
     Returns:
         MoleculeSpec with two H atoms at (0, 0, ±bond_length/2).
     """
-    ...
+    return MoleculeSpec(
+        atoms=[
+            Atom(symbol="H", position=np.array([0.0, 0.0, -bond_length / 2])),
+            Atom(symbol="H", position=np.array([0.0, 0.0, bond_length / 2])),
+        ],
+        basis="sto-3g",
+        charge=0,
+        multiplicity=1,
+        name="H2")
 
 
 def create_lih(bond_length: float = 1.595) -> MoleculeSpec:
@@ -51,7 +59,15 @@ def create_lih(bond_length: float = 1.595) -> MoleculeSpec:
     Returns:
         MoleculeSpec with Li at origin and H along z-axis.
     """
-    ...
+    return MoleculeSpec(
+        atoms=[
+            Atom(symbol="Li", position=np.array([0.0, 0.0, 0.0])),
+            Atom(symbol="H", position=np.array([0.0, 0.0, bond_length])),
+        ],
+        basis="sto-3g",
+        charge=0,
+        multiplicity=1,
+        name="LiH")
 
 
 def create_h2o(oh_length: float = 0.957, angle_deg: float = 104.5) -> MoleculeSpec:
@@ -72,7 +88,17 @@ def create_h2o(oh_length: float = 0.957, angle_deg: float = 104.5) -> MoleculeSp
     Returns:
         MoleculeSpec for water with STO-3G basis.
     """
-    ...
+    angle = np.pi*angle_deg /180
+    return MoleculeSpec(
+        atoms=[
+            Atom(symbol="O", position=np.array([0.0, 0.0, 0.0])),
+            Atom(symbol="H", position=np.array([+oh_length * np.sin(angle/2), 0.0,-oh_length * np.cos(angle/2)])),
+            Atom(symbol="H", position=np.array([-oh_length * np.sin(angle/2), 0.0,-oh_length * np.cos(angle/2)])),
+        ],
+        basis="sto-3g",
+        charge=0,
+        multiplicity=1,
+        name="H2O")
 
 
 def set_bond_length(mol: MoleculeSpec, atom_idx_a: int,
@@ -93,4 +119,15 @@ def set_bond_length(mol: MoleculeSpec, atom_idx_a: int,
     Returns:
         New MoleculeSpec with updated atom positions.
     """
-    ...
+    new_mol = copy.deepcopy(mol)
+    atom_a = new_mol.atoms[atom_idx_a]
+    atom_b = new_mol.atoms[atom_idx_b]
+    # Calculate current bond vector and midpoint
+    bond_vector = atom_b.position - atom_a.position
+    midpoint = (atom_a.position + atom_b.position) / 2
+    # Normalize bond vector to get direction
+    direction = bond_vector / np.linalg.norm(bond_vector)
+    # Set new positions symmetrically about the midpoint
+    atom_a.position = midpoint - (new_length / 2) * direction
+    atom_b.position = midpoint + (new_length / 2) * direction
+    return new_mol

@@ -5,6 +5,8 @@ from dataclasses import dataclass
 import numpy as np
 from pyscf import ao2mo, gto, scf, fci, ci, cc
 
+from .molecule import MoleculeSpec
+
 
 @dataclass
 class HFResult:
@@ -43,7 +45,38 @@ def run_hartree_fock(mol_spec: MoleculeSpec) -> HFResult:
         orbital energies, transformed integrals, overlap, electron/orbital counts,
         and AO labels.
     """
-    ...
+    mol = _build_pyscf_mol(mol_spec)
+    mf = scf.RHF(mol)
+    energy_hf = mf.kernel()
+    energy_nuc = mol.energy_nuc()
+
+    mo_coefficients = mf.mo_coeff
+    mo_energies = mf.mo_energy
+
+    h1_ao = mol.get_hcore()
+    h1_mo = mo_coefficients.T @ h1_ao @ mo_coefficients
+
+    # Full 4-index MO integrals (i j | k l)
+    eri_mo = ao2mo.kernel(mol, mf.mo_coeff)  # returns compressed by default
+
+    # Restore to full 4D array
+    nmo = mf.mo_coeff.shape[1]
+    eri_mo_full = ao2mo.restore(1, eri_mo, nmo)  # shape: (nmo, nmo, nmo, nmo)
+
+    overlap_matrix=mol.intor("int1e_ovlp")
+
+    return HFResult(
+        energy_hf=energy_hf,
+        energy_nuc=energy_nuc,
+        mo_coefficients=mo_coefficients,
+        mo_energies=mo_energies,
+        one_electron_integrals=h1_mo,
+        two_electron_integrals=eri_mo_full,
+        overlap_matrix=overlap_matrix,
+        n_electrons=mol.nelectron,
+        n_orbitals=nmo,
+        ao_labels=mol.ao_labels())
+
 
 
 def get_fci_energy(mol_spec: MoleculeSpec) -> float:
@@ -58,7 +91,12 @@ def get_fci_energy(mol_spec: MoleculeSpec) -> float:
     Returns:
         FCI total energy in Hartrees.
     """
-    ...
+    mol = _build_pyscf_mol(mol_spec)
+    mf = scf.RHF(mol)
+    mf.kernel()
+    fcisolver = fci.FCI(mf)
+    energy_fci, _ = fcisolver.kernel()
+    return energy_fci
 
 
 def get_cisd_energy(mol_spec: MoleculeSpec) -> float:
@@ -72,7 +110,12 @@ def get_cisd_energy(mol_spec: MoleculeSpec) -> float:
     Returns:
         CISD total energy in Hartrees.
     """
-    ...
+    mol = _build_pyscf_mol(mol_spec)
+    mf = scf.RHF(mol)
+    mf.kernel()
+    cisolver = ci.CISD(mf)
+    energy_cisd, _ = cisolver.run()
+    return energy_cisd
 
 
 def get_ccsd_t_energy(mol_spec: MoleculeSpec) -> float:
@@ -87,7 +130,13 @@ def get_ccsd_t_energy(mol_spec: MoleculeSpec) -> float:
     Returns:
         CCSD(T) total energy in Hartrees.
     """
-    ...
+    mol = _build_pyscf_mol(mol_spec)
+    mf = scf.RHF(mol)
+    mf.kernel()
+    cc_solver = cc.CCSD(mf)
+    energy_ccsd, _ = cc_solver.run()
+    energy_ccsd_t = energy_ccsd + cc_solver.ccsd_t()
+    return energy_ccsd_t
 
 
 def _build_pyscf_mol(mol_spec: MoleculeSpec) -> gto.Mole:
@@ -103,4 +152,14 @@ def _build_pyscf_mol(mol_spec: MoleculeSpec) -> gto.Mole:
     Returns:
         Built PySCF Mole object ready for calculations.
     """
-    ...
+    atom_str = "; ".join(
+        f"{atom.symbol} {atom.position[0]} {atom.position[1]} {atom.position[2]}"
+        for atom in mol_spec.atoms)
+    mol = gto.Mole()
+    mol.atom = atom_str
+    mol.basis = mol_spec.basis
+    mol.charge = mol_spec.charge
+    mol.spin = mol_spec.multiplicity - 1
+    mol.unit = "Angstrom"
+    mol.build()
+    return mol

@@ -1,0 +1,26 @@
+# VQE PES Explorer - Python Dependencies
+# Install with: pip install -r requirements.txt
+# NOTE: PySCF requires Linux (use WSL on Windows)
+
+# Core Scientific Computing
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Quantum Chemistry (Linux only)
+pyscf>=2.3.0
+
+# Quantum Computing
+pennylane>=0.33.0
+pennylane-qiskit>=0.33.0  # For IBM hardware
+
+# Exact Diagonalization
+qutip>=5.0.0
+
+# Visualization
+scikit-image>=0.21.0  # Marching cubes
+matplotlib>=3.7.0     # Plotting
+
+# OpenGL Rendering (optional, requires X server in WSL)
+glfw>=2.6.0
+PyOpenGL>=3.1.7
+PyOpenGL_accelerate>=3.1.7  # Optional, speeds up OpenGL
