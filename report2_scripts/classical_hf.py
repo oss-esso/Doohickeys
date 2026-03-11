@@ -53,7 +53,7 @@ def run_hartree_fock(mol_spec: MoleculeSpec) -> HFResult:
     mo_coefficients = mf.mo_coeff
     mo_energies = mf.mo_energy
 
-    h1_ao = mol.get_hcore()
+    h1_ao = mf.get_hcore()
     h1_mo = mo_coefficients.T @ h1_ao @ mo_coefficients
 
     # Full 4-index MO integrals (i j | k l)
@@ -114,8 +114,8 @@ def get_cisd_energy(mol_spec: MoleculeSpec) -> float:
     mf = scf.RHF(mol)
     mf.kernel()
     cisolver = ci.CISD(mf)
-    energy_cisd, _ = cisolver.run()
-    return energy_cisd
+    cisolver.run()
+    return cisolver.e_tot
 
 
 def get_ccsd_t_energy(mol_spec: MoleculeSpec) -> float:
@@ -134,8 +134,8 @@ def get_ccsd_t_energy(mol_spec: MoleculeSpec) -> float:
     mf = scf.RHF(mol)
     mf.kernel()
     cc_solver = cc.CCSD(mf)
-    energy_ccsd, _ = cc_solver.run()
-    energy_ccsd_t = energy_ccsd + cc_solver.ccsd_t()
+    cc_solver.run()
+    energy_ccsd_t = cc_solver.e_tot + cc_solver.ccsd_t()
     return energy_ccsd_t
 
 

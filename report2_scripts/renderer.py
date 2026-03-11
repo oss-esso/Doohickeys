@@ -3,6 +3,14 @@ from __future__ import annotations
 import ctypes
 import os
 
+# Force GLX platform so PyOpenGL's context tracker matches GLFW's GLX context.
+# Without this, PyOpenGL defaults to EGLPlatform on Mesa/WSL and GetCurrentContext
+# returns None, causing glVertexAttribPointer to raise "no valid context".
+os.environ.setdefault('PYOPENGL_PLATFORM', 'glx')
+
+import OpenGL
+OpenGL.USE_ACCELERATE = False  # Workaround: OpenGL_accelerate's context tracker is incompatible with GLFW
+
 import glfw
 import numpy as np
 from OpenGL.GL import *

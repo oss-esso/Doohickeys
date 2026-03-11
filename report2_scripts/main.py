@@ -222,12 +222,22 @@ def _run_visualization(args: argparse.Namespace, factory) -> None:
     
     # Extract isosurface
     print("  Extracting isosurface...")
+    isovalue = 0.05
+    vol = orbital_data.values
+    # Clamp isovalue to be within the actual volume range so both lobes are attempted
+    max_abs = float(np.abs(vol).max())
+    if max_abs < isovalue:
+        isovalue = max_abs * 0.3
+        print(f"  Isovalue clamped to {isovalue:.4f} (volume max |val| = {max_abs:.4f})")
     mesh = extract_dual_isosurface(
         volume=orbital_data.values,
-        isovalue=0.05,
+        isovalue=isovalue,
         grid_origin=orbital_data.grid_origin,
         grid_spacing=orbital_data.grid_spacing
     )
+    if len(mesh.faces) == 0:
+        print("  Warning: isosurface is empty — no surface to render.")
+        return
     
     print(f"  Mesh: {len(mesh.vertices)} vertices, {len(mesh.faces)} triangles")
     

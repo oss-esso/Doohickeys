@@ -89,11 +89,37 @@ def extract_dual_isosurface(volume: np.ndarray, isovalue: float,
     Returns:
         Combined IsosurfaceMesh with both lobes, signs indicating +1/-1.
     """
-    positive_mesh = marching_cubes(volume, isovalue, grid_origin, grid_spacing)
-    negative_mesh = marching_cubes(volume, -isovalue, grid_origin, grid_spacing)
-    negative_mesh.signs *= -1.0
+    has_positive = volume.max() > isovalue
+    has_negative = volume.min() < -isovalue
 
-    # Combine the meshes
+    meshes: list[IsosurfaceMesh] = []
+    if has_positive:
+        m = marching_cubes(volume, isovalue, grid_origin, grid_spacing)
+        meshes.append(m)
+    if has_negative:
+        m = marching_cubes(volume, -isovalue, grid_origin, grid_spacing)
+        m.signs *= -1.0
+        meshes.append(m)
+
+    if not meshes:
+        # isovalue is outside volume range entirely — return empty mesh
+        return IsosurfaceMesh(
+            vertices=np.zeros((0, 3), dtype=np.float32),
+            normals=np.zeros((0, 3), dtype=np.float32),
+            faces=np.zeros((0, 3), dtype=np.uint32),
+            signs=np.zeros(0, dtype=np.float32),
+        )
+
+    if len(meshes) == 1:
+        m = meshes[0]
+        return IsosurfaceMesh(
+            vertices=m.vertices.astype(np.float32),
+            normals=m.normals.astype(np.float32),
+            faces=m.faces.astype(np.uint32),
+            signs=m.signs,
+        )
+
+    positive_mesh, negative_mesh = meshes[0], meshes[1]
     verts = np.vstack([positive_mesh.vertices, negative_mesh.vertices])
     normals = np.vstack([positive_mesh.normals, negative_mesh.normals])
     faces = np.vstack([positive_mesh.faces, negative_mesh.faces + len(positive_mesh.vertices)])
