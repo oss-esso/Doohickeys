@@ -5,6 +5,9 @@ import json
 import os
 from pathlib import Path
 
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -178,8 +181,45 @@ def run_pipeline(args: argparse.Namespace) -> None:
     print(f"Chemical accuracy:       {'YES' if error < 1.6e-3 else 'NO'} (< 1.6 mHa)")
     print("=" * 60)
     
+    # Plot PES curves
+    _plot_pes(args, pes_data)
+
     # Save results
     _save_results(args, pes_data)
+
+
+def _plot_pes(args: argparse.Namespace, pes_data) -> None:
+    """Generate and save PES curve plot (E vs R for all methods)."""
+    output_dir = Path(args.output)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    R = pes_data.bond_lengths
+
+    ax.plot(R, pes_data.energies_fci, "k-", linewidth=2, label="FCI (exact)")
+    ax.plot(R, pes_data.energies_vqe, "o-", color="#2196F3", markersize=4,
+            linewidth=1.5, label="VQE (UCCSD)")
+    ax.plot(R, pes_data.energies_hf, "--", color="#F44336", linewidth=1.5,
+            label="Hartree\u2013Fock")
+
+    if pes_data.energies_cisd is not None:
+        ax.plot(R, pes_data.energies_cisd, "s-", color="#4CAF50", markersize=3,
+                linewidth=1, label="CISD")
+    if pes_data.energies_ccsd_t is not None:
+        ax.plot(R, pes_data.energies_ccsd_t, "^-", color="#FF9800", markersize=3,
+                linewidth=1, label="CCSD(T)")
+
+    ax.set_xlabel("Bond Length (\u00c5)")
+    ax.set_ylabel("Energy (Hartree)")
+    ax.set_title(f"Potential Energy Surface \u2014 {args.molecule.upper()} / {args.basis}")
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    fig.tight_layout()
+
+    save_path = output_dir / f"pes_{args.molecule}_{args.basis}.pdf"
+    fig.savefig(save_path, dpi=200, bbox_inches="tight")
+    plt.close(fig)
+    print(f"\nPES plot saved to: {save_path}")
 
 
 def _run_visualization(args: argparse.Namespace, factory) -> None:
@@ -251,9 +291,9 @@ def _run_visualization(args: argparse.Namespace, factory) -> None:
     # Create VAO
     vao, vbo, ebo, n_indices = create_orbital_vao(mesh)
     
-    # Camera setup
+    # Camera setup — view from the side so the bond axis (z) is horizontal
     camera = ArcballCamera(
-        position=np.array([0.0, 0.0, 15.0]),
+        position=np.array([12.0, 4.0, 0.0]),
         target=np.array([0.0, 0.0, 0.0])
     )
     

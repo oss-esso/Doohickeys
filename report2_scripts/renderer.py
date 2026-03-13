@@ -458,19 +458,29 @@ class ArcballCamera:
                  target: np.ndarray | None = None) -> None:
         """Initialise camera.
 
-        Defaults: position=[0,0,10], target=[0,0,0], up=[0,1,0],
-        yaw=-90, pitch=20, zoom = |position - target|.
+        Defaults: position=[10,3,0], target=[0,0,0], up=[0,1,0].
+        Derives yaw, pitch, and zoom from the supplied position vector
+        so the initial view is consistent with subsequent mouse drags.
 
         Args:
             position: Initial camera position (or None for default).
             target: Initial look-at target (or None for default).
         """
-        self.position = position if position is not None else np.array([0.0, 0.0, 10.0])
         self.target = target if target is not None else np.array([0.0, 0.0, 0.0])
+        pos = position if position is not None else np.array([10.0, 3.0, 0.0])
         self.up = np.array([0.0, 1.0, 0.0])
-        self.yaw = -90.0
-        self.pitch = 20.0
-        self.zoom = np.linalg.norm(self.position - self.target)
+
+        # Derive spherical coordinates from position
+        offset = pos - self.target
+        self.zoom = float(np.linalg.norm(offset))
+        if self.zoom < 1e-6:
+            self.zoom = 10.0
+        direction = offset / self.zoom
+        self.pitch = float(np.degrees(np.arcsin(np.clip(direction[1], -1, 1))))
+        self.yaw = float(np.degrees(np.arctan2(direction[2], direction[0])))
+
+        # Set position from the derived angles so it is fully consistent
+        self._update()
 
     def on_mouse_drag(self, dx: float, dy: float) -> None:
         """Update yaw/pitch from mouse drag deltas.
